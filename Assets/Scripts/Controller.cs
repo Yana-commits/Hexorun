@@ -1,136 +1,62 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-public enum GameState { doPlay, doNotPlay };
 public class Controller : MonoBehaviour
 {
     private static Controller instance;
+    public static Controller Instance => instance;
 
-    public static Controller Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-    
-    public float gameTime;
+    [SerializeField] private HUD hud;
 
-    public delegate void WinDelegate();
-    public event WinDelegate Win;
-    public delegate void LooseDelegate();
-    public event LooseDelegate Loose;
-    private bool stopTime = true;
-    private bool once = true;
-    
-    //[SerializeField]
-    //private Player player;
-    [SerializeField]
-    private CameraController perspCamera;
+    [SerializeField] private CameraController perspCamera;
+    [SerializeField] private CameraController ortoCamera;
 
-    [SerializeField]
-    private CameraController ortoCamera;
+    [SerializeField] private Map mapPrefab;
+    [SerializeField] private Player playerPrefab;
+
+    [SerializeField] private LevelParameters level;
+
+    public event Action Win;
+    public event Action Loose;
+
+    public GameParameters gameParameters;
 
     private CameraController camera;
-
-    public GameState gameState = GameState.doNotPlay;
-
     private Map map;
-    public Map Map
+    private Player player;
+    private float gameTimeLeft;
+
+    public GameState gameState = GameState.Stop;
+
+    public void StartGame(GameParameters parameters)
     {
-        get
-        {
-            return map;
-        }
+        gameParameters = parameters;
 
-        set
-        {
-            map = value;
-        }
-    }
+        gameTimeLeft = gameParameters.duration;
+        gameState = GameState.Play;
 
-    public Hex hexPrefab;
 
-    [SerializeField]
-    private LevelParameters level;
-    public LevelParameters Level
-    {
-        get
-        {
-            return level;
-        }
-
-        set
-        {
-            level = value;
-        }
-    }
-
-    private int koeff ;
-
-    private float camKoeff;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            if (instance != this && instance != null) Destroy(gameObject);
-        }
-    }
-    void Start()
-    {
-        gameTime = HUD.Instance.timer.value;
-    }
-
-    void FixedUpdate()
-    {
-        if (gameState == GameState.doPlay)
-        {
-            if (stopTime)
-            {
-                gameTime = gameTime - 1 * Time.deltaTime;
-
-                HUD.Instance.UpdateScoreValue(gameTime);
-
-                if (gameTime <= 0)
-                {
-                    if (once)
-                    {
-                        Loose?.Invoke();
-                        once = false;
-                    }
-                    gameTime = 0;
-                }
-            }
-        }
-    }
-    public void Game()
-    {
-        gameState = GameState.doPlay;
-        koeff = (int)HUD.Instance.areaFactor.value;
-        camKoeff = HUD.Instance.cameraFactor.value;
-        if (camKoeff == 1)
+        if (gameParameters.isCameraOrthographic)
         {
             perspCamera.gameObject.SetActive(false);
             ortoCamera.gameObject.SetActive(true);
             camera = ortoCamera;
         }
-        else 
+        else
         {
             ortoCamera.gameObject.SetActive(false);
             perspCamera.gameObject.SetActive(true);
             camera = perspCamera;
         }
-        InitializeLevel(koeff);
-       
-        map = Map.Create(level, hexPrefab);
+
+        level = new LevelParameters(gameParameters.areaFactor);
+
+        map = Instantiate(mapPrefab, Vector3.zero, Quaternion.identity);
+        map.Initializie(level);
+
         PlayerInit(level);
     }
     public void PlayerInit(LevelParameters level)
@@ -139,24 +65,46 @@ public class Controller : MonoBehaviour
         float xOffset = level.XOffset;
 
         float playerX = xHeight * xOffset / 2;
-        var player = (GameObject)Instantiate(Resources.Load("Prefabs/Player"), new Vector3(playerX, 0.03f, 2.5f), Quaternion.identity);
+        player = Instantiate(playerPrefab, new Vector3(playerX, 0.03f, 2.5f), Quaternion.identity);
         camera.player = player.transform;
     }
 
-    public void InitializeLevel(int koeff)
-    { 
-      level = new LevelParameters(koeff);
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
     }
-   
+
+    private void Update()
+    {
+        if (gameState != GameState.Play)
+            return;
+
+        gameTimeLeft -= Time.deltaTime;
+
+        if (gameTimeLeft <= 0)
+        {
+            Lost();
+            gameTimeLeft = 0;
+        }
+
+        hud.UpdateScoreValue(gameTimeLeft);
+    }
+
     public void Victory()
     {
+        gameState = GameState.GameOver;
+
         Win?.Invoke();
-        stopTime = false;
-        gameState = GameState.doNotPlay;
+        player.Win();
     }
     public void Lost()
     {
+        gameState = GameState.GameOver;
+
         Loose?.Invoke();
-        stopTime = false;
+        player.Loose();
     }
 }

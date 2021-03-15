@@ -5,6 +5,7 @@ using System.Linq;
 
 public class Map : MonoBehaviour
 {
+    [SerializeField] Hex hexPrefab;
     [SerializeField] Material redMaterial;
     public List<Hex> hexes = new List<Hex>();
     private float changeTime = 1;
@@ -25,14 +26,12 @@ public class Map : MonoBehaviour
 
     void Start()
     {
-        holesNomber = HUD.Instance.holes.value;
+        holesNomber = Controller.Instance.gameParameters.holes;
         Debug.Log(size);
     }
 
-    private void Initializie(LevelParameters level, Hex hexPrefab)
+    public void Initializie(LevelParameters level)
     {
-
-
         size = new Vector2Int(level.ZWidth, level.XHeight);
 
         float xOffset = level.XOffset;
@@ -79,19 +78,9 @@ public class Map : MonoBehaviour
         MooveHexes();
     }
 
-    public static Map Create(LevelParameters level, Hex hexPrefab)
-    {
-        Vector3 fieldPosition = Vector3.zero;
-        var mapPrefab = Resources.Load<Map>("Prefabs/Map");
-
-        var map = Instantiate(mapPrefab, fieldPosition, Quaternion.identity);
-        map.Initializie(level, hexPrefab);
-        return map;
-    }
-
     public void MooveHexes()
     {
-        if (Controller.Instance.gameState == GameState.doPlay)
+        if (Controller.Instance.gameState == GameState.Play)
         {
             changeTime = changeTime - 1 * Time.deltaTime;
             if (changeTime <= 0)
@@ -129,7 +118,7 @@ public class Map : MonoBehaviour
                         list[index].Move(minusePoints);
                     }
                 }
-                changeTime = HUD.Instance.changesTime.value;
+                changeTime = Controller.Instance.gameParameters.changesTime;
             }
         }
     }

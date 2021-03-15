@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Controller.Instance.gameState == GameState.doPlay)
+        if (Controller.Instance.gameState == GameState.Play)
         {
             Vector3 velocity = new Vector3(joystick.Horizontal * speed, rigidbody.velocity.y, joystick.Vertical * speed);
 
@@ -48,10 +48,7 @@ public class Player : MonoBehaviour
         joystick = FindObjectOfType<Joystick>();
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
-        speed = HUD.Instance.playerSpeed.value;
-
-        Controller.Instance.Win += Win;
-        Controller.Instance.Loose += Loose;
+        speed = Controller.Instance.gameParameters.playerSpeed;
     }
     public void Win()
     {
@@ -79,11 +76,6 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    private void OnDestroy()
-    {
-        Controller.Instance.Win -= Win;
-        Controller.Instance.Loose -= Loose;
-    }
     private void Fall()
     {
         Debug.Log("Loose!");
