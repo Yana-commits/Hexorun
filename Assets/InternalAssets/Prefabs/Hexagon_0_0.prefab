@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8596847502250722835}
   - component: {fileID: 4052352603810499495}
   - component: {fileID: 6572510424087198273}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hexagon_0_0
   m_TagString: Hex
   m_Icon: {fileID: 0}
@@ -128,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49af69bb52deed04bbedfabbc1fbb84c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPosition: {x: 0, y: 0, z: 0}
-  permission: 1
-  end: 1
-  hole: 1
+  _renderer: {fileID: 2666777967648899050}
+  index: {x: 0, y: 0}
+  IsTarget: 0

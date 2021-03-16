@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
         Init();
     }
 
+    //TODO: need refactoring
     void FixedUpdate()
     {
         if (Controller.Instance.gameState == GameState.Play)
@@ -43,6 +45,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    internal void DestinationReached()
+    {
+        Controller.Instance.Victory();
+    }
+
     public void Init()
     {
         joystick = FindObjectOfType<Joystick>();
@@ -61,6 +68,7 @@ public class Player : MonoBehaviour
         rigidbody.velocity = Vector3.zero;
         animator.SetTrigger("Win");
         yield return new WaitForSeconds(6);
+        //TODO: Remove
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void Loose()
@@ -73,12 +81,14 @@ public class Player : MonoBehaviour
         speed = 0;
         animator.SetTrigger("Loose");
         yield return new WaitForSeconds(5);
+        //TODO: Remove
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void Fall()
     {
         Debug.Log("Loose!");
+        //TODO: Remove
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
