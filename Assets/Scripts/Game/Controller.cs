@@ -8,10 +8,8 @@ using Random = UnityEngine.Random;
 
 public class Controller : MonoBehaviour
 {
-    private static Controller instance;
-    public static Controller Instance => instance;
-
     [SerializeField] private HUD hud;
+    [SerializeField] private Joystick joystick;
 
     [SerializeField] private CameraController[] cameras;
     [Space]
@@ -20,9 +18,6 @@ public class Controller : MonoBehaviour
     [SerializeField] private ObstaclePresenter obstaclePresenter;
     [Space]
     [SerializeField] private Player playerPrefab;
-
-    public event Action Win;
-    public event Action Loose;
 
     public GameParameters gameParameters;
 
@@ -55,18 +50,45 @@ public class Controller : MonoBehaviour
 
     public void PlayerInit()
     {
-        var hex = map[Random.Range(0, gameParameters.size.x), 1];
+        var hex = map[gameParameters.size.x/2, 0];
         Vector3 startPos = hex.transform.position;
-        startPos.y = 0.03f;
         player = Instantiate(playerPrefab, startPos,Quaternion.identity);
+        player.Initializie(gameParameters.playerSpeed, map.Bounds, joystick);
+
+        player.stateChanged += OnPlayerStateChanged;
     }
 
-    private void Awake()
+    private void OnPlayerStateChanged(PlayerState obj)
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
+        gameState = GameState.GameOver;
+        player.enabled = false;
+
+        switch (obj)
+        {
+            case PlayerState.Win:
+                StartCoroutine(player.Winner(ReloadScene));
+                break;
+            case PlayerState.Lose:
+                StartCoroutine(player.Looser(ReloadScene));
+                break;
+            case PlayerState.Fall:
+                ReloadScene();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnDestroy()
+    {
+        if (player)
+            player.stateChanged -= OnPlayerStateChanged;
     }
 
     private void Update()
@@ -78,7 +100,7 @@ public class Controller : MonoBehaviour
 
         if (gameTimeLeft <= 0)
         {
-            Lost();
+            OnPlayerStateChanged(PlayerState.Lose);
             gameTimeLeft = 0;
         }
 
@@ -95,21 +117,4 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void Victory()
-    {
-        //TODO: need refactoring
-        gameState = GameState.GameOver;
-
-        Win?.Invoke();
-        player.Win();
-    }
-
-    public void Lost()
-    {
-        //TODO: need refactoring
-        gameState = GameState.GameOver;
-
-        Loose?.Invoke();
-        player?.Loose();
-    }
 }

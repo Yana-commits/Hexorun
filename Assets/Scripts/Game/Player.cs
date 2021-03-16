@@ -6,89 +6,77 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    protected Joystick joystick;
-    private Rigidbody rigidbody;
-    public float speed;
-   private Animator animator;
-    public float xMin, xMax, zMin, zMax;
-    void Start()
-    {
+    private readonly int SpeedKeyHash = Animator.StringToHash("Speed");
 
-        Init();
+    [SerializeField] private Rigidbody rigidbody;
+    [SerializeField] private Animator animator;      
+
+    private float speed;
+    private Joystick joystick;
+
+    public event Action<PlayerState> stateChanged;
+
+    [SerializeField] private Bounds mapBounds;
+
+    public void Initializie(float speed, Bounds bounds, Joystick joystick)
+    {
+        this.joystick = joystick;
+        this.speed = speed;
+        this.mapBounds = bounds;
+        //TODO: refactoring
+        mapBounds.Expand(new Vector3(1, 0, Mathf.Sqrt(3)) * -Map.hexRadius);
     }
 
-    //TODO: need refactoring
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (Controller.Instance.gameState == GameState.Play)
-        {
-            Vector3 velocity = new Vector3(joystick.Horizontal * speed, rigidbody.velocity.y, joystick.Vertical * speed);
+        Move(joystick.Direction);
+        ClampPosition();
 
-            rigidbody.velocity = velocity;
-            
-            if (joystick.Direction.magnitude > 0)
-                rigidbody.rotation = Quaternion.LookRotation(rigidbody.velocity, Vector3.up);
-            
-            rigidbody.position = new Vector3
-                (
-                Mathf.Clamp(rigidbody.position.x, xMin, xMax),
-               rigidbody.position.y,
-                Mathf.Clamp(rigidbody.position.z, zMin, zMax)
-                );
-            
-            animator.SetFloat("Speed", Mathf.Abs(rigidbody.velocity.magnitude));
-        }
-
+        //TODO: refactoring
         if (rigidbody.position.y <= -2)
-        {
             Fall();
-        }
     }
 
-    internal void DestinationReached()
+    public void Move(Vector2 direction)
     {
-        Controller.Instance.Victory();
+        Vector3 velocity = new Vector3(direction.x, 0, direction.y) * speed;
+
+        if (velocity.magnitude > 0)
+            rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
+        animator.SetFloat(SpeedKeyHash, velocity.magnitude);
+
+        velocity.y = rigidbody.velocity.y;
+        rigidbody.velocity = velocity;
     }
 
-    public void Init()
+    private void ClampPosition()
     {
-        joystick = FindObjectOfType<Joystick>();
-        rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
-        speed = Controller.Instance.gameParameters.playerSpeed;
+        Vector3 position = rigidbody.position;
+        position.x = Mathf.Clamp(position.x, mapBounds.min.x, mapBounds.max.x);
+        position.z = Mathf.Clamp(position.z, mapBounds.min.z, mapBounds.max.z);
+        rigidbody.position = position;
     }
-    public void Win()
+
+    public void DestinationReached() 
+        => stateChanged?.Invoke(PlayerState.Win);
+    private void Fall() 
+        => stateChanged?.Invoke(PlayerState.Fall);
+
+    public IEnumerator Winner(Action callback)
     {
-        StartCoroutine(Winner());
-    }
-    private IEnumerator Winner()
-    {
-        Debug.Log("Win!");
-        speed = 0;
         rigidbody.velocity = Vector3.zero;
         animator.SetTrigger("Win");
         yield return new WaitForSeconds(6);
-        //TODO: Remove
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    public void Loose()
-    {
-        StartCoroutine(Looser());
-    }
-    private IEnumerator Looser()
-    {
-        Debug.Log("Loose!");
-        speed = 0;
-        animator.SetTrigger("Loose");
-        yield return new WaitForSeconds(5);
-        //TODO: Remove
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        callback?.Invoke();
     }
 
-    private void Fall()
+    public IEnumerator Looser(Action callback)
     {
-        Debug.Log("Loose!");
-        //TODO: Remove
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        rigidbody.velocity = Vector3.zero;
+        animator.SetTrigger("Loose");
+        yield return new WaitForSeconds(5);
+        callback?.Invoke();
     }
+
+
 }

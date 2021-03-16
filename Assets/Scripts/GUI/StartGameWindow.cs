@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class StartGameWindow : MonoBehaviour
 {
+    public Slider width;
+    public Slider height;
     public Slider timer;
     public Slider playerSpeed;
     public Slider changesTime;
@@ -18,6 +20,7 @@ public class StartGameWindow : MonoBehaviour
     private void OnStartClick()
     {
         OnStartGame?.Invoke(new GameParameters { 
+            size = new Vector2Int((int)width.value, (int)height.value),
             duration = (int)timer.value,
             playerSpeed = playerSpeed.value,
             changesTime = changesTime.value,

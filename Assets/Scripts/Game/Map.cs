@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Map : MonoBehaviour, IEnumerable<Hex>
 {
-    private const float hexRadius = 0.9755461f/2;
+    public const float hexRadius = 0.9755461f/2;
 
     [SerializeField] Hex hexPrefab;
     [SerializeField] Material redMaterial;
@@ -39,7 +39,6 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
                 _bounds.Encapsulate(hex_go.Renderer.bounds);
             }
-
 
         var targetIndex = new Vector2Int(
             Random.Range(0, size.x),
