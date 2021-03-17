@@ -10,14 +10,15 @@ public class StartGameWindow : MonoBehaviour
     public Slider areaFactor;
     public Slider holes;
     public Button startButton;
-
+    public int time;
+        
     public StartGameEvent OnStartGame;
     private void OnStartClick()
     {
 
         OnStartGame?.Invoke(new GameParameters { 
             size = new Vector2Int(10, 20 +  (int)(areaFactor.value-1) * 6), // 20 * 30% = 6
-            duration = 30,
+            duration = time,
             playerSpeed = playerSpeed.value,
             changesTime = 2,
             holes = (int)holes.value,
