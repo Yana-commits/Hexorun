@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Top_Color_matirial_world
+  m_Name: black_neon_mat
   m_Shader: {fileID: -6465566751694194690, guid: 6417543a18af5474aa69f26335789f66,
     type: 3}
   m_ShaderKeywords: 

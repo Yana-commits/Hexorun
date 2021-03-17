@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Rim_Color_matirial_world 1
-  m_Shader: {fileID: -6465566751694194690, guid: 3126c310b68f14748bc5bf1d0a61416c,
+  m_Name: Deep_plane_mat
+  m_Shader: {fileID: -6465566751694194690, guid: 49e5d02e954e81846807b791c93655b6,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -33,12 +33,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Boolean_7A195443: 1
-    - Vector1_48d49434debd4c688466f8b896964a23: 0
-    - Vector1_57B2F474: 0.08
-    - Vector1_5B0BFD77: 0.12
-    - Vector1_f7bb09625cb54699b88a3f47d01c52d9: 0
+    - Vector1_677230dd70b74a2698b15d26dd458f83: -0.11
+    - Vector1_c08c3fc8279741408c5668971facd61d: 1.28
     m_Colors:
-    - Color_3BEE2782: {r: 0, g: 0.100629196, b: 0.754717, a: 0}
-    - Color_89D4D418: {r: 0, g: 0.15721321, b: 1, a: 0}
+    - Color_6d8787a5ee644853a64f4482b50de5f5: {r: 0.8113208, g: 0.18752226, b: 0.18752226,
+        a: 0}
+    - Color_9b9631ede24f4b5380f4e3599dd167ac: {r: 0.2, g: 0.21568628, b: 0.35686275,
+        a: 0}
   m_BuildTextureStacks: []

@@ -46,7 +46,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
             );
 
         var rend = this[targetIndex].Renderer;
-        rend.materials = new[] { null, redMaterial, redMaterial };
+        rend.materials = new[] {redMaterial};
         this[targetIndex].IsTarget = true;
     }
 
