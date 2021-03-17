@@ -16,6 +16,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private Map map;
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
+    [SerializeField] private MaterialRepository materials;
 
     private GameParameters gameParameters;
     private float gameTimeLeft;
@@ -27,7 +28,7 @@ public class GameState : MonoBehaviour
 
         gameTimeLeft = gameParameters.duration;
 
-        map.Initializie(gameParameters.size);
+        map.Initializie(gameParameters.size, materials.Random());
         map.gameObject.SetActive(true);
 
         PlayerInit();
