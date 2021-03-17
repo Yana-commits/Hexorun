@@ -11,17 +11,15 @@ public class Controller : MonoBehaviour
     [SerializeField] private HUD hud;
     [SerializeField] private Joystick joystick;
 
-    [SerializeField] private CameraController[] cameras;
+    [SerializeField] private GameObject[] cameras;
     [Space]
+    [SerializeField] private Player player;
     [SerializeField] private Map map;
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
-    [Space]
-    [SerializeField] private Player playerPrefab;
 
     public GameParameters gameParameters;
 
-    private Player player;
     private float gameTimeLeft;
 
     public GameState gameState = GameState.Stop;
@@ -32,17 +30,14 @@ public class Controller : MonoBehaviour
 
         gameTimeLeft = gameParameters.duration;
 
-        cameras[1].gameObject.SetActive(gameParameters.isCameraOrthographic);
-        cameras[0].gameObject.SetActive(!gameParameters.isCameraOrthographic);
+        cameras[1].SetActive(gameParameters.isCameraOrthographic);
+        cameras[0].SetActive(!gameParameters.isCameraOrthographic);
 
         map.Initializie(gameParameters.size);
 
         PlayerInit();
         obstaclePresenter.Initialize(gameParameters.holes);
         obstacleGenerator.Initialize(player.transform);
-
-        foreach (var camera in cameras)
-            camera.player = player.transform;
 
         gameState = GameState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
@@ -52,10 +47,10 @@ public class Controller : MonoBehaviour
     {
         var hex = map[gameParameters.size.x/2, 0];
         Vector3 startPos = hex.transform.position;
-        player = Instantiate(playerPrefab, startPos,Quaternion.identity);
+        player.transform.SetPositionAndRotation(startPos,Quaternion.identity);
         player.Initializie(gameParameters.playerSpeed, map.Bounds, joystick);
-
         player.stateChanged += OnPlayerStateChanged;
+        player.gameObject.SetActive(true);
     }
 
     private void OnPlayerStateChanged(PlayerState obj)

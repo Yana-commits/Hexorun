@@ -7,12 +7,13 @@ using Random = UnityEngine.Random;
 
 public class ObstacleGenerator : MonoBehaviour
 {
-    [SerializeField] Transform _player;
     [SerializeField] Map _map;
     [Space]
     [SerializeField] LayerMask hexLayer;
+    [SerializeField] float _overlapSphereRadius = 0.5f;
 
     public Action<IEnumerable<Vector2Int>> ObstaclesGenerated;
+    private Transform _player;
 
     public void Initialize(Transform player)
     {
@@ -21,12 +22,12 @@ public class ObstacleGenerator : MonoBehaviour
 
     internal void Generate()
     {
-
         var obstacles = _map
             .Where(hex => Random.Range(0, 5) == 0) // 1/5 = 20%
             .Select(h => h.index);
 
-        var colliders = Physics.OverlapSphere(_player.position, 0.5f, hexLayer);
+        //TODO: если клетка опущена Physics.OverlapSphere не может ее отловить
+        var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
 
         var hexIndexes = colliders.Select(c => c.GetComponent<Hex>().index);
 

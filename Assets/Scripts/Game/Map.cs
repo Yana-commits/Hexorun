@@ -137,6 +137,8 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         return new Vector3(t.x, 0,t.y);
     }
 
+    //TODO: добавить перевод позиции в индекс хекса
+
     #endregion
 
     #region IEnumerable
