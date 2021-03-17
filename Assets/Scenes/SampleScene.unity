@@ -959,7 +959,7 @@ GameObject:
   - component: {fileID: 374825335}
   - component: {fileID: 374825334}
   m_Layer: 0
-  m_Name: GameStateController
+  m_Name: GameState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -986,15 +986,6 @@ MonoBehaviour:
   map: {fileID: 1214377412}
   obstacleGenerator: {fileID: 1214377415}
   obstaclePresenter: {fileID: 1214377414}
-  gameParameters:
-    size: {x: 10, y: 20}
-    duration: 0
-    playerSpeed: 0
-    changesTime: 0
-    areaFactor: 0
-    isCameraOrthographic: 0
-    holes: 0
-  gameState: 0
 --- !u!4 &374825335
 Transform:
   m_ObjectHideFlags: 0
@@ -2177,7 +2168,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: -0.000000022880089, z: 0.000000008283735, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: -0.000000030408128, z: 0.000000011009259, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2739,6 +2730,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map
       objectReference: {fileID: 0}
+    - target: {fileID: 2797601803964202246, guid: 7f6da3088103d194682e8a4cebce6bcb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f6da3088103d194682e8a4cebce6bcb, type: 3}
 --- !u!4 &1214377411 stripped
@@ -2910,7 +2906,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 374825334}
-        m_TargetAssemblyTypeName: Controller, Assembly-CSharp
+        m_TargetAssemblyTypeName: GameState, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 0
         m_Arguments:
@@ -4037,7 +4033,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.0000000060500103, z: 0.0000000050416746, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

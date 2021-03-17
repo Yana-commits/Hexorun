@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 using Random = UnityEngine.Random;
 
-public class Controller : MonoBehaviour
+public class GameState : MonoBehaviour
 {
     [SerializeField] private HUD hud;
     [SerializeField] private Joystick joystick;
@@ -18,11 +18,9 @@ public class Controller : MonoBehaviour
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
 
-    public GameParameters gameParameters;
-
+    private GameParameters gameParameters;
     private float gameTimeLeft;
-
-    public GameState gameState = GameState.Stop;
+    private GameplayState gameState = GameplayState.Stop;
 
     public void StartGame(GameParameters parameters)
     {
@@ -34,16 +32,17 @@ public class Controller : MonoBehaviour
         cameras[0].SetActive(!gameParameters.isCameraOrthographic);
 
         map.Initializie(gameParameters.size);
+        map.gameObject.SetActive(true);
 
         PlayerInit();
         obstaclePresenter.Initialize(gameParameters.holes);
         obstacleGenerator.Initialize(player.transform);
 
-        gameState = GameState.Play;
+        gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
     }
 
-    public void PlayerInit()
+    private void PlayerInit()
     {
         var hex = map[gameParameters.size.x/2, 0];
         Vector3 startPos = hex.transform.position;
@@ -55,7 +54,7 @@ public class Controller : MonoBehaviour
 
     private void OnPlayerStateChanged(PlayerState obj)
     {
-        gameState = GameState.GameOver;
+        gameState = GameplayState.GameOver;
         player.enabled = false;
 
         switch (obj)
@@ -88,7 +87,7 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        if (gameState != GameState.Play)
+        if (gameState != GameplayState.Play)
             return;
 
         gameTimeLeft -= Time.deltaTime;
@@ -105,7 +104,7 @@ public class Controller : MonoBehaviour
     private IEnumerator ObstacleGeneratorLoop()
     {
         yield return new WaitForSeconds(1f);
-        while (gameState == GameState.Play)
+        while (gameState == GameplayState.Play)
         {
             obstacleGenerator.Generate();
             yield return new WaitForSeconds(gameParameters.changesTime);
