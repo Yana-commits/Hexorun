@@ -8,8 +8,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     public const float hexRadius = 0.9755461f/2;
 
     [SerializeField] Hex hexPrefab;
-    [SerializeField] Material redMaterial;
-
+   
     private List<Hex> hexes = new List<Hex>();
     private Vector2Int size;
 
@@ -20,10 +19,12 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     public Hex this[int q, int r] => this[new Vector2Int(q,r)];
     private int ConvertToArrayIndex(Vector2Int index) => index.x + index.y * size.x;
 
-    public void Initializie(Vector2Int size)
+    public void Initializie(Vector2Int size, MaterialRepository.Data data)
     {
         this.size = size;
         _bounds = new Bounds(transform.position, Vector3.zero);
+
+        hexPrefab.Renderer.material = data.main;
 
         for (int r = 0; r < size.y; r++)
             for (int q = 0; q < size.x; q++)
@@ -46,7 +47,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
             );
 
         var rend = this[targetIndex].Renderer;
-        rend.materials = new[] {redMaterial};
+        rend.material = data.target;
         this[targetIndex].IsTarget = true;
     }
 
