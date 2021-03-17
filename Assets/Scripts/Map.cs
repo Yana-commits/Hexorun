@@ -55,7 +55,14 @@ public class Map : MonoBehaviour
                 hex_go.name = "Hex_" + x + "_" + y;
                 hex_go.cube_coord = ToCube(x, y);
 
-                hex_go.neihbours = GetNeighbour(hex_go.cube_coord);
+                try 
+                {
+                    hex_go.neihbours = GetNeighbour(hex_go.cube_coord);
+                }
+                catch
+                {
+                }
+                
                 //Debug.Log($"{hex_go.neihbours.ToArray()[1]}");
 
                 hex_go.transform.SetParent(transform);
@@ -138,7 +145,7 @@ public class Map : MonoBehaviour
     static Vector3Int ToCube(int xPos, int yPos)
     {
         var x = xPos;
-        var z = yPos;
+        var z = yPos - (xPos + (xPos&1))/2;
         var y = -x - z;
 
         return new Vector3Int(x, y, z);
@@ -147,7 +154,7 @@ public class Map : MonoBehaviour
     private Vector2Int ConvertCoordToAxial(Vector3Int index)
     {
         var q = index.x;
-        var r = index.z;
+        var r = index.z + (index.x + (index.x&1))/2;
         return new Vector2Int(q, r);
     }
 
@@ -170,6 +177,6 @@ public class Map : MonoBehaviour
         => GetNeighbour(hex.cube_coord);
 
     public IEnumerable<Vector3Int> GetNeighbour(Vector3Int index)
-        => _directions.Select(v => index + v);
+        => _directions.Select(v => index + v).Where(v => ConvertToArrayIndex(v) >= 0 && ConvertToArrayIndex(v)< hexes.Count);
 
 }
