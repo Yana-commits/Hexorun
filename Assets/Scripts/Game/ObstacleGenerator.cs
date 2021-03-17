@@ -35,4 +35,12 @@ public class ObstacleGenerator : MonoBehaviour
 
         ObstaclesGenerated?.Invoke(obstacles);
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_player.position, _overlapSphereRadius);
+    }
+#endif
 }

@@ -6,27 +6,21 @@ using UnityEngine.UI;
 
 public class StartGameWindow : MonoBehaviour
 {
-    public Slider width;
-    public Slider height;
-    public Slider timer;
     public Slider playerSpeed;
-    public Slider changesTime;
     public Slider areaFactor;
-    public Slider cameraFactor;
     public Slider holes;
     public Button startButton;
 
     public StartGameEvent OnStartGame;
     private void OnStartClick()
     {
+
         OnStartGame?.Invoke(new GameParameters { 
-            size = new Vector2Int((int)width.value, (int)height.value),
-            duration = (int)timer.value,
+            size = new Vector2Int(10, 20 +  (int)(areaFactor.value-1) * 6), // 20 * 30% = 6
+            duration = 30,
             playerSpeed = playerSpeed.value,
-            changesTime = changesTime.value,
-            areaFactor = (int)areaFactor.value,
+            changesTime = 2,
             holes = (int)holes.value,
-            isCameraOrthographic = cameraFactor.value == 1
         });
     }
 

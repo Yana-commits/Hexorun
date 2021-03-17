@@ -11,7 +11,6 @@ public class GameState : MonoBehaviour
     [SerializeField] private HUD hud;
     [SerializeField] private Joystick joystick;
 
-    [SerializeField] private GameObject[] cameras;
     [Space]
     [SerializeField] private Player player;
     [SerializeField] private Map map;
@@ -27,9 +26,6 @@ public class GameState : MonoBehaviour
         gameParameters = parameters;
 
         gameTimeLeft = gameParameters.duration;
-
-        cameras[1].SetActive(gameParameters.isCameraOrthographic);
-        cameras[0].SetActive(!gameParameters.isCameraOrthographic);
 
         map.Initializie(gameParameters.size);
         map.gameObject.SetActive(true);
