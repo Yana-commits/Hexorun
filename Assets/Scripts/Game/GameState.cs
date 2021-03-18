@@ -28,7 +28,7 @@ public class GameState : MonoBehaviour
 
         gameTimeLeft = gameParameters.duration;
 
-        map.Initializie(gameParameters.size, materials.Random());
+        map.Initializie(gameParameters.size, materials.Materials[gameParameters.theme]);
         map.gameObject.SetActive(true);
 
         PlayerInit();

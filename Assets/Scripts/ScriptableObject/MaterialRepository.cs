@@ -13,6 +13,7 @@ public class MaterialRepository : ScriptableObject, IEnumerable<Data>
         public Sprite preview;
         public Material main;
         public Material target;
+        public Material plane;
     }
 
     [SerializeField]

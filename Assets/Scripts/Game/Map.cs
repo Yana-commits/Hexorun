@@ -8,6 +8,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     public const float hexRadius = 0.9755461f/2;
 
     [SerializeField] Hex hexPrefab;
+    [SerializeField] Renderer planeRenderer;
    
     private List<Hex> hexes = new List<Hex>();
     private Vector2Int size;
@@ -25,6 +26,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         _bounds = new Bounds(transform.position, Vector3.zero);
 
         hexPrefab.Renderer.material = data.main;
+        planeRenderer.material = data.plane;
 
         for (int r = 0; r < size.y; r++)
             for (int q = 0; q < size.x; q++)

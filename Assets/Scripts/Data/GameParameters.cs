@@ -11,6 +11,7 @@ public class GameParameters
     public float playerSpeed;
     public float changesTime;
     public int holes;
+    public int theme;
 }
 
 [Serializable]
