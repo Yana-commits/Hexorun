@@ -28,6 +28,11 @@ public class StartGameWindow : MonoBehaviour
         });
     }
 
-    private void OnEnable() => startButton.onClick.AddListener(OnStartClick);
+    private void OnEnable()
+    {
+        startButton.onClick.AddListener(OnStartClick);
+        themeDropDown.onValueChanged.AddListener((x)=> { PlayerPrefs.SetInt("Theme", x); });
+        themeDropDown.value = PlayerPrefs.GetInt("Theme", 0);
+    }
     private void OnDisable() => startButton.onClick.RemoveListener(OnStartClick);
 }
