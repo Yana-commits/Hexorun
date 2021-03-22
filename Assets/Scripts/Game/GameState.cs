@@ -16,8 +16,9 @@ public class GameState : MonoBehaviour
     [SerializeField] private Map map;
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
-    [SerializeField] private MaterialRepository materials;
+    [SerializeField] private StartGameWindow startGameWindow;
 
+    [SerializeField]
     private GameParameters gameParameters;
     private float gameTimeLeft;
     private GameplayState gameState = GameplayState.Stop;
@@ -28,12 +29,12 @@ public class GameState : MonoBehaviour
 
         gameTimeLeft = gameParameters.duration;
 
-        map.Initializie(gameParameters.size, materials.Materials[gameParameters.theme]);
+        map.Initializie(gameParameters.size, gameParameters.theme);
         map.gameObject.SetActive(true);
 
         PlayerInit();
         obstaclePresenter.Initialize(gameParameters.holes);
-        obstacleGenerator.Initialize(player.transform);
+        obstacleGenerator.Initialize(player.transform );
 
         gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
@@ -52,6 +53,7 @@ public class GameState : MonoBehaviour
     private void OnPlayerStateChanged(PlayerState obj)
     {
         gameState = GameplayState.GameOver;
+        DG.Tweening.DOTween.KillAll();
         player.enabled = false;
 
         switch (obj)
@@ -63,7 +65,7 @@ public class GameState : MonoBehaviour
                 StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
-                ReloadScene();
+                StartCoroutine(player.FallDown(ReloadScene));
                 break;
             default:
                 break;
@@ -103,7 +105,7 @@ public class GameState : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (gameState == GameplayState.Play)
         {
-            obstacleGenerator.Generate();
+            obstacleGenerator.Generate(startGameWindow);
             yield return new WaitForSeconds(gameParameters.changesTime);
         }
     }

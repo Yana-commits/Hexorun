@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 463645848259778443}
   - component: {fileID: 463645848259778549}
   - component: {fileID: 463645848259778551}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -79,10 +79,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 463645848259778443}
   animator: {fileID: 6270601506904576326}
-  xMin: -100
-  xMax: 100
-  zMin: -100
-  zMax: 100
+  mapBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!135 &463645848259778551
 SphereCollider:
   m_ObjectHideFlags: 0

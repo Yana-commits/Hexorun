@@ -11,7 +11,8 @@ public class GameParameters
     public float playerSpeed;
     public float changesTime;
     public int holes;
-    public int theme;
+    public MaterialRepository.Data theme;
+    public RangedFloat probability = RangedFloat.Value(0, 1);
 }
 
 [Serializable]

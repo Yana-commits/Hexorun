@@ -13,27 +13,33 @@ MonoBehaviour:
   m_Name: Material Repository
   m_EditorClassIdentifier: 
   _materials:
-  - preview: {fileID: 0}
+  - name: Black Neon
+    preview: {fileID: 0}
     main: {fileID: 2100000, guid: 14ac8f5661a178a4d9ae1ad0cf0b4981, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: 1dbe6a7ec6ed2cb4face0a88072605c5, type: 2}
-  - preview: {fileID: 0}
+  - name: White Casual
+    preview: {fileID: 0}
     main: {fileID: 2100000, guid: 79ce4a68bbb4542448cf3e553c9e1bb2, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: a32b711f705334640971cac2a395fea2, type: 2}
-  - preview: {fileID: 0}
+  - name: White Casual v2
+    preview: {fileID: 0}
     main: {fileID: 2100000, guid: 38357590a6bde5348b509a9a40cd66dd, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: 5c3163d2d72039b4fbe9bdfa99257455, type: 2}
-  - preview: {fileID: 0}
+  - name: Color
+    preview: {fileID: 0}
     main: {fileID: 2100000, guid: dd5e13a291c5c9f4aaa36a70ac8ba293, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: 2717e17f7955cee4fafb738b00c339d5, type: 2}
-  - preview: {fileID: 0}
+  - name: Colov v2
+    preview: {fileID: 0}
     main: {fileID: 2100000, guid: 6589757ed6d1b364591f0f492ad9d956, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: 2717e17f7955cee4fafb738b00c339d5, type: 2}
-  - preview: {fileID: 0}
+  - name: Lego
+    preview: {fileID: 0}
     main: {fileID: 2100000, guid: 80755f5e70bfd6b43b2c5b9ebbe4a5b2, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: b4d509e95faab444682ad58d4d54000c, type: 2}

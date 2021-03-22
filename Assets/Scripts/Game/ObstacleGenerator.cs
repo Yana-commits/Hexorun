@@ -20,10 +20,15 @@ public class ObstacleGenerator : MonoBehaviour
         _player = player;
     }
 
-    internal void Generate()
+    internal void Generate(StartGameWindow parameters)
     {
+        //TODO:
+        var f = Random.Range(0.2f, 0.5f);
+
         var obstacles = _map
-            .Where(hex => Random.Range(0, 5) == 0) // 1/5 = 20%
+            .Shuffle()
+            .Take((int)(_map.Count() * f))
+            //.Where(hex => Random.Range(0, 5) == 0) // 1/5 = 20%
             .Select(h => h.index);
 
         //TODO: если клетка опущена Physics.OverlapSphere не может ее отловить
@@ -39,8 +44,8 @@ public class ObstacleGenerator : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(_player.position, _overlapSphereRadius);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawSphere(_player.position, _overlapSphereRadius);
     }
 #endif
 }
