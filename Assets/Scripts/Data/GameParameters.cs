@@ -5,15 +5,26 @@ using UnityEngine.Events;
 [Serializable]
 public class GameParameters
 {
-    public Vector2Int size = new Vector2Int(10, 20);
+    public Vector2Int size;
 
-    public int duration = 30;
-    public float playerSpeed = 2;
-    public float changesTime = 2;
-    public RangedFloat obstacleProbability = RangedFloat.Value(0, 1);
-    public RangedFloat holeProbability = RangedFloat.Value(0, 1);
+    public int duration;
+    public float playerSpeed;
+    public float changesTime;
+    public RangedFloat obstacleProbability;
+    public RangedFloat holeProbability;
     [HideInInspector]
     public MaterialRepository.Data theme;
+
+    public GameParameters()
+    {
+        size = new Vector2Int(10, 20);
+        duration = 30;
+        playerSpeed = 2;
+        changesTime = 2;
+        obstacleProbability = RangedFloat.Value(0, 1);
+        holeProbability = RangedFloat.Value(0, 1);
+        theme = default;
+    }
 }
 
 [Serializable]
