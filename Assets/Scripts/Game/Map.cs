@@ -12,7 +12,13 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     [SerializeField] BoxCollider deathTrigger;
    
     private List<Hex> hexes = new List<Hex>();
-    private Vector2Int size;
+    public Vector2Int size
+    {
+        get;
+        private set;
+    }
+        
+
 
     private Bounds _bounds;
     public Bounds Bounds => _bounds;

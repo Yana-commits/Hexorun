@@ -12,8 +12,10 @@ public class GameParameters
     public float changesTime;
     public RangedFloat obstacleProbability;
     public RangedFloat holeProbability;
-    [HideInInspector]
+    [NonSerialized]
     public MaterialRepository.Data theme;
+    [NonSerialized]
+    public int id;
 
     public GameParameters()
     {

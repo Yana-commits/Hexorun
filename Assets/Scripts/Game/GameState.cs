@@ -37,6 +37,8 @@ public class GameState : MonoBehaviour
 
         gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
+
+        hud.UpdateLevel(gameParameters.id + 1);
     }
 
     private void PlayerInit()
@@ -59,6 +61,7 @@ public class GameState : MonoBehaviour
         {
             case PlayerState.Win:
                 StartCoroutine(player.Winner(ReloadScene));
+                GamePlayerPrefs.LastLevel = gameParameters.id;
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
@@ -85,6 +88,7 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
+        return;
         if (gameState != GameplayState.Play)
             return;
 
@@ -104,7 +108,7 @@ public class GameState : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (gameState == GameplayState.Play)
         {
-            obstacleGenerator.Generate(startGameWindow);
+            obstacleGenerator.Generate();
             yield return new WaitForSeconds(gameParameters.changesTime);
         }
     }

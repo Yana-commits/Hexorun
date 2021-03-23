@@ -44,7 +44,7 @@ public class Hex : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        //UnityEditor.Handles.Label(transform.position, $"{index}");
+        UnityEditor.Handles.Label(transform.position, $"{index}");
     }
 #endif
 
