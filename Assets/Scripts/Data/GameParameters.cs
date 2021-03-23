@@ -7,12 +7,13 @@ public class GameParameters
 {
     public Vector2Int size = new Vector2Int(10, 20);
 
-    public int duration;
-    public float playerSpeed;
-    public float changesTime;
-    public int holes;
+    public int duration = 30;
+    public float playerSpeed = 2;
+    public float changesTime = 2;
+    public RangedFloat obstacleProbability = RangedFloat.Value(0, 1);
+    public RangedFloat holeProbability = RangedFloat.Value(0, 1);
+    [HideInInspector]
     public MaterialRepository.Data theme;
-    public RangedFloat probability = RangedFloat.Value(0, 1);
 }
 
 [Serializable]

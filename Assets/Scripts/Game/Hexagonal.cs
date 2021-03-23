@@ -68,15 +68,15 @@ public static class Hexagonal
         private static Matrix4x4 OrientationFlat = new Matrix4x4(
                 new Vector4(3f / 2, Mathf.Sqrt(3f) / 2),
                 new Vector4(0, Mathf.Sqrt(3f)),
-                Vector4.zero,
-                Vector4.zero
+                new Vector4(0, 0, 1, 0),
+                new Vector4(0, 0, 0, 1)
             );
 
         private static Matrix4x4 OrientationPointy = new Matrix4x4(
                 new Vector4(Mathf.Sqrt(3f), 0),
                 new Vector4(Mathf.Sqrt(3f) / 2, 3f / 2),
-                Vector4.zero,
-                Vector4.zero
+                new Vector4(0, 0, 1, 0),
+                new Vector4(0, 0, 0, 1)
             );
 
         public static IEnumerable<Vector3Int> GetNeighbour(Vector3Int index)
@@ -94,6 +94,7 @@ public static class Hexagonal
         public static Vector3 HexToPixel(Vector3Int index, Vector2 size)
         {
             var t = OrientationFlat * (Vector3)index;
+            //var t = OrientationPointy * (Vector3)index;
             t.Scale(size);
 
             return new Vector3(t.x, 0, t.y);
@@ -101,27 +102,9 @@ public static class Hexagonal
 
         public static Vector3Int PixelToHex(Vector3 localPosition, Vector2 size)
         {
-            float sqrt3 = Mathf.Sqrt(3f);
-
-            //TODO: OrientationFlat.inverse == матрице ниже?
-
-            Matrix4x4 OrientationFlat = new Matrix4x4(
-                new Vector4(2f / 3, -1f / 3),
-                new Vector4(0, sqrt3 / 3),
-                Vector4.zero,
-                Vector4.zero
-            );
-            /*
-            Matrix4x4 OrientationPointy = new Matrix4x4(
-                new Vector4(sqrt3/3, 0),
-                new Vector4(-1f/3, 2f/3),
-                Vector4.zero,
-                Vector4.zero
-            );
-            */
-
             var pos = new Vector3(localPosition.x / size.x, -localPosition.z / size.y, 0);
-            var hex = OrientationFlat * pos;
+            var hex = OrientationFlat.inverse * pos;
+            //var hex = OrientationPointy.inverse * pos;
 
             return HexRound(Axial.ToCube(hex));
         }

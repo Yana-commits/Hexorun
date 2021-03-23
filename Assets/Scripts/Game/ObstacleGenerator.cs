@@ -12,22 +12,22 @@ public class ObstacleGenerator : MonoBehaviour
     [SerializeField] LayerMask hexLayer;
     [SerializeField] float _overlapSphereRadius = 0.5f;
 
-    public Action<IEnumerable<Vector2Int>> ObstaclesGenerated;
-    private Transform _player;
+    public event Action<IEnumerable<Vector2Int>> ObstaclesGenerated;
 
-    public void Initialize(Transform player)
+    private Transform _player;
+    private RangedFloat _obstacleProb;
+
+    public void Initialize(Transform player, RangedFloat obstacleProbability)
     {
         _player = player;
+        _obstacleProb = obstacleProbability;
     }
 
     internal void Generate(StartGameWindow parameters)
     {
-        //TODO:
-        var f = Random.Range(0.2f, 0.5f);
-
         var obstacles = _map
             .Shuffle()
-            .Take((int)(_map.Count() * f))
+            .Take((int)(_map.Count() * _obstacleProb.Random()))
             //.Where(hex => Random.Range(0, 5) == 0) // 1/5 = 20%
             .Select(h => h.index);
 

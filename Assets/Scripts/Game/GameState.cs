@@ -18,7 +18,6 @@ public class GameState : MonoBehaviour
     [SerializeField] private ObstaclePresenter obstaclePresenter;
     [SerializeField] private StartGameWindow startGameWindow;
 
-    [SerializeField]
     private GameParameters gameParameters;
     private float gameTimeLeft;
     private GameplayState gameState = GameplayState.Stop;
@@ -33,8 +32,8 @@ public class GameState : MonoBehaviour
         map.gameObject.SetActive(true);
 
         PlayerInit();
-        obstaclePresenter.Initialize(gameParameters.holes);
-        obstacleGenerator.Initialize(player.transform );
+        obstaclePresenter.Initialize(gameParameters.holeProbability);
+        obstacleGenerator.Initialize(player.transform, gameParameters.obstacleProbability);
 
         gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());

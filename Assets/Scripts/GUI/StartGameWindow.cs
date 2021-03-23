@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class StartGameWindow : MonoBehaviour
 {
@@ -10,10 +11,12 @@ public class StartGameWindow : MonoBehaviour
 
     public Slider playerSpeed;
     public Slider areaFactor;
-    public Slider holes;
     public Button startButton;
     public Dropdown themeDropDown;
     public int time;
+    public RangeSlider obstacleSlider;
+    public RangeSlider holesSlider;
+    
         
     public StartGameEvent OnStartGame;
     private void OnStartClick()
@@ -26,9 +29,13 @@ public class StartGameWindow : MonoBehaviour
             duration = time,
             playerSpeed = 2,
             changesTime = 2,
-            holes = (int)(holes.value),
-            theme = datas.Materials[themeDropDown.value]
+            theme = datas.Materials[themeDropDown.value],
+            obstacleProbability = RangedFloat.Value(obstacleSlider.LowValue, obstacleSlider.HighValue),
+            holeProbability = RangedFloat.Value(holesSlider.LowValue, holesSlider.HighValue),
         }) ;
+
+       
+        
     }
 
     private void OnEnable()
