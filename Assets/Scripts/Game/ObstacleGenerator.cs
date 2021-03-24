@@ -16,7 +16,7 @@ public class ObstacleGenerator : MonoBehaviour
 
     private Transform _player;
     private RangedFloat _obstacleProb;
-    private Vector2Int obstaclePosition;
+   
     public void Initialize(Transform player, RangedFloat obstacleProbability)
     {
         _player = player;
@@ -26,8 +26,6 @@ public class ObstacleGenerator : MonoBehaviour
     internal void Generate()
     {
         SimpleGenerator();
-
-        
     }
 
 #if UNITY_EDITOR
@@ -107,7 +105,6 @@ public class ObstacleGenerator : MonoBehaviour
 
     private IEnumerable<Vector2Int> Pattern3()
     {
-        
 
         List<Vector2Int> obstaclesField = new List<Vector2Int>();
 
@@ -127,7 +124,7 @@ public class ObstacleGenerator : MonoBehaviour
 
         while (index.y < 5)
         {
-            
+            //var next = Random.Range(0, directions.Count);
             if (index.x == 0)
             {
                 //next = Random.Range(0, directions.Count - 1);
