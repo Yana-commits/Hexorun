@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9032367685023441053
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 4
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
@@ -20,31 +7,19 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Lego_mat
-  m_Shader: {fileID: -6465566751694194690, guid: 7463d445f95e89948b50fd3235c70492,
-    type: 3}
+  m_Name: Item_crystal_mat
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_2f6d72afb8774d2d894bc5ecea4ccc97:
-        m_Texture: {fileID: 2800000, guid: 40e294ab2824dab418e1b29859df7ecb, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_5af1c29823df4a07afacb75dcf24fbb7:
-        m_Texture: {fileID: 2800000, guid: 69b9d71bef1c9234ea86e2069fcbc296, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_e9e93b53e14f4560b8d81c07071b80b6:
-        m_Texture: {fileID: 2800000, guid: 842d885e441275d44948b412385014f4, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -102,16 +77,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_1306D47F: 0
-    - Vector1_46ffb50d67c94179adf7e6736d2658b4: 1
-    - Vector1_4e1f2acc054b45ae8462b2be8bb8daed: 0.5
-    - Vector1_4f6f812e055a4392b390506e6e2852e8: 0.234
-    - Vector1_682d2a01d30b47848adec186b97a7354: 0
-    - Vector1_6D098D4: 0
-    - Vector1_84f16e8e62d94805b27249a3c6d172c9: 0
-    - Vector1_927a7846296b419780df3dc8906d584b: 0
-    - Vector1_c3cfe8ed31eb49899a4e87b9cda257b5: 1
-    - Vector1_f7ebe24382624cd9a8f9ab1a2be472e4: 2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -131,7 +96,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -139,17 +104,21 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_256774a4842a417fb2b9e8e8f5fc8eda: {r: 1, g: 1, b: 1, a: 0}
-    - Color_d3dd389a6bdf417b9488a8327843b52d: {r: 0.7176471, g: 0.025253627, b: 0,
-        a: 0}
-    - Color_d3dd389a6bdf417b9488a8327843b52d_1: {r: 0.11154662, g: 0.6886792, b: 0,
-        a: 0}
-    - Color_e7c7508242134d118cd78693679b45c7: {r: 0.8537736, g: 0.97678095, b: 1,
-        a: 0}
-    - Color_e7c7508242134d118cd78693679b45c7_1: {r: 0.15733525, g: 0.13656995, b: 0.9339623,
-        a: 0}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0, g: 1, b: 0.9806142, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &1030494779608165712
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 4
