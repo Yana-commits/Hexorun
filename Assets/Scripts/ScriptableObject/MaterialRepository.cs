@@ -10,6 +10,7 @@ public class MaterialRepository : ScriptableObject, IEnumerable<Data>
     [Serializable]
     public struct Data
     {
+        public string name;
         public Sprite preview;
         public Material main;
         public Material target;

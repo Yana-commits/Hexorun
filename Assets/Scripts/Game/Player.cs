@@ -31,10 +31,6 @@ public class Player : MonoBehaviour
     {
         Move(joystick.Direction);
         ClampPosition();
-
-        //TODO: refactoring
-        if (rigidbody.position.y <= -2)
-            Fall();
     }
 
     public void Move(Vector2 direction)
@@ -59,7 +55,7 @@ public class Player : MonoBehaviour
 
     public void DestinationReached() 
         => stateChanged?.Invoke(PlayerState.Win);
-    private void Fall() 
+    public void Fall() 
         => stateChanged?.Invoke(PlayerState.Fall);
 
     public IEnumerator Winner(Action callback)
@@ -77,5 +73,9 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         callback?.Invoke();
     }
-
+    public IEnumerator FallDown(Action callback)
+    {
+        yield return new WaitForSeconds(0.5f);
+        callback?.Invoke();
+    }
 }

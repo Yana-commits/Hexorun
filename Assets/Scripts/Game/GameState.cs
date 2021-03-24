@@ -16,7 +16,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private Map map;
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
-    [SerializeField] private MaterialRepository materials;
+    [SerializeField] private StartGameWindow startGameWindow;
 
     private GameParameters gameParameters;
     private float gameTimeLeft;
@@ -28,15 +28,17 @@ public class GameState : MonoBehaviour
 
         gameTimeLeft = gameParameters.duration;
 
-        map.Initializie(gameParameters.size, materials.Materials[gameParameters.theme]);
+        map.Initializie(gameParameters.size, gameParameters.theme);
         map.gameObject.SetActive(true);
 
         PlayerInit();
-        obstaclePresenter.Initialize(gameParameters.holes);
-        obstacleGenerator.Initialize(player.transform);
+        obstaclePresenter.Initialize(gameParameters.holeProbability);
+        obstacleGenerator.Initialize(player.transform, gameParameters.obstacleProbability);
 
         gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
+
+        hud.UpdateLevel(gameParameters.id + 1);
     }
 
     private void PlayerInit()
@@ -52,18 +54,20 @@ public class GameState : MonoBehaviour
     private void OnPlayerStateChanged(PlayerState obj)
     {
         gameState = GameplayState.GameOver;
+        DG.Tweening.DOTween.KillAll();
         player.enabled = false;
 
         switch (obj)
         {
             case PlayerState.Win:
                 StartCoroutine(player.Winner(ReloadScene));
+                GamePlayerPrefs.LastLevel = gameParameters.id;
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
-                ReloadScene();
+                StartCoroutine(player.FallDown(ReloadScene));
                 break;
             default:
                 break;
@@ -84,6 +88,7 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
+        return;
         if (gameState != GameplayState.Play)
             return;
 

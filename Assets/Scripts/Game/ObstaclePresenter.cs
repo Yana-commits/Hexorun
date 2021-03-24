@@ -7,9 +7,9 @@ public class ObstaclePresenter : MonoBehaviour
     [SerializeField] Map _map;
     [SerializeField] ObstacleGenerator generator;
 
-    private int _holes;
+    private RangedFloat _holes;
 
-    public void Initialize(int holes) =>
+    public void Initialize(RangedFloat holes) =>
         _holes = holes;
 
     private void OnEnable()
@@ -24,14 +24,17 @@ public class ObstaclePresenter : MonoBehaviour
 
     private void OnObstaclesGenerated(IEnumerable<Vector2Int> indexes)
     {
-        var hexes = indexes.Select(ind => _map[ind])
+        int holes = (int)(_holes.Random() * indexes.Count());
+
+        var hexes = indexes
+            .Select(ind => _map[ind])
             .Shuffle()
             .ToArray();
 
-        foreach (var item in hexes.Take(_holes))
+        foreach (var item in hexes.Take(holes))
             item.TrySetState(HexState.DOWN);
 
-        foreach (var item in hexes.Skip(_holes))
+        foreach (var item in hexes.Skip(holes))
             item.TrySetState(HexState.UP);
 
         foreach (var item in _map.Except(hexes))

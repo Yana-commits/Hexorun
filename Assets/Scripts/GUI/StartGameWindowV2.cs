@@ -5,37 +5,25 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
-public class StartGameWindow : MonoBehaviour
+public class StartGameWindowV2 : MonoBehaviour
 {
     [SerializeField] MaterialRepository datas;
+    [SerializeField] LevelRepository levels;
 
-    public Slider playerSpeed;
-    public Slider areaFactor;
     public Button startButton;
     public Dropdown themeDropDown;
-    public int time;
-    public RangeSlider obstacleSlider;
-    public RangeSlider holesSlider;
-    
         
     public StartGameEvent OnStartGame;
     private void OnStartClick()
     {
         GamePlayerPrefs.LastTheme = themeDropDown.value;
+        int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count-1);
+        var gameParams = levels[level];
+        gameParams.id = level;
+        gameParams.theme = datas.Materials[themeDropDown.value];
+        OnStartGame?.Invoke(gameParams);
 
-        OnStartGame?.Invoke(new GameParameters
-        {
-            size = new Vector2Int(10, 20 + (int)(areaFactor.value - 1) * 6), // 20 * 30% = 6
-            duration = time,
-            playerSpeed = 2,
-            changesTime = 2,
-            theme = datas.Materials[themeDropDown.value],
-            obstacleProbability = RangedFloat.Value(obstacleSlider.LowValue, obstacleSlider.HighValue),
-            holeProbability = RangedFloat.Value(holesSlider.LowValue, holesSlider.HighValue),
-        }) ;
-
-       
-        
+        print(level);
     }
 
     private void OnEnable()
