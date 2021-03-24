@@ -16,7 +16,7 @@ public class ObstacleGenerator : MonoBehaviour
 
     private Transform _player;
     private RangedFloat _obstacleProb;
-
+    private Vector2Int obstaclePosition;
     public void Initialize(Transform player, RangedFloat obstacleProbability)
     {
         _player = player;
@@ -66,10 +66,9 @@ public class ObstacleGenerator : MonoBehaviour
 
     private IEnumerable<Vector2Int> Pattern1()
     {
-        var hex = _map.GetHexByPosition(_player.position).index;
-
+  
         return Enumerable.Range(0, _map.size.x)
-            .Select(q => new Vector2Int(q, hex.y + 2))
+            .Select(q => new Vector2Int(q, OffsetY()))
             .Shuffle()
             .Skip(1);
         /*
@@ -94,22 +93,21 @@ public class ObstacleGenerator : MonoBehaviour
         {
             for (int q = 0; q < _map.size.x; q = q + 2)
             {
-                yield return new Vector2Int(q, hex.y + 2);
+                yield return new Vector2Int(q, OffsetY());
             }
         }
         else
         {
             for (int q = 1; q < _map.size.x; q = q + 2)
             {
-                yield return new Vector2Int(q, hex.y + 2);
+                yield return new Vector2Int(q, OffsetY());
             }
         }
-
     }
 
     private IEnumerable<Vector2Int> Pattern3()
     {
-        var hex = _map.GetHexByPosition(_player.position).index;
+        
 
         List<Vector2Int> obstaclesField = new List<Vector2Int>();
 
@@ -129,15 +127,19 @@ public class ObstacleGenerator : MonoBehaviour
 
         while (index.y < 5)
         {
-            var next = Random.Range(0, directions.Count);
+            
             if (index.x == 0)
             {
-                next = Random.Range(0, directions.Count - 1);
+                //next = Random.Range(0, directions.Count - 1);
+                directions = directions.Where(d=>d.x != -1 ).ToList();
             }
             else if (index.x == _map.size.x)
             {
-                next = Random.Range(1, directions.Count);
+                //next = Random.Range(1, directions.Count);
+              directions = directions.Where(d => d.x != 1).ToList();
             }
+            var next = Random.Range(0, directions.Count);
+
             Vector2Int neighbor = index + directions[next];
             if (indexToExclude.Contains(neighbor))
             {
@@ -149,6 +151,22 @@ public class ObstacleGenerator : MonoBehaviour
 
         return obstaclesField
             .Except(indexToExclude)
-            .Select(ind => ind + new Vector2Int(0, hex.y+2));
+            .Select(ind => ind + new Vector2Int(0, OffsetY()));
+    }
+
+    public int OffsetY()
+    {
+        var hex = _map.GetHexByPosition(_player.position).index;
+        int offsetY = hex.y + 2;
+        if (offsetY <= 5)
+        {
+            offsetY = 5;
+        }
+        else if (offsetY >= _map.size.y - 5f)
+        {
+            offsetY = _map.size.y - 5;
+        }
+
+        return offsetY;
     }
 }
