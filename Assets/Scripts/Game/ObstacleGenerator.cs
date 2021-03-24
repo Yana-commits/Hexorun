@@ -125,15 +125,30 @@ public class ObstacleGenerator : MonoBehaviour
         List<Vector2Int> indexToExclude = new List<Vector2Int>();
         indexToExclude.Add(index);
 
+        List<Vector2Int> directions = new List<Vector2Int> { new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(-1, 0) };
+
         while (index.y < 5)
         {
-            Vector2Int neighbor = Vector2Int.one;
+            var next = Random.Range(0, directions.Count);
+            if (index.x == 0)
+            {
+                next = Random.Range(0, directions.Count - 1);
+            }
+            else if (index.x == _map.size.x)
+            {
+                next = Random.Range(1, directions.Count);
+            }
+            Vector2Int neighbor = index + directions[next];
+            if (indexToExclude.Contains(neighbor))
+            {
+                continue;
+            }
             indexToExclude.Add(neighbor);
             index = neighbor;
         }
 
         return obstaclesField
             .Except(indexToExclude)
-            .Select(ind => ind + new Vector2Int(0, hex.y+1));
+            .Select(ind => ind + new Vector2Int(0, hex.y+2));
     }
 }
