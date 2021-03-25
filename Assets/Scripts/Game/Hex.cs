@@ -7,13 +7,13 @@ public class Hex : MonoBehaviour
     [SerializeField] private Renderer _renderer;
     public Renderer Renderer => _renderer;
 
-    public HexState State { get; private set; } = HexState.NONE;
+    public HexState State { get; private set; } = HexState.None;
 
     private Dictionary<HexState, float[]> hexPositionByState = new Dictionary<HexState, float[]>
     {
-        [HexState.NONE] = new[] {0f},
-        [HexState.UP] = new[] {0.5f, 1f},
-        [HexState.DOWN] = new[] {-3f}
+        [HexState.None] = new[] {0f},
+        [HexState.Hill] = new[] {0.5f, 1f},
+        [HexState.Hole] = new[] {-3f}
     };
 
     public Vector2Int index;

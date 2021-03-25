@@ -1,16 +1,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ObstaclePresenter : MonoBehaviour
 {
     [SerializeField] Map _map;
     [SerializeField] ObstacleGenerator generator;
-
-    private RangedFloat _holes;
-
-    public void Initialize(RangedFloat holes) =>
-        _holes = holes;
 
     private void OnEnable()
     {
@@ -22,22 +18,21 @@ public class ObstaclePresenter : MonoBehaviour
         generator.ObstaclesGenerated -= OnObstaclesGenerated;
     }
 
-    private void OnObstaclesGenerated(IEnumerable<Vector2Int> indexes)
+    private void OnObstaclesGenerated(IDictionary<Vector2Int, HexState> indexes)
     {
-        int holes = (int)(_holes.Random() * indexes.Count());
-
         var hexes = indexes
-            .Select(ind => _map[ind])
+            .Select(ind => _map[ind.Key])
             .Shuffle()
             .ToArray();
 
-        foreach (var item in hexes.Take(holes))
-            item.TrySetState(HexState.DOWN);
-
-        foreach (var item in hexes.Skip(holes))
-            item.TrySetState(HexState.UP);
-
+        foreach (var item in hexes)
+            item.TrySetState(indexes[item.index]);
+        
         foreach (var item in _map.Except(hexes))
-            item.TrySetState(HexState.NONE);
+            item.TrySetState(HexState.None);
+    }
+
+    public void Initialize()
+    {
     }
 }

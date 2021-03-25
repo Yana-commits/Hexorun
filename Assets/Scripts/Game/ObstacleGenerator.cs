@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static Hexagonal;
 using Random = UnityEngine.Random;
 
 public class ObstacleGenerator : MonoBehaviour
@@ -12,12 +12,13 @@ public class ObstacleGenerator : MonoBehaviour
     [SerializeField] LayerMask hexLayer;
     [SerializeField] float _overlapSphereRadius = 0.5f;
 
-    public event Action<IEnumerable<Vector2Int>> ObstaclesGenerated;
+    public event Action<IDictionary<Vector2Int, HexState>> ObstaclesGenerated;
 
     private Transform _player;
     private RangedFloat _obstacleProb;
-   
-    public void Initialize(Transform player, RangedFloat obstacleProbability)
+    private RangedFloat _holes;
+
+    public void Initialize(Transform player, RangedFloat obstacleProbability, RangedFloat holeProbability)
     {
         _player = player;
         _obstacleProb = obstacleProbability;
@@ -38,12 +39,25 @@ public class ObstacleGenerator : MonoBehaviour
 
     public void SimpleGenerator()
     {
-        //var obstacles = RandomObstacles();
-        var obstacles = Pattern3();
-        //var obstacles = Pattern2();
-        //var obstacles = Pattern1();
+        Dictionary<Vector2Int, HexState> hexObstacles = new Dictionary<Vector2Int, HexState>();
 
-        ObstaclesGenerated?.Invoke(obstacles);
+        /*
+        var randomObstacles = RandomObstacles();
+
+        foreach (var item in randomObstacles)
+            hexObstacles.Add(item, HexState.Hill);
+
+        int holes = (int)(_holes.Random() * randomObstacles.Count());
+        var holesIndexes = randomObstacles.Shuffle().Take(holes);
+        foreach (var item in holesIndexes)
+            hexObstacles[item] = HexState.Hole;
+        */
+        foreach (var item in Pattern2())
+        {
+            hexObstacles[item.Key] = item.Value;
+        }
+
+        ObstaclesGenerated?.Invoke(hexObstacles);
     }
 
     private IEnumerable<Vector2Int> RandomObstacles()
@@ -62,13 +76,16 @@ public class ObstacleGenerator : MonoBehaviour
        return obstacles.Except(hexIndexes);
     }
 
-    private IEnumerable<Vector2Int> Pattern1()
+    private IDictionary<Vector2Int, HexState> Pattern1()
     {
-  
-        return Enumerable.Range(0, _map.size.x)
+        var retVal = Enumerable.Range(0, _map.size.x)
             .Select(q => new Vector2Int(q, OffsetY()))
             .Shuffle()
-            .Skip(1);
+            .ToDictionary(ind => ind, ind => HexState.Hill);
+
+        retVal[retVal.Keys.Random()] = HexState.None;
+        return retVal;
+
         /*
         int skip = (int)(Random.value * _map.size.x);
         for (int q = 0; q < _map.size.x; q++)
@@ -79,90 +96,92 @@ public class ObstacleGenerator : MonoBehaviour
         */
     }
 
-    private IEnumerable<Vector2Int> Pattern2()
+    private IDictionary<Vector2Int, HexState> Pattern2()
     {
-        var hex = _map.GetHexByPosition(_player.position).index;
+        var offset = new Vector2Int(0, OffsetY());
 
-        //return Enumerable.Range(0, _map.size.x)
-        //    .Select(q => new Vector2Int(q, hex.y + 1))
-        //    .Where(ind => (ind.x & 1) == (hex.y & 1));
+        var retVal = Enumerable.Range(0, _map.size.x)
+            .Select(q => new Vector2Int(q, 0))
+            .Shuffle()
+            .ToDictionary(ind => ind, ind => HexState.Hill);
 
+        foreach (var item in retVal.Keys.ToArray())
+        {
+            if ((item.x & 1) == (offset.y & 1))
+                retVal[item] = HexState.None;
+        }
+
+/*
         if ((hex.y + 2) % 2 == 0)
         {
-            for (int q = 0; q < _map.size.x; q = q + 2)
+            for (int q = 0; q < _map.size.x; q = q ++)
             {
-                yield return new Vector2Int(q, OffsetY());
+             var wall = new Vector2Int(q, OffsetY());
+                if(q % 2 !=0)
+                obstacles.Add(wall, HexState.Hill);
+                else
+                 obstacles.Add(wall, HexState.None);
             }
         }
         else
         {
-            for (int q = 1; q < _map.size.x; q = q + 2)
+            for (int q = 0; q < _map.size.x; q = q++)
             {
-                yield return new Vector2Int(q, OffsetY());
+                var wall = new Vector2Int(q, OffsetY());
+                if (q % 2 == 0)
+                    obstacles.Add(wall, HexState.Hill);
+                else
+                    obstacles.Add(wall, HexState.None);
             }
         }
+*/
+        return retVal.ToDictionary(pair => pair.Key + offset, pair => pair.Value); ;
     }
 
-    private IEnumerable<Vector2Int> Pattern3()
+    private IDictionary<Vector2Int, HexState> Pattern3()
     {
-
-        List<Vector2Int> obstaclesField = new List<Vector2Int>();
-
+        IDictionary<Vector2Int, HexState> obstaclesField = new Dictionary<Vector2Int, HexState>();
+       
         for (int q = 0; q < _map.size.x; q++)
         {
             for (int r = 0; r < 5; r++)
             {
-                obstaclesField.Add(new Vector2Int(q, r));
+                obstaclesField.Add(new Vector2Int(q, r), HexState.Hill);
             }
         }
 
         var index = new Vector2Int(Random.Range(0, _map.size.x), 0);
-        List<Vector2Int> indexToExclude = new List<Vector2Int>();
+        HashSet<Vector2Int> indexToExclude = new HashSet<Vector2Int>();
         indexToExclude.Add(index);
 
-        List<Vector2Int> directions = new List<Vector2Int> { new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(-1, 0) };
-
-        while (index.y < 5)
+        IEnumerable<Vector2Int> GetPassable(Vector2Int start, int width)
         {
-            //var next = Random.Range(0, directions.Count);
-            if (index.x == 0)
-            {
-                //next = Random.Range(0, directions.Count - 1);
-                directions = directions.Where(d=>d.x != -1 ).ToList();
-            }
-            else if (index.x == _map.size.x)
-            {
-                //next = Random.Range(1, directions.Count);
-              directions = directions.Where(d => d.x != 1).ToList();
-            }
-            var next = Random.Range(0, directions.Count);
-
-            Vector2Int neighbor = index + directions[next];
-            if (indexToExclude.Contains(neighbor))
-            {
-                continue;
-            }
-            indexToExclude.Add(neighbor);
-            index = neighbor;
+            return Offset.GetQNeighbour(start)
+                .Where(d => (d - start).y >= (start.x & 1))
+                .Where(n => n.x >= 0 && n.x < width);
         }
 
-        return obstaclesField
-            .Except(indexToExclude)
-            .Select(ind => ind + new Vector2Int(0, OffsetY()));
+        do
+        {
+            var neighbor = GetPassable(index, _map.size.x).Random();
+            if (indexToExclude.Add(neighbor))
+                index = neighbor;
+        } while (index.y < 4);
+
+        foreach (var item in indexToExclude)
+        {
+            obstaclesField[item] = HexState.None;
+        }
+
+        var offset = new Vector2Int(0, OffsetY());
+
+        return obstaclesField.ToDictionary(pair => pair.Key + offset, pair => pair.Value);
     }
 
     public int OffsetY()
     {
         var hex = _map.GetHexByPosition(_player.position).index;
-        int offsetY = hex.y + 2;
-        if (offsetY <= 5)
-        {
-            offsetY = 5;
-        }
-        else if (offsetY >= _map.size.y - 5f)
-        {
-            offsetY = _map.size.y - 5;
-        }
+        int offsetY = Mathf.Clamp(hex.y + 2, 5, _map.size.y - 5);
 
         return offsetY;
     }

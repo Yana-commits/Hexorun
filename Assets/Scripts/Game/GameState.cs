@@ -32,8 +32,8 @@ public class GameState : MonoBehaviour
         map.gameObject.SetActive(true);
 
         PlayerInit();
-        obstaclePresenter.Initialize(gameParameters.holeProbability);
-        obstacleGenerator.Initialize(player.transform, gameParameters.obstacleProbability);
+        obstaclePresenter.Initialize();
+        obstacleGenerator.Initialize(player.transform, gameParameters.obstacleProbability, gameParameters.holeProbability);
 
         gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
