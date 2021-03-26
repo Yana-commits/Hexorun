@@ -33,7 +33,7 @@ public class GameState : MonoBehaviour
 
         PlayerInit();
         obstaclePresenter.Initialize();
-        obstacleGenerator.Initialize(player.transform, gameParameters.obstacleProbability, gameParameters.holeProbability);
+        obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam);
 
         gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
@@ -88,7 +88,7 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
-        return;
+       
         if (gameState != GameplayState.Play)
             return;
 

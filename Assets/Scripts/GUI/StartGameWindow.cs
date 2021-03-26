@@ -30,8 +30,11 @@ public class StartGameWindow : MonoBehaviour
             playerSpeed = 2,
             changesTime = 2,
             theme = datas.Materials[themeDropDown.value],
-            obstacleProbability = RangedFloat.Value(obstacleSlider.LowValue, obstacleSlider.HighValue),
-            holeProbability = RangedFloat.Value(holesSlider.LowValue, holesSlider.HighValue),
+            obstaclesParam = new GameParameters.Obstacles
+            {
+                obstacleProbability = RangedFloat.Value(obstacleSlider.LowValue, obstacleSlider.HighValue),
+                holeProbability = RangedFloat.Value(holesSlider.LowValue, holesSlider.HighValue)
+            }
         }) ;
 
        

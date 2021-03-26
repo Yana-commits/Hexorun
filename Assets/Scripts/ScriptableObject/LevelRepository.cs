@@ -10,10 +10,20 @@ public class LevelRepository : ScriptableObject, IEnumerable<GameParameters>, IR
     [SerializeField]
     private List<GameParameters> _parameters;
 
+
     public IReadOnlyList<GameParameters> Parameters => _parameters;
 
     public GameParameters this[int index] => Parameters[index];
     public int Count => ((IReadOnlyCollection<GameParameters>)_parameters).Count;
     public IEnumerator<GameParameters> GetEnumerator() => ((IEnumerable<GameParameters>)_parameters).GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_parameters).GetEnumerator();
+
+}
+
+
+public enum PatternEnum
+{
+    Wall1,
+    Wall2,
+    Wall3,
 }

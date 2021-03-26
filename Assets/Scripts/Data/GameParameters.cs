@@ -1,21 +1,37 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
 public class GameParameters
 {
+    [Serializable]
+    public class Obstacles
+    {
+        public RangedFloat obstacleProbability;
+        public RangedFloat holeProbability;
+        public List<PatternEnum> pattern;
+
+        public Obstacles()
+        {
+            obstacleProbability = RangedFloat.Value(0, 1);
+            holeProbability = RangedFloat.Value(0, 1);
+            pattern = new List<PatternEnum>();
+        }
+    }
+
     public Vector2Int size;
 
     public int duration;
     public float playerSpeed;
     public float changesTime;
-    public RangedFloat obstacleProbability;
-    public RangedFloat holeProbability;
     [NonSerialized]
     public MaterialRepository.Data theme;
     [NonSerialized]
     public int id;
+
+    public Obstacles obstaclesParam;
 
     public GameParameters()
     {
@@ -23,11 +39,11 @@ public class GameParameters
         duration = 30;
         playerSpeed = 2;
         changesTime = 2;
-        obstacleProbability = RangedFloat.Value(0, 1);
-        holeProbability = RangedFloat.Value(0, 1);
         theme = default;
     }
 }
+
+
 
 [Serializable]
 public class StartGameEvent : UnityEvent<GameParameters>
