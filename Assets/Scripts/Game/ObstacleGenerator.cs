@@ -19,7 +19,7 @@ public class ObstacleGenerator : MonoBehaviour
     private GameParameters.Obstacles _obstaclesParam;
 
     private List<ObstacleProduct> patterns;
- 
+
 
     public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
     {
@@ -27,10 +27,10 @@ public class ObstacleGenerator : MonoBehaviour
         _player = player;
         _obstaclesParam = obstaclesParam;
 
-        var creators = _obstaclesParam.pattern
+        IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
             .Select(p => new ObstacleCreator(p))
             .Shuffle();
-
+            
         int patternsHeight = creators.Sum(c => c.Generate(_map.size, Vector2Int.zero).Height);
         int range = _map.size.y - patternsHeight - 10;
 
@@ -38,11 +38,11 @@ public class ObstacleGenerator : MonoBehaviour
         foreach (var factory in creators)
         {
             int ttt = Random.Range(0, range);
-            range -= ttt - 1;
+            range -= ttt;
             offset += ttt;
             
             var obstacle = factory.Generate(_map.size, Vector2Int.up * offset);
-            offset += obstacle.Height+1;
+            offset += obstacle.Height;
             patterns.Add(obstacle);
         }
     }
@@ -63,7 +63,6 @@ public class ObstacleGenerator : MonoBehaviour
     public void SimpleGenerator()
     {
         Dictionary<Vector2Int, HexState> hexObstacles = new Dictionary<Vector2Int, HexState>();
-
       
         var randomObstacles = RandomObstacles();
 
@@ -79,6 +78,7 @@ public class ObstacleGenerator : MonoBehaviour
         {
             item.ChangeValue();
         }
+
         var patt = patterns.SelectMany(p => p.Values);
 
         foreach (var item in patt)
@@ -89,25 +89,17 @@ public class ObstacleGenerator : MonoBehaviour
 
     private IEnumerable<Vector2Int> RandomObstacles()
     {
+        //return new Vector2Int[0];
         var obstacles = _map
                .Shuffle()
                .Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
-               //.Where(hex => Random.Range(0, 5) == 0) // 1/5 = 20%
                .Select(h => h.index);
 
         //TODO: если клетка опущена Physics.OverlapSphere не может ее отловить
         var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
-
         var hexIndexes = colliders.Select(c => c.GetComponent<Hex>().index);
 
        return obstacles.Except(hexIndexes);
     }
 
-    public int OffsetY()
-    {
-        var hex = _map.GetHexByPosition(_player.position).index;
-        int offsetY = Mathf.Clamp(hex.y + 2, 5, _map.size.y - 5);
-
-        return offsetY;
-    }
 }

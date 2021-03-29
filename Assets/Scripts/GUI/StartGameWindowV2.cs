@@ -19,7 +19,8 @@ public class StartGameWindowV2 : MonoBehaviour
         var gameParams = levels[level];
         gameParams.id = level;
         gameParams.theme = datas.Materials[GamePlayerPrefs.LastTheme];
-        GamePlayerPrefs.LastTheme = GamePlayerPrefs.LastTheme == datas.Materials.Count - 1 ? 0 : ++GamePlayerPrefs.LastTheme;
+        GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
+
         OnStartGame?.Invoke(gameParams);       
         print(level);
     }

@@ -30,57 +30,45 @@ namespace Factory.ObstaclePattern
             [PatternEnum.Path1] = new Path1Creator()
         };
 
-        private ObstacleFactory factory;
+        private readonly ObstacleFactory factory;
 
-        public ObstacleCreator(PatternEnum type)
-        {
-            factory = dict[type];
-            
-        }
+        public ObstacleCreator(PatternEnum type) 
+            => factory = dict[type];
 
-        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset)
-        {
-            return factory.Generate(mapSize, offset);
-        }
+        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset) 
+            => factory.Generate(mapSize, offset);
     }
 
     internal class WallFirstCreator : ObstacleFactory
     {
-        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset)
-        {
-            return new WallFirst(mapSize, offset);
-        }
+        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset) 
+            => new WallFirst(mapSize, offset);
     }
 
     internal class WallSecondCreator : ObstacleFactory
     {
-        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset)
-        {
-            return new WallSecond(mapSize, offset);
-        }
+        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset) 
+            => new WallSecond(mapSize, offset);
     }
 
     internal class WallThirdCreator : ObstacleFactory
     {
-        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset)
-        {
-            return new WallThird(mapSize, offset);
-        }
+        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset) 
+            => new WallThird(mapSize, offset);
     }
 
     internal class Path1Creator : ObstacleFactory
     {
-        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset)
-        {
-            return new Path1(mapSize, offset);
-        }
+        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset) 
+            => new Path1(mapSize, offset);
     }
 
     internal class WallFirst : ObstacleProduct
     {
         public override string Id { get; }
-        public override int Height => 2;
+        public override int Height => 3;
         public override IDictionary<Vector2Int, HexState> Values { get; }
+
         private Vector2Int mapSize;
         private Vector2Int offset;
         private Vector2Int currentPoint;
@@ -108,7 +96,7 @@ namespace Factory.ObstaclePattern
             for (int i = 0; i < mapSize.x; i++)
             {
                 retVal.Add(new Vector2Int(i, 0), HexState.None);
-                retVal.Add(new Vector2Int(i, Height), HexState.None);
+                retVal.Add(new Vector2Int(i, Height-1), HexState.None);
             }
 
             return retVal.ToDictionary(
@@ -119,8 +107,11 @@ namespace Factory.ObstaclePattern
 
         public override void ChangeValue()
         {
+            var newItem = Values
+                .Where(x => x.Key.y == (1 + offset.y) && x.Key != currentPoint)
+                .Random();
+
             Values[currentPoint] = pointState;
-            var newItem = Values.Where(x => x.Key.y == (1 + offset.y) && x.Key != currentPoint).Random();
             Values[newItem.Key] = HexState.None;
             currentPoint = newItem.Key;
         }
@@ -129,7 +120,7 @@ namespace Factory.ObstaclePattern
     internal class WallSecond : ObstacleProduct
     {
         public override string Id { get; }
-        public override int Height => 2;
+        public override int Height => 3;
         public override IDictionary<Vector2Int, HexState> Values { get; }
         private Vector2Int mapSize;
         private Vector2Int offset;
@@ -138,7 +129,7 @@ namespace Factory.ObstaclePattern
 
         public WallSecond(Vector2Int mapSize, Vector2Int offset)
         {
-            this.Id = nameof(WallFirst);
+            this.Id = nameof(WallSecond);
             this.mapSize = mapSize;
             this.offset = offset;
             this.Values = Generate();
@@ -149,7 +140,7 @@ namespace Factory.ObstaclePattern
             var retVal = Enumerable.Range(0, mapSize.x)
                 .Select(q => new Vector2Int(q, 1))
                 .Shuffle()
-                .ToDictionary(ind => ind, ind => HexState.Hill);
+                .ToDictionary(ind => ind, ind => HexState.Hill); // TODO: pointState ?
 
             currentPoint = retVal.Keys.Random();
             retVal[currentPoint] = HexState.None;
@@ -157,7 +148,7 @@ namespace Factory.ObstaclePattern
             for (int i = 0; i < mapSize.x; i++)
             {
                 retVal.Add(new Vector2Int(i, 0), HexState.None);
-                retVal.Add(new Vector2Int(i, Height), HexState.None);
+                retVal.Add(new Vector2Int(i, Height-1), HexState.None);
             }
 
             return retVal.ToDictionary(
@@ -175,11 +166,13 @@ namespace Factory.ObstaclePattern
     internal class WallThird : ObstacleProduct
     {
         public override string Id { get; }
-        public override int Height => 2;
+        public override int Height => 3;
         public override IDictionary<Vector2Int, HexState> Values { get; }
         private Vector2Int mapSize;
         private Vector2Int offset;
+
         private int evenOdd = 1;
+        private readonly HexState pointState = HexState.Hill;
 
         public WallThird(Vector2Int mapSize, Vector2Int offset)
         {
@@ -194,7 +187,7 @@ namespace Factory.ObstaclePattern
             var retVal = Enumerable.Range(0, mapSize.x)
                  .Select(q => new Vector2Int(q, 1))
                  .Shuffle()
-                 .ToDictionary(ind => ind, ind => HexState.Hill);
+                 .ToDictionary(ind => ind, ind => pointState);
 
             foreach (var item in retVal.Keys.ToArray())
             {
@@ -205,7 +198,7 @@ namespace Factory.ObstaclePattern
             for (int i = 0; i < mapSize.x; i++)
             {
                 retVal.Add(new Vector2Int(i, 0), HexState.None);
-                retVal.Add(new Vector2Int(i, Height), HexState.None);
+                retVal.Add(new Vector2Int(i, Height-1), HexState.None);
             }
 
             return retVal.ToDictionary(
@@ -223,7 +216,7 @@ namespace Factory.ObstaclePattern
                 if ((item.Key.x % 2 == evenOdd))
                     Values[item.Key] = HexState.None;
                 else
-                    Values[item.Key] = HexState.Hill;
+                    Values[item.Key] = pointState;
             }
         }
     }
@@ -237,12 +230,14 @@ namespace Factory.ObstaclePattern
         private Vector2Int mapSize;
         private Vector2Int offset;
 
+        private readonly HexState pointState = HexState.Hole;
+
         public Path1(Vector2Int mapSize, Vector2Int offset, int height = 5)
         {
             this.Id = nameof(Path1);
             this.mapSize = mapSize;
             this.offset = offset;
-            this.Height = height;
+            this.Height = height + 2;  // 1+height+1
             this.Values = Generate();
         }
 
@@ -252,10 +247,12 @@ namespace Factory.ObstaclePattern
 
             for (int q = 0; q < mapSize.x; q++)
             {
-                for (int r = 1; r <= Height; r++)
-                {
-                    obstaclesField.Add(new Vector2Int(q, r), HexState.Hole);
-                }
+                obstaclesField.Add(new Vector2Int(q, 0), HexState.None);
+
+                for (int r = 1; r < Height - 1; r++)
+                    obstaclesField.Add(new Vector2Int(q, r), pointState);
+                
+                obstaclesField.Add(new Vector2Int(q, Height - 1), HexState.None);
             }
 
             var index = new Vector2Int(Random.Range(0, mapSize.x), 1);
@@ -271,17 +268,11 @@ namespace Factory.ObstaclePattern
 
                 if (indexToExclude.Add(neighbor))
                     index = neighbor;
-            } while (index.y <= Height - 1);
+            } while (index.y < Height - 2);
 
             foreach (var item in indexToExclude)
             {
                 obstaclesField[item] = HexState.None;
-            }
-
-            for (int i = 0; i < mapSize.x; i++)
-            {
-                obstaclesField.Add(new Vector2Int(i, 0), HexState.None);
-                obstaclesField.Add(new Vector2Int(i, Height+1), HexState.None);
             }
 
             return obstaclesField.ToDictionary(
