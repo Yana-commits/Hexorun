@@ -26,4 +26,5 @@ public enum PatternEnum
     Wall1,
     Wall2,
     Wall3,
+    Path1,
 }
