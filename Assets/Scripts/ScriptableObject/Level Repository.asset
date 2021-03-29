@@ -36,7 +36,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.1
         maxValue: 0.2
-      pattern: 00000000
+      pattern: 02000000
   - size: {x: 10, y: 26}
     duration: 30
     playerSpeed: 2
@@ -48,7 +48,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.22
         maxValue: 0.3
-      pattern: 01000000
+      pattern: 00000000
   - size: {x: 10, y: 26}
     duration: 30
     playerSpeed: 2
@@ -72,7 +72,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.2
         maxValue: 0.3
-      pattern: 02000000
+      pattern: 03000000
   - size: {x: 10, y: 32}
     duration: 30
     playerSpeed: 2
@@ -84,7 +84,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.2
         maxValue: 0.3
-      pattern: 0000000001000000
+      pattern: 0000000002000000
   - size: {x: 10, y: 32}
     duration: 30
     playerSpeed: 2
@@ -96,20 +96,8 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.2
         maxValue: 0.3
-      pattern: 0100000000000000
-  - size: {x: 10, y: 32}
-    duration: 30
-    playerSpeed: 2
-    changesTime: 2
-    obstaclesParam:
-      obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
-      holeProbability:
-        minValue: 0.3
-        maxValue: 0.4
       pattern: 0100000002000000
-  - size: {x: 10, y: 38}
+  - size: {x: 10, y: 32}
     duration: 30
     playerSpeed: 2
     changesTime: 2
@@ -120,19 +108,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
-      pattern: 000000000100000001000000
-  - size: {x: 10, y: 38}
-    duration: 30
-    playerSpeed: 2
-    changesTime: 2
-    obstaclesParam:
-      obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
-      holeProbability:
-        minValue: 0.3
-        maxValue: 0.4
-      pattern: 010000000100000002000000
+      pattern: 0000000003000000
   - size: {x: 10, y: 38}
     duration: 30
     playerSpeed: 2
@@ -145,6 +121,30 @@ MonoBehaviour:
         minValue: 0.3
         maxValue: 0.4
       pattern: 000000000100000002000000
+  - size: {x: 10, y: 38}
+    duration: 30
+    playerSpeed: 2
+    changesTime: 2
+    obstaclesParam:
+      obstacleProbability:
+        minValue: 0.3
+        maxValue: 0.4
+      holeProbability:
+        minValue: 0.3
+        maxValue: 0.4
+      pattern: 000000000100000003000000
+  - size: {x: 10, y: 38}
+    duration: 30
+    playerSpeed: 2
+    changesTime: 2
+    obstaclesParam:
+      obstacleProbability:
+        minValue: 0.3
+        maxValue: 0.4
+      holeProbability:
+        minValue: 0.3
+        maxValue: 0.4
+      pattern: 010000000200000003000000
   - size: {x: 10, y: 44}
     duration: 30
     playerSpeed: 2
@@ -156,7 +156,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
-      pattern: 010000000100000002000000
+      pattern: 010000000100000003000000
   - size: {x: 10, y: 44}
     duration: 30
     playerSpeed: 2
@@ -168,7 +168,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
-      pattern: 000000000200000002000000
+      pattern: 020000000300000003000000
   - size: {x: 10, y: 44}
     duration: 30
     playerSpeed: 2
@@ -180,7 +180,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
-      pattern: 020000000200000002000000
+      pattern: 030000000300000003000000
   - size: {x: 10, y: 50}
     duration: 30
     playerSpeed: 2
@@ -192,7 +192,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
-      pattern: 00000000000000000100000002000000
+      pattern: 02000000020000000100000003000000
   - size: {x: 10, y: 50}
     duration: 30
     playerSpeed: 2
@@ -204,7 +204,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
-      pattern: 01000000010000000000000002000000
+      pattern: 00000000010000000200000003000000
   - size: {x: 10, y: 50}
     duration: 30
     playerSpeed: 2
@@ -216,7 +216,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
-      pattern: 01000000010000000000000002000000
+      pattern: 01000000010000000200000003000000
   - size: {x: 10, y: 50}
     duration: 30
     playerSpeed: 2
@@ -228,7 +228,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
-      pattern: 00000000010000000200000002000000
+      pattern: 02000000010000000300000003000000
   - size: {x: 10, y: 50}
     duration: 30
     playerSpeed: 2
@@ -240,7 +240,7 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
-      pattern: 01000000010000000200000002000000
+      pattern: 00000000010000000300000003000000
   - size: {x: 10, y: 56}
     duration: 30
     playerSpeed: 2
@@ -252,4 +252,4 @@ MonoBehaviour:
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
-      pattern: 01000000020000000200000002000000
+      pattern: 01000000030000000300000002000000
