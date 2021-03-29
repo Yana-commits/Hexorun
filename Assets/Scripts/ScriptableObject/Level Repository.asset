@@ -31,11 +31,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.2
-        maxValue: 0.3
+        minValue: 0.1
+        maxValue: 0.2
       holeProbability:
         minValue: 0.1
-        maxValue: 0.1
+        maxValue: 0.2
       pattern: 00000000
   - size: {x: 10, y: 26}
     duration: 30
@@ -43,8 +43,20 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.1
+        maxValue: 0.2
+      holeProbability:
+        minValue: 0.22
+        maxValue: 0.3
+      pattern: 01000000
+  - size: {x: 10, y: 26}
+    duration: 30
+    playerSpeed: 2
+    changesTime: 2
+    obstaclesParam:
+      obstacleProbability:
+        minValue: 0.2
+        maxValue: 0.3
       holeProbability:
         minValue: 0.2
         maxValue: 0.3
@@ -55,20 +67,8 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
-      holeProbability:
         minValue: 0.2
         maxValue: 0.3
-      pattern: 01000000
-  - size: {x: 10, y: 26}
-    duration: 30
-    playerSpeed: 2
-    changesTime: 2
-    obstaclesParam:
-      obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
       holeProbability:
         minValue: 0.2
         maxValue: 0.3
@@ -79,8 +79,8 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.2
+        maxValue: 0.3
       holeProbability:
         minValue: 0.2
         maxValue: 0.3
@@ -91,8 +91,8 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.2
+        maxValue: 0.3
       holeProbability:
         minValue: 0.2
         maxValue: 0.3
@@ -103,11 +103,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.3
+        maxValue: 0.4
       holeProbability:
-        minValue: 0.2
-        maxValue: 0.3
+        minValue: 0.3
+        maxValue: 0.4
       pattern: 0100000002000000
   - size: {x: 10, y: 38}
     duration: 30
@@ -115,11 +115,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.3
+        maxValue: 0.4
       holeProbability:
-        minValue: 0.2
-        maxValue: 0.3
+        minValue: 0.3
+        maxValue: 0.4
       pattern: 000000000100000001000000
   - size: {x: 10, y: 38}
     duration: 30
@@ -127,11 +127,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.3
+        maxValue: 0.4
       holeProbability:
-        minValue: 0.2
-        maxValue: 0.3
+        minValue: 0.3
+        maxValue: 0.4
       pattern: 010000000100000002000000
   - size: {x: 10, y: 38}
     duration: 30
@@ -139,11 +139,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.3
+        maxValue: 0.4
       holeProbability:
-        minValue: 0.2
-        maxValue: 0.3
+        minValue: 0.3
+        maxValue: 0.4
       pattern: 000000000100000002000000
   - size: {x: 10, y: 44}
     duration: 30
@@ -151,11 +151,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.3
+        maxValue: 0.4
       holeProbability:
-        minValue: 0.2
-        maxValue: 0.3
+        minValue: 0.3
+        maxValue: 0.4
       pattern: 010000000100000002000000
   - size: {x: 10, y: 44}
     duration: 30
@@ -163,11 +163,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.3
+        maxValue: 0.4
       holeProbability:
-        minValue: 0.2
-        maxValue: 0.3
+        minValue: 0.3
+        maxValue: 0.4
       pattern: 000000000200000002000000
   - size: {x: 10, y: 44}
     duration: 30
@@ -175,11 +175,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.3
+        maxValue: 0.4
       holeProbability:
-        minValue: 0.2
-        maxValue: 0.3
+        minValue: 0.3
+        maxValue: 0.4
       pattern: 020000000200000002000000
   - size: {x: 10, y: 50}
     duration: 30
@@ -187,11 +187,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.5
-        maxValue: 0.6
-      holeProbability:
         minValue: 0.3
         maxValue: 0.4
+      holeProbability:
+        minValue: 0.4
+        maxValue: 0.5
       pattern: 00000000000000000100000002000000
   - size: {x: 10, y: 50}
     duration: 30
@@ -199,11 +199,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.5
-        maxValue: 0.6
-      holeProbability:
         minValue: 0.3
         maxValue: 0.4
+      holeProbability:
+        minValue: 0.4
+        maxValue: 0.5
       pattern: 01000000010000000000000002000000
   - size: {x: 10, y: 50}
     duration: 30
@@ -211,11 +211,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.5
-        maxValue: 0.6
-      holeProbability:
         minValue: 0.3
         maxValue: 0.4
+      holeProbability:
+        minValue: 0.4
+        maxValue: 0.5
       pattern: 01000000010000000000000002000000
   - size: {x: 10, y: 50}
     duration: 30
@@ -223,11 +223,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.5
-        maxValue: 0.6
-      holeProbability:
         minValue: 0.3
         maxValue: 0.4
+      holeProbability:
+        minValue: 0.4
+        maxValue: 0.5
       pattern: 00000000010000000200000002000000
   - size: {x: 10, y: 50}
     duration: 30
@@ -235,11 +235,11 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.5
-        maxValue: 0.6
-      holeProbability:
         minValue: 0.3
         maxValue: 0.4
+      holeProbability:
+        minValue: 0.4
+        maxValue: 0.5
       pattern: 01000000010000000200000002000000
   - size: {x: 10, y: 56}
     duration: 30
@@ -247,9 +247,9 @@ MonoBehaviour:
     changesTime: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.5
-        maxValue: 0.6
+        minValue: 0.4
+        maxValue: 0.5
       holeProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.4
+        maxValue: 0.5
       pattern: 01000000020000000200000002000000

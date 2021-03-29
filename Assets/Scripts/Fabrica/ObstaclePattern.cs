@@ -90,8 +90,18 @@ namespace Factory.ObstaclePattern
                 .ToDictionary(ind => ind, ind => HexState.Hill);
 
             retVal[retVal.Keys.Random()] = HexState.None;
+            for (int i = 0; i < mapSize.x; i++)
+            {
+                retVal.Add(new Vector2Int(i, 0), HexState.None);
+                retVal.Add(new Vector2Int(i, 2), HexState.None);
+            }
 
-            
+            for (int i = 0; i < mapSize.x; i++)
+            {
+                retVal.Select(q => new Vector2Int(i, offset.y - 1))
+                                  .ToDictionary(ind => ind, ind => HexState.None);
+            }
+
             return retVal.ToDictionary(
                 pair => pair.Key + offset,
                 pair => pair.Value
@@ -118,7 +128,7 @@ namespace Factory.ObstaclePattern
         private IDictionary<Vector2Int, HexState> Generate()
         {
             var retVal = Enumerable.Range(0, mapSize.x)
-                 .Select(q => new Vector2Int(q, 0))
+                 .Select(q => new Vector2Int(q, 1))
                  .Shuffle()
                  .ToDictionary(ind => ind, ind => HexState.Hill);
 
@@ -127,6 +137,13 @@ namespace Factory.ObstaclePattern
                 if ((item.x & 1) == (offset.y & 1))
                     retVal[item] = HexState.None;
             }
+
+            for (int i = 0; i < mapSize.x; i++)
+            {
+                retVal.Add(new Vector2Int(i, 0), HexState.None);
+                retVal.Add(new Vector2Int(i, 2), HexState.None);
+            }
+
 
             return retVal.ToDictionary(
                 pair => pair.Key + offset,
@@ -159,36 +176,42 @@ namespace Factory.ObstaclePattern
 
             for (int q = 0; q < mapSize.x; q++)
             {
-                for (int r = 0; r < Height; r++)
+                for (int r = 1; r <= Height; r++)
                 {
                     obstaclesField.Add(new Vector2Int(q, r), HexState.Hole);
                 }
             }
 
-            var index = new Vector2Int(Random.Range(0, mapSize.x), 0);
+            var index = new Vector2Int(Random.Range(0, mapSize.x), 1);
             HashSet<Vector2Int> indexToExclude = new HashSet<Vector2Int>();
             indexToExclude.Add(index);
 
             do
             {
                 var neighbor = Offset.GetQNeighbour(index)
-                    .Where(d => (d - index).y >= (index.x & 1))
-                    .Where(n => n.x >= 0 && n.x < mapSize.x)
-                    .Random();
+                .Where(d => (d - index).y >= (index.x & 1))
+                .Where(n => n.x >= 0 && n.x < mapSize.x)
+                .Random();
 
                 if (indexToExclude.Add(neighbor))
                     index = neighbor;
-            } while (index.y < Height - 1);
+            } while (index.y <= Height - 1);
 
             foreach (var item in indexToExclude)
             {
                 obstaclesField[item] = HexState.None;
             }
 
+            for (int i = 0; i < mapSize.x; i++)
+            {
+                obstaclesField.Add(new Vector2Int(i, 0), HexState.None);
+                obstaclesField.Add(new Vector2Int(i, Height + 1), HexState.None);
+            }
+
             return obstaclesField.ToDictionary(
-                pair => pair.Key + offset,
-                pair => pair.Value
-            );
+            pair => pair.Key + offset,
+            pair => pair.Value
+                        );
         }
     }
 
