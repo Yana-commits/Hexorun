@@ -11,18 +11,16 @@ public class StartGameWindowV2 : MonoBehaviour
     [SerializeField] LevelRepository levels;
 
     public Button startButton;
-    public Dropdown themeDropDown;
-        
+  
     public StartGameEvent OnStartGame;
     private void OnStartClick()
     {
-        GamePlayerPrefs.LastTheme = themeDropDown.value;
         int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count-1);
         var gameParams = levels[level];
         gameParams.id = level;
-        gameParams.theme = datas.Materials[themeDropDown.value];
-        OnStartGame?.Invoke(gameParams);
-
+        gameParams.theme = datas.Materials[GamePlayerPrefs.LastTheme];
+        GamePlayerPrefs.LastTheme = GamePlayerPrefs.LastTheme == datas.Materials.Count - 1 ? 0 : ++GamePlayerPrefs.LastTheme;
+        OnStartGame?.Invoke(gameParams);       
         print(level);
     }
 
@@ -33,10 +31,6 @@ public class StartGameWindowV2 : MonoBehaviour
         var names = datas
             .Select(d => new Dropdown.OptionData(d.name))
             .ToList();
-
-        themeDropDown.ClearOptions();
-        themeDropDown.AddOptions(names);
-        themeDropDown.value = GamePlayerPrefs.LastTheme;
     }
     private void OnDisable() => startButton.onClick.RemoveListener(OnStartClick);
 }
