@@ -42,7 +42,7 @@ public class ObstacleGenerator : MonoBehaviour
             offset += ttt;
             
             var obstacle = factory.Generate(_map.size, Vector2Int.up * offset);
-            offset += obstacle.Height + 1;
+            offset += obstacle.Height+1;
             patterns.Add(obstacle);
         }
     }
@@ -75,7 +75,12 @@ public class ObstacleGenerator : MonoBehaviour
         foreach (var item in holesIndexes)
             hexObstacles[item] = HexState.Hole;
 
+        foreach (var item in patterns)
+        {
+            item.ChangeValue();
+        }
         var patt = patterns.SelectMany(p => p.Values);
+
         foreach (var item in patt)
             hexObstacles[item.Key] = item.Value;
 
