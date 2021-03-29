@@ -90,6 +90,8 @@ namespace Factory.ObstaclePattern
                 .ToDictionary(ind => ind, ind => HexState.Hill);
 
             retVal[retVal.Keys.Random()] = HexState.None;
+
+            
             return retVal.ToDictionary(
                 pair => pair.Key + offset,
                 pair => pair.Value
@@ -159,7 +161,7 @@ namespace Factory.ObstaclePattern
             {
                 for (int r = 0; r < Height; r++)
                 {
-                    obstaclesField.Add(new Vector2Int(q, r), HexState.Hill);
+                    obstaclesField.Add(new Vector2Int(q, r), HexState.Hole);
                 }
             }
 
