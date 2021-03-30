@@ -31,7 +31,7 @@ public class ObstacleGenerator : MonoBehaviour
         _obstaclesParam = obstaclesParam;
         _smallCoin = smallCoin;
 
-        Debug.Log($"{smallCoin}");
+        Debug.Log($"{_smallCoin}");
 
         IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
             //new PatternEnum[] { PatternEnum.Wall3 }
@@ -55,7 +55,8 @@ public class ObstacleGenerator : MonoBehaviour
 
         var starPlace = _map
               .Shuffle()
-              .Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
+              .Take(_smallCoin)
+              //.Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
               .Select(h => h.index);
 
         foreach (var item in _map)
@@ -112,8 +113,6 @@ public class ObstacleGenerator : MonoBehaviour
         foreach (var item in patterns)
             item.ChangeValue();
 
-      
-
     }
 
     private IEnumerable<Vector2Int> RandomObstacles()
@@ -123,9 +122,6 @@ public class ObstacleGenerator : MonoBehaviour
                .Shuffle()
                .Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
                .Select(h => h.index);
-
-
-      
 
         //TODO: если клетка опущена Physics.OverlapSphere не может ее отловить
         var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);

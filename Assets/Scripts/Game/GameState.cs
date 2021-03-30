@@ -29,7 +29,7 @@ public class GameState : MonoBehaviour
 
         gameTimeLeft = gameParameters.duration;
 
-        smallCoin = parameters.smallCoin;
+        smallCoin = gameParameters.smallCoin;
         Debug.Log($"{smallCoin}");
 
         map.Initializie(gameParameters.size, gameParameters.theme);
