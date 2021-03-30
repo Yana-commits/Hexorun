@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class HUD : MonoBehaviour
 
     public void UpdateScoreValue(float value)
     {
-        timeText.text = Mathf.Round(value).ToString();
+        timeText.text = TimeSpan.FromSeconds(value).ToString(@"mm\:ss");
     }
 
     public void UpdateLevel(int level)

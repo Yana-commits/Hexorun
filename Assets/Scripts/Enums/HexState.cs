@@ -1,6 +1,6 @@
 public enum HexState
 {
-    NONE,
-    UP,
-    DOWN,
+    None,
+    Hill,
+    Hole,
 }

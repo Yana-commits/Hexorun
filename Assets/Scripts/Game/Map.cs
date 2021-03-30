@@ -52,7 +52,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
         var targetIndex = new Vector2Int(
             Random.Range(0, size.x),
-            Random.Range(size.y-10, size.y)
+            Random.Range(size.y-5, size.y-2)
             );
 
         var rend = this[targetIndex].Renderer;

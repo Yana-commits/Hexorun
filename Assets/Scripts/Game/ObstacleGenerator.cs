@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Factory.ObstaclePattern;
+using static Hexagonal;
 using Random = UnityEngine.Random;
 
 public class ObstacleGenerator : MonoBehaviour
@@ -11,23 +12,68 @@ public class ObstacleGenerator : MonoBehaviour
     [Space]
     [SerializeField] LayerMask hexLayer;
     [SerializeField] float _overlapSphereRadius = 0.5f;
+    [SerializeField] Star starPrefab;
 
-    public event Action<IEnumerable<Vector2Int>> ObstaclesGenerated;
+    public event Action<IDictionary<Vector2Int, HexState>> ObstaclesGenerated;
 
     private Transform _player;
-    private RangedFloat _obstacleProb;
+    private GameParameters.Obstacles _obstaclesParam;
 
-    public void Initialize(Transform player, RangedFloat obstacleProbability)
+    private List<ObstacleProduct> patterns;
+
+    public Dictionary<Vector2Int, HexState> hexObstacles;
+
+
+    public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
     {
+        patterns = new List<ObstacleProduct>();
         _player = player;
-        _obstacleProb = obstacleProbability;
+        _obstaclesParam = obstaclesParam;
+
+        IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
+            //new PatternEnum[] { PatternEnum.Wall3 }
+            .Select(p => new ObstacleCreator(p))
+            .Shuffle();
+            
+        int patternsHeight = creators.Sum(c => c.Generate(_map.size, Vector2Int.zero).Height);
+        int range = _map.size.y - patternsHeight - 10;
+
+        int offset = 5;
+        foreach (var factory in creators)
+        {
+            int ttt = Random.Range(0, range);
+            range -= ttt;
+            offset += ttt;
+            
+            var obstacle = factory.Generate(_map.size, Vector2Int.up * offset);
+            offset += obstacle.Height;
+            patterns.Add(obstacle);
+        }
+
+        var starPlace = _map
+              .Shuffle()
+              .Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
+              .Select(h => h.index);
+
+        foreach (var item in _map)
+        {
+            if (starPlace.Contains(item.index))
+            {
+                var position = Hexagonal.Cube.HexToPixel(
+                Hexagonal.Offset.QToCube(item.index),
+                Vector2.one * Map.hexRadius) + new Vector3(0, 0.5f, 0);
+
+                Star star = Instantiate(starPrefab, position, Quaternion.identity);
+
+                star.transform.SetParent(item.transform);
+            }
+        }
+
     }
 
     internal void Generate()
     {
         SimpleGenerator();
-
-        
     }
 
 #if UNITY_EDITOR
@@ -40,100 +86,48 @@ public class ObstacleGenerator : MonoBehaviour
 
     public void SimpleGenerator()
     {
-        //var obstacles = RandomObstacles();
-        var obstacles = Pattern3();
-        //var obstacles = Pattern2();
-        //var obstacles = Pattern1();
+         hexObstacles = new Dictionary<Vector2Int, HexState>();
+      
+        var randomObstacles = RandomObstacles();
 
-        ObstaclesGenerated?.Invoke(obstacles);
+        foreach (var item in randomObstacles)
+            hexObstacles.Add(item, HexState.Hill);
+
+        int holes = (int)(_obstaclesParam.holeProbability.Random() * randomObstacles.Count());
+        var holesIndexes = randomObstacles.Shuffle().Take(holes);
+        foreach (var item in holesIndexes)
+            hexObstacles[item] = HexState.Hole;
+
+        var patt = patterns.SelectMany(p => p.GetValues());
+
+        foreach (var item in patt)
+            hexObstacles[item.Key] = item.Value;
+
+        ObstaclesGenerated?.Invoke(hexObstacles);
+
+        foreach (var item in patterns)
+            item.ChangeValue();
+
+      
+
     }
 
     private IEnumerable<Vector2Int> RandomObstacles()
     {
+        //return new Vector2Int[0];
         var obstacles = _map
                .Shuffle()
-               .Take((int)(_map.Count() * _obstacleProb.Random()))
-               //.Where(hex => Random.Range(0, 5) == 0) // 1/5 = 20%
+               .Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
                .Select(h => h.index);
+
+
+      
 
         //TODO: если клетка опущена Physics.OverlapSphere не может ее отловить
         var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
-
         var hexIndexes = colliders.Select(c => c.GetComponent<Hex>().index);
 
        return obstacles.Except(hexIndexes);
     }
 
-    private IEnumerable<Vector2Int> Pattern1()
-    {
-        var hex = _map.GetHexByPosition(_player.position).index;
-
-        return Enumerable.Range(0, _map.size.x)
-            .Select(q => new Vector2Int(q, hex.y + 2))
-            .Shuffle()
-            .Skip(1);
-        /*
-        int skip = (int)(Random.value * _map.size.x);
-        for (int q = 0; q < _map.size.x; q++)
-        {
-            if (q == skip) continue;
-            yield return new Vector2Int(q, 0 + offsetR);
-        }
-        */
-    }
-
-    private IEnumerable<Vector2Int> Pattern2()
-    {
-        var hex = _map.GetHexByPosition(_player.position).index;
-
-        //return Enumerable.Range(0, _map.size.x)
-        //    .Select(q => new Vector2Int(q, hex.y + 1))
-        //    .Where(ind => (ind.x & 1) == (hex.y & 1));
-
-        if ((hex.y + 2) % 2 == 0)
-        {
-            for (int q = 0; q < _map.size.x; q = q + 2)
-            {
-                yield return new Vector2Int(q, hex.y + 2);
-            }
-        }
-        else
-        {
-            for (int q = 1; q < _map.size.x; q = q + 2)
-            {
-                yield return new Vector2Int(q, hex.y + 2);
-            }
-        }
-
-    }
-
-    private IEnumerable<Vector2Int> Pattern3()
-    {
-        var hex = _map.GetHexByPosition(_player.position).index;
-
-        List<Vector2Int> obstaclesField = new List<Vector2Int>();
-
-        for (int q = 0; q < _map.size.x; q++)
-        {
-            for (int r = 0; r < 5; r++)
-            {
-                obstaclesField.Add(new Vector2Int(q, r));
-            }
-        }
-
-        var index = new Vector2Int(Random.Range(0, _map.size.x), 0);
-        List<Vector2Int> indexToExclude = new List<Vector2Int>();
-        indexToExclude.Add(index);
-
-        while (index.y < 5)
-        {
-            Vector2Int neighbor = Vector2Int.one;
-            indexToExclude.Add(neighbor);
-            index = neighbor;
-        }
-
-        return obstaclesField
-            .Except(indexToExclude)
-            .Select(ind => ind + new Vector2Int(0, hex.y+1));
-    }
 }

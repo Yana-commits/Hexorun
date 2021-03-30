@@ -7,6 +7,15 @@ public static class Hexagonal
 {
     public static class Offset
     {
+        public static IEnumerable<Vector2Int> GetQNeighbour(Vector2Int index)
+        {
+            var offset = index.x % 2 != 0 ? OffsetCoord.Even : OffsetCoord.Odd;
+            return QDirections(offset).Select(d => index + d);
+        }
+
+        private static IEnumerable<Vector2Int> QDirections(OffsetCoord offset = OffsetCoord.Odd) 
+            => Cube.directions.Select(cube => QFromCube(cube, offset));
+
         public static Vector3Int RToCube(Vector2Int h, OffsetCoord offset = OffsetCoord.Odd)
         {
             int q = h.x - (int)((h.y + (int)offset * (h.y & 1)) / 2);
