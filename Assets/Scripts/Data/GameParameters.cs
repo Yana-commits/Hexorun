@@ -30,6 +30,8 @@ public class GameParameters
     public MaterialRepository.Data theme;
     [NonSerialized]
     public int id;
+    public int smallCoin;
+    public int bigCoin;
 
     public Obstacles obstaclesParam;
 
@@ -40,6 +42,8 @@ public class GameParameters
         playerSpeed = 2;
         changesTime = 2;
         theme = default;
+        smallCoin=1;
+        bigCoin =1;
     }
 }
 

@@ -18,17 +18,20 @@ public class ObstacleGenerator : MonoBehaviour
 
     private Transform _player;
     private GameParameters.Obstacles _obstaclesParam;
-
+    private int _smallCoin;
     private List<ObstacleProduct> patterns;
 
     public Dictionary<Vector2Int, HexState> hexObstacles;
 
 
-    public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
+    public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam,int smallCoin)
     {
         patterns = new List<ObstacleProduct>();
         _player = player;
         _obstaclesParam = obstaclesParam;
+        _smallCoin = smallCoin;
+
+        Debug.Log($"{smallCoin}");
 
         IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
             //new PatternEnum[] { PatternEnum.Wall3 }
@@ -57,7 +60,7 @@ public class ObstacleGenerator : MonoBehaviour
 
         foreach (var item in _map)
         {
-            if (starPlace.Contains(item.index))
+            if (starPlace.Contains(item.index) )
             {
                 var position = Hexagonal.Cube.HexToPixel(
                 Hexagonal.Offset.QToCube(item.index),
@@ -67,6 +70,7 @@ public class ObstacleGenerator : MonoBehaviour
 
                 star.transform.SetParent(item.transform);
             }
+           
         }
 
     }

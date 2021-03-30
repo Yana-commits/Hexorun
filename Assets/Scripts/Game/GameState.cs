@@ -21,6 +21,7 @@ public class GameState : MonoBehaviour
     private GameParameters gameParameters;
     private float gameTimeLeft;
     private GameplayState gameState = GameplayState.Stop;
+    private int smallCoin;
 
     public void StartGame(GameParameters parameters)
     {
@@ -28,12 +29,15 @@ public class GameState : MonoBehaviour
 
         gameTimeLeft = gameParameters.duration;
 
+        smallCoin = parameters.smallCoin;
+        Debug.Log($"{smallCoin}");
+
         map.Initializie(gameParameters.size, gameParameters.theme);
         map.gameObject.SetActive(true);
 
         PlayerInit();
         obstaclePresenter.Initialize();
-        obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam);
+        obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam,smallCoin);
 
         gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
