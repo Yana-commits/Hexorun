@@ -12,6 +12,7 @@ public class ObstacleGenerator : MonoBehaviour
     [Space]
     [SerializeField] LayerMask hexLayer;
     [SerializeField] float _overlapSphereRadius = 0.5f;
+    [SerializeField] Star starPrefab;
 
     public event Action<IDictionary<Vector2Int, HexState>> ObstaclesGenerated;
 
@@ -19,6 +20,8 @@ public class ObstacleGenerator : MonoBehaviour
     private GameParameters.Obstacles _obstaclesParam;
 
     private List<ObstacleProduct> patterns;
+
+    public Dictionary<Vector2Int, HexState> hexObstacles;
 
 
     public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
@@ -46,6 +49,26 @@ public class ObstacleGenerator : MonoBehaviour
             offset += obstacle.Height;
             patterns.Add(obstacle);
         }
+
+        var starPlace = _map
+              .Shuffle()
+              .Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
+              .Select(h => h.index);
+
+        foreach (var item in _map)
+        {
+            if (starPlace.Contains(item.index))
+            {
+                var position = Hexagonal.Cube.HexToPixel(
+                Hexagonal.Offset.QToCube(item.index),
+                Vector2.one * Map.hexRadius) + new Vector3(0, 0.5f, 0);
+
+                Star star = Instantiate(starPrefab, position, Quaternion.identity);
+
+                star.transform.SetParent(item.transform);
+            }
+        }
+
     }
 
     internal void Generate()
@@ -63,7 +86,7 @@ public class ObstacleGenerator : MonoBehaviour
 
     public void SimpleGenerator()
     {
-        Dictionary<Vector2Int, HexState> hexObstacles = new Dictionary<Vector2Int, HexState>();
+         hexObstacles = new Dictionary<Vector2Int, HexState>();
       
         var randomObstacles = RandomObstacles();
 
@@ -84,6 +107,9 @@ public class ObstacleGenerator : MonoBehaviour
 
         foreach (var item in patterns)
             item.ChangeValue();
+
+      
+
     }
 
     private IEnumerable<Vector2Int> RandomObstacles()
@@ -93,6 +119,9 @@ public class ObstacleGenerator : MonoBehaviour
                .Shuffle()
                .Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
                .Select(h => h.index);
+
+
+      
 
         //TODO: если клетка опущена Physics.OverlapSphere не может ее отловить
         var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
