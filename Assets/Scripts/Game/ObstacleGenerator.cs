@@ -56,7 +56,6 @@ public class ObstacleGenerator : MonoBehaviour
         var starPlace = _map
               .Shuffle()
               .Take(_smallCoin)
-              //.Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
               .Select(h => h.index);
 
         foreach (var item in _map)
