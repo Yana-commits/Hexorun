@@ -34,7 +34,7 @@ public class GameState : MonoBehaviour
 
         map.Initializie(gameParameters.size, gameParameters.theme);
         map.gameObject.SetActive(true);
-
+        
         PlayerInit();
         obstaclePresenter.Initialize();
         obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam,smallCoin);
@@ -54,6 +54,8 @@ public class GameState : MonoBehaviour
         player.stateChanged += OnPlayerStateChanged;
         player.gameObject.SetActive(true);
     }
+
+
 
     private void OnPlayerStateChanged(PlayerState obj)
     {

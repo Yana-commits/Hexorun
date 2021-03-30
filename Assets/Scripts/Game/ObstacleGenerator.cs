@@ -13,6 +13,7 @@ public class ObstacleGenerator : MonoBehaviour
     [SerializeField] LayerMask hexLayer;
     [SerializeField] float _overlapSphereRadius = 0.5f;
     [SerializeField] Star starPrefab;
+    [SerializeField] GameObject arrowPrefab;
 
     public event Action<IDictionary<Vector2Int, HexState>> ObstaclesGenerated;
 
@@ -20,9 +21,6 @@ public class ObstacleGenerator : MonoBehaviour
     private GameParameters.Obstacles _obstaclesParam;
     private int _smallCoin;
     private List<ObstacleProduct> patterns;
-
-    public Dictionary<Vector2Int, HexState> hexObstacles;
-
 
     public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam,int smallCoin)
     {
@@ -52,11 +50,10 @@ public class ObstacleGenerator : MonoBehaviour
             offset += obstacle.Height;
             patterns.Add(obstacle);
         }
-
+      
         var starPlace = _map
               .Shuffle()
-              .Take(_smallCoin)
-              .Select(h => h.index);
+              .Take(_smallCoin).Select(h => h.index);
 
         foreach (var item in _map)
         {
@@ -72,6 +69,10 @@ public class ObstacleGenerator : MonoBehaviour
             }
            
         }
+
+        var arrowHex = _map.Where(x => x.IsTarget).FirstOrDefault();
+        var arrow = Instantiate(arrowPrefab, arrowHex.transform);
+        arrow.transform.localPosition = Vector3.up;
 
     }
 
@@ -90,7 +91,7 @@ public class ObstacleGenerator : MonoBehaviour
 
     public void SimpleGenerator()
     {
-         hexObstacles = new Dictionary<Vector2Int, HexState>();
+        Dictionary<Vector2Int, HexState> hexObstacles = new Dictionary<Vector2Int, HexState>();
       
         var randomObstacles = RandomObstacles();
 
