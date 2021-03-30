@@ -28,6 +28,7 @@ public class ObstacleGenerator : MonoBehaviour
         _obstaclesParam = obstaclesParam;
 
         IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
+            //new PatternEnum[] { PatternEnum.Wall3 }
             .Select(p => new ObstacleCreator(p))
             .Shuffle();
             
@@ -74,17 +75,15 @@ public class ObstacleGenerator : MonoBehaviour
         foreach (var item in holesIndexes)
             hexObstacles[item] = HexState.Hole;
 
-        foreach (var item in patterns)
-        {
-            item.ChangeValue();
-        }
-
-        var patt = patterns.SelectMany(p => p.Values);
+        var patt = patterns.SelectMany(p => p.GetValues());
 
         foreach (var item in patt)
             hexObstacles[item.Key] = item.Value;
 
         ObstaclesGenerated?.Invoke(hexObstacles);
+
+        foreach (var item in patterns)
+            item.ChangeValue();
     }
 
     private IEnumerable<Vector2Int> RandomObstacles()
