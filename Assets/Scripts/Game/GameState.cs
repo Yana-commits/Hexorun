@@ -25,6 +25,7 @@ public class GameState : MonoBehaviour
 
     public void StartGame(GameParameters parameters)
     {
+     
         gameParameters = parameters;
 
         gameTimeLeft = gameParameters.duration;
