@@ -17,6 +17,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 5
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.1
@@ -29,6 +31,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 8
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.1
@@ -41,6 +45,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 8
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.1
@@ -53,6 +59,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 10
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.2
@@ -65,6 +73,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 10
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.2
@@ -77,6 +87,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 10
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.2
@@ -89,6 +101,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 12
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.2
@@ -101,6 +115,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 12
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -113,6 +129,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 12
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -125,6 +143,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 15
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -137,6 +157,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 15
+    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -149,6 +171,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 15
+    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -161,6 +185,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 18
+    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -173,6 +199,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 18
+    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -185,6 +213,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 18
+    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -197,6 +227,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 20
+    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -209,6 +241,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 20
+    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -221,6 +255,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 20
+    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -233,6 +269,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 25
+    bigCoin: 3
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -245,6 +283,8 @@ MonoBehaviour:
     duration: 30
     playerSpeed: 2
     changesTime: 2
+    smallCoin: 25
+    bigCoin: 3
     obstaclesParam:
       obstacleProbability:
         minValue: 0.4
