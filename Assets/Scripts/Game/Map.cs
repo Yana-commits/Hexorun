@@ -10,15 +10,15 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     [SerializeField] Hex hexPrefab;
     [SerializeField] Renderer planeRenderer;
     [SerializeField] BoxCollider deathTrigger;
-   
+
+    [SerializeField] GameObject arrowPrefab;
+
     private List<Hex> hexes = new List<Hex>();
     public Vector2Int size
     {
         get;
         private set;
     }
-        
-
 
     private Bounds _bounds;
     public Bounds Bounds => _bounds;
@@ -58,6 +58,9 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         var rend = this[targetIndex].Renderer;
         rend.material = data.target;
         this[targetIndex].IsTarget = true;
+
+        var arrow = Instantiate(arrowPrefab, this[targetIndex].transform);
+        arrow.transform.localPosition = Vector3.up;
 
         var cent = deathTrigger.transform.InverseTransformPoint(_bounds.center);
         deathTrigger.size = _bounds.size;

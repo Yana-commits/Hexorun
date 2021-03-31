@@ -26,13 +26,13 @@ public class GameParameters
     public int duration;
     public float playerSpeed;
     public float changesTime;
+
     [NonSerialized]
     public MaterialRepository.Data theme;
     [NonSerialized]
     public int id;
-    public int smallCoin;
-    public int bigCoin;
 
+    public List<KeyValuePair<GameObject,int>> collectableItems;
     public Obstacles obstaclesParam;
 
     public GameParameters()
@@ -42,12 +42,16 @@ public class GameParameters
         playerSpeed = 2;
         changesTime = 2;
         theme = default;
-        smallCoin=1;
-        bigCoin =1;
+        collectableItems = new List<KeyValuePair<GameObject, int>>();
     }
 }
 
-
+[Serializable]
+public struct KeyValuePair<TKey, TValue>
+{
+    public TKey Key;
+    public TValue Value;
+}
 
 [Serializable]
 public class StartGameEvent : UnityEvent<GameParameters>
