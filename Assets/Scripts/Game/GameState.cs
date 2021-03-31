@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,7 +22,6 @@ public class GameState : MonoBehaviour
     private GameParameters gameParameters;
     private float gameTimeLeft;
     private GameplayState gameState = GameplayState.Stop;
-    private int smallCoin;
 
     public void StartGame(GameParameters parameters)
     {
@@ -30,20 +30,31 @@ public class GameState : MonoBehaviour
 
         gameTimeLeft = gameParameters.duration;
 
-        smallCoin = gameParameters.smallCoin;
-        Debug.Log($"{smallCoin}");
-
         map.Initializie(gameParameters.size, gameParameters.theme);
         map.gameObject.SetActive(true);
         
         PlayerInit();
         obstaclePresenter.Initialize();
-        obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam,smallCoin);
+        obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam);
 
         gameState = GameplayState.Play;
         StartCoroutine(ObstacleGeneratorLoop());
 
         hud.UpdateLevel(gameParameters.id + 1);
+
+        //TODO: move into another place
+        var list = map.Shuffle().ToList();
+        int index = 0;
+
+        foreach (var pair in gameParameters.collectableItems)
+        {
+            for (int i = 0; i < pair.Value; index++, i++)
+            {
+                GameObject star = Instantiate(pair.Key, list[index].transform);
+                star.transform.localPosition = Vector3.up * 0.5f;
+            }
+        }
+
     }
 
     private void PlayerInit()

@@ -22,7 +22,6 @@ public class StartGameWindowV2 : MonoBehaviour
         GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
 
         OnStartGame?.Invoke(gameParams);       
-        print(level);
     }
 
     private void OnEnable()

@@ -13,23 +13,18 @@ public class ObstacleGenerator : MonoBehaviour
     [SerializeField] LayerMask hexLayer;
     [SerializeField] float _overlapSphereRadius = 0.5f;
     [SerializeField] Star starPrefab;
-    [SerializeField] GameObject arrowPrefab;
 
     public event Action<IDictionary<Vector2Int, HexState>> ObstaclesGenerated;
 
     private Transform _player;
     private GameParameters.Obstacles _obstaclesParam;
-    private int _smallCoin;
     private List<ObstacleProduct> patterns;
 
-    public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam,int smallCoin)
+    public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
     {
         patterns = new List<ObstacleProduct>();
         _player = player;
         _obstaclesParam = obstaclesParam;
-        _smallCoin = smallCoin;
-
-        Debug.Log($"{_smallCoin}");
 
         IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
             //new PatternEnum[] { PatternEnum.Wall3 }
@@ -50,30 +45,6 @@ public class ObstacleGenerator : MonoBehaviour
             offset += obstacle.Height;
             patterns.Add(obstacle);
         }
-      
-        var starPlace = _map
-              .Shuffle()
-              .Take(_smallCoin).Select(h => h.index);
-
-        foreach (var item in _map)
-        {
-            if (starPlace.Contains(item.index) )
-            {
-                var position = Hexagonal.Cube.HexToPixel(
-                Hexagonal.Offset.QToCube(item.index),
-                Vector2.one * Map.hexRadius) + new Vector3(0, 0.5f, 0);
-
-                Star star = Instantiate(starPrefab, position, Quaternion.identity);
-
-                star.transform.SetParent(item.transform);
-            }
-           
-        }
-
-        var arrowHex = _map.Where(x => x.IsTarget).FirstOrDefault();
-        var arrow = Instantiate(arrowPrefab, arrowHex.transform);
-        arrow.transform.localPosition = Vector3.up;
-
     }
 
     internal void Generate()
