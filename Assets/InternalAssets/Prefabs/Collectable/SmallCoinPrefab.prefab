@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 62709942110977725}
   - component: {fileID: 7176123062537426086}
   m_Layer: 0
-  m_Name: CoinPrefab
+  m_Name: SmallCoinPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55980b5929729ac408f9d0c96599f518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 398942834805256364, guid: a6f0bc7ca6c660149a9eb5ff430cc707,
+    type: 3}
 --- !u!65 &62709942110977725
 BoxCollider:
   m_ObjectHideFlags: 0
