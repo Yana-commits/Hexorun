@@ -2,15 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    [SerializeField] Button pauseBtn;
+
     [SerializeField] Text timeText;
     [SerializeField] Text levelText;
     [SerializeField] Text scoreText;
 
     private int coinAmount = 0;
+
+    public event UnityAction OnPause
+    {
+        add => pauseBtn.onClick.AddListener(value);
+        remove => pauseBtn.onClick.RemoveListener(value);
+    }
 
     private void OnEnable()
     {

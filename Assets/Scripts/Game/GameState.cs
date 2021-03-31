@@ -20,27 +20,30 @@ public class GameState : MonoBehaviour
     [SerializeField] private StartGameWindow startGameWindow;
 
     private GameParameters gameParameters;
-    private float gameTimeLeft;
+
+    private float elapsedTime;
+    private float generatorTime;
     private GameplayState gameState = GameplayState.Stop;
+
+    private void Start()
+    {
+        hud.OnPause += () => SetGameState(GameplayState.Pause);
+    }
 
     public void StartGame(GameParameters parameters)
     {
-     
         gameParameters = parameters;
-
-        gameTimeLeft = gameParameters.duration;
 
         map.Initializie(gameParameters.size, gameParameters.theme);
         map.gameObject.SetActive(true);
-        
+
         PlayerInit();
         obstaclePresenter.Initialize();
         obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam);
 
-        gameState = GameplayState.Play;
-        StartCoroutine(ObstacleGeneratorLoop());
-
         hud.UpdateLevel(gameParameters.id + 1);
+
+        generatorTime = gameParameters.changesTime - 1;
 
         //TODO: move into another place
         var list = map.Shuffle().ToList();
@@ -55,6 +58,29 @@ public class GameState : MonoBehaviour
             }
         }
 
+        SetGameState(GameplayState.Play);
+    }
+
+    public void SetGameState(GameplayState state)
+    {
+        gameState = state;
+        switch (state)
+        {
+            case GameplayState.Stop:
+                break;
+            case GameplayState.Play:
+                Time.timeScale = 1;
+                player.enabled = true;
+                break;
+            case GameplayState.Pause:
+                Time.timeScale = 0;
+                player.enabled = false;
+                break;
+            case GameplayState.GameOver:
+                DG.Tweening.DOTween.KillAll();
+                player.enabled = false;
+                break;
+        }
     }
 
     private void PlayerInit()
@@ -64,16 +90,13 @@ public class GameState : MonoBehaviour
         player.transform.SetPositionAndRotation(startPos,Quaternion.identity);
         player.Initializie(gameParameters.playerSpeed, map.Bounds, joystick);
         player.stateChanged += OnPlayerStateChanged;
+        player.enabled = false;
         player.gameObject.SetActive(true);
     }
 
-
-
     private void OnPlayerStateChanged(PlayerState obj)
     {
-        gameState = GameplayState.GameOver;
-        DG.Tweening.DOTween.KillAll();
-        player.enabled = false;
+        SetGameState(GameplayState.GameOver);
 
         switch (obj)
         {
@@ -106,29 +129,24 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
-       
         if (gameState != GameplayState.Play)
             return;
+        
+        elapsedTime += Time.deltaTime;
 
-        gameTimeLeft -= Time.deltaTime;
-
-        if (gameTimeLeft <= 0)
+        if (elapsedTime > gameParameters.duration)
         {
             OnPlayerStateChanged(PlayerState.Lose);
-            gameTimeLeft = 0;
+            elapsedTime = gameParameters.duration;
         }
 
-        hud.UpdateScoreValue(gameTimeLeft);
-    }
-
-    private IEnumerator ObstacleGeneratorLoop()
-    {
-        yield return new WaitForSeconds(1f);
-        while (gameState == GameplayState.Play)
+        generatorTime += Time.deltaTime;
+        if (generatorTime > gameParameters.changesTime)
         {
             obstacleGenerator.Generate();
-            yield return new WaitForSeconds(gameParameters.changesTime);
+            generatorTime = 0;
         }
-    }
 
+        hud.UpdateScoreValue(gameParameters.duration - elapsedTime);
+    }
 }
