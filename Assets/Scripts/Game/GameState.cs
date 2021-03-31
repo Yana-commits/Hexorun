@@ -58,7 +58,7 @@ public class GameState : MonoBehaviour
             }
         }
 
-        SetGameState(GameplayState.Play);
+        //SetGameState(GameplayState.Play);
     }
 
     public void SetGameState(GameplayState state)

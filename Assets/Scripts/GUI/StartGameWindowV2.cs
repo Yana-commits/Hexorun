@@ -9,19 +9,29 @@ public class StartGameWindowV2 : MonoBehaviour
 {
     [SerializeField] MaterialRepository datas;
     [SerializeField] LevelRepository levels;
+    [SerializeField] GameState gameState;
+    [SerializeField] Text levelText;
 
     public Button startButton;
   
     public StartGameEvent OnStartGame;
-    private void OnStartClick()
+
+    private void Start()
     {
-        int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count-1);
+        int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count - 1);
         var gameParams = levels[level];
         gameParams.id = level;
         gameParams.theme = datas.Materials[GamePlayerPrefs.LastTheme];
         GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
+        gameState.StartGame(gameParams);
+        levelText.text = "Level " +(level + 1).ToString();
+    }
 
-        OnStartGame?.Invoke(gameParams);       
+    private void OnStartClick()
+    {
+
+        gameState.SetGameState(GameplayState.Play);
+        OnStartGame?.Invoke(null);       
     }
 
     private void OnEnable()
