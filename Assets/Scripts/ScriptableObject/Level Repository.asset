@@ -22,8 +22,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 5
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.1
@@ -41,8 +39,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 8
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.1
@@ -60,8 +56,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 10
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.1
@@ -79,8 +73,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 10
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.2
@@ -98,8 +90,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 10
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.2
@@ -117,8 +107,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 12
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.2
@@ -136,8 +124,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 12
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.2
@@ -155,8 +141,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 12
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -174,8 +158,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 15
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -193,8 +175,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 15
-    bigCoin: 1
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -212,8 +192,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 15
-    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -231,8 +209,6 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 18
-    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
@@ -250,12 +226,10 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 18
-    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
@@ -269,12 +243,10 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 18
-    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
@@ -288,12 +260,10 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 20
-    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
@@ -307,12 +277,10 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 20
-    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
@@ -326,12 +294,10 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 20
-    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
@@ -345,12 +311,10 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 20
-    bigCoin: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
@@ -364,12 +328,10 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 25
-    bigCoin: 3
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.4
         maxValue: 0.5
@@ -383,12 +345,10 @@ MonoBehaviour:
       Value: 5
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
-    smallCoin: 25
-    bigCoin: 3
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.4
-        maxValue: 0.5
+        minValue: 0.3
+        maxValue: 0.35
       holeProbability:
         minValue: 0.4
         maxValue: 0.5

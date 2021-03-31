@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 1284c8f9bcbfd4f4eb5fcf8cfad0e495
+guid: 58b5f2463e198024f8e2bf15a6e6377e
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Win_2
+    second: Win
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Win_2
+      name: Win
       takeName: Take 001
       internalID: 0
-      firstFrame: 0
-      lastFrame: 169
+      firstFrame: 1
+      lastFrame: 179
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
