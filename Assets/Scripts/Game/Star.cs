@@ -14,8 +14,7 @@ public class Star : MonoBehaviour
     {
         if (other.TryGetComponent<Player>(out var player))
         {
-          var  newExplosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
-            _ = newExplosion.GetComponent<ParticleSystem>().startLifetime;
+          var  newExplosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity).GetComponent<ParticleSystem>().startLifetime;
 
             Handheld.Vibrate();
             Score();

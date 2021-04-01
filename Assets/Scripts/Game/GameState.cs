@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 public class GameState : MonoBehaviour
 {
     [SerializeField] private HUD hud;
+    [SerializeField] private AdditionalTime additional;
     [SerializeField] private Joystick joystick;
 
     [Space]
@@ -24,10 +25,13 @@ public class GameState : MonoBehaviour
     private float elapsedTime;
     private float generatorTime;
     private GameplayState gameState = GameplayState.Stop;
+    private float additionalTimePanel = 10;
+    private float additionalTime = 10;
 
     private void Start()
     {
         hud.OnPause += () => SetGameState(GameplayState.Pause);
+        additional.OnAddTime += () => AddTime();
     }
 
     public void StartGame(GameParameters parameters)
@@ -136,8 +140,7 @@ public class GameState : MonoBehaviour
 
         if (elapsedTime > gameParameters.duration)
         {
-            OnPlayerStateChanged(PlayerState.Lose);
-            elapsedTime = gameParameters.duration;
+            StartCoroutine(ForAdditionalTime());
         }
 
         generatorTime += Time.deltaTime;
@@ -148,5 +151,35 @@ public class GameState : MonoBehaviour
         }
 
         hud.UpdateScoreValue(gameParameters.duration - elapsedTime);
+    }
+
+    private void Lose()
+    {
+        OnPlayerStateChanged(PlayerState.Lose);
+        elapsedTime = gameParameters.duration;
+    }
+
+    private IEnumerator ForAdditionalTime()
+    {
+        SetGameState(GameplayState.Pause);
+        additional.gameObject.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(additionalTimePanel);
+
+        SetGameState(GameplayState.Play);
+        additional.gameObject.SetActive(false);
+        
+        Lose();
+    }
+
+    public void AddTime()
+    {
+        Debug.Log("111");
+
+        StopCoroutine(ForAdditionalTime());
+        gameParameters.duration = gameParameters.duration + (int)additionalTime;
+
+        SetGameState(GameplayState.Play);
+        additional.gameObject.SetActive(false);
     }
 }
