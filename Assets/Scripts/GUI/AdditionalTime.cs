@@ -15,6 +15,12 @@ public class AdditionalTime : MonoBehaviour
         add => continuieBtn.onClick.AddListener(value);
         remove => continuieBtn.onClick.RemoveListener(value);
     }
+    public event UnityAction OnContiniue
+    {
+        add => giveUpBtn.onClick.AddListener(value);
+        remove => giveUpBtn.onClick.RemoveListener(value);
+    }
+
     void Start()
     {
         

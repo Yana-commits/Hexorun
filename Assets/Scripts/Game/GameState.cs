@@ -25,18 +25,21 @@ public class GameState : MonoBehaviour
     private float elapsedTime;
     private float generatorTime;
     private GameplayState gameState = GameplayState.Stop;
-    private float additionalTimePanel = 10;
+    private float additionalTimePanel = 6;
     private float additionalTime = 10;
-
+    private float duration;
+    private bool plusTime = true;
     private void Start()
     {
         hud.OnPause += () => SetGameState(GameplayState.Pause);
         additional.OnAddTime += () => AddTime();
+        additional.OnContiniue += () => Continiue();
     }
 
     public void StartGame(GameParameters parameters)
     {
         gameParameters = parameters;
+        duration = gameParameters.duration;
 
         map.Initializie(gameParameters.size, gameParameters.theme);
         map.gameObject.SetActive(true);
@@ -138,9 +141,16 @@ public class GameState : MonoBehaviour
         
         elapsedTime += Time.deltaTime;
 
-        if (elapsedTime > gameParameters.duration)
+        if (elapsedTime > duration)
         {
-            StartCoroutine(ForAdditionalTime());
+            if (plusTime)
+            {
+                StartCoroutine(ForAdditionalTime());
+            }
+            else
+            {
+                Lose();
+            }
         }
 
         generatorTime += Time.deltaTime;
@@ -150,36 +160,44 @@ public class GameState : MonoBehaviour
             generatorTime = 0;
         }
 
-        hud.UpdateScoreValue(gameParameters.duration - elapsedTime);
+        hud.UpdateScoreValue(duration - elapsedTime);
     }
 
     private void Lose()
     {
         OnPlayerStateChanged(PlayerState.Lose);
-        elapsedTime = gameParameters.duration;
+        elapsedTime = duration;
+        plusTime = true;
     }
 
     private IEnumerator ForAdditionalTime()
     {
+        plusTime = false;
         SetGameState(GameplayState.Pause);
         additional.gameObject.SetActive(true);
 
         yield return new WaitForSecondsRealtime(additionalTimePanel);
-
+       
         SetGameState(GameplayState.Play);
         additional.gameObject.SetActive(false);
-        
         Lose();
     }
 
     public void AddTime()
     {
-        Debug.Log("111");
-
-        StopCoroutine(ForAdditionalTime());
-        gameParameters.duration = gameParameters.duration + (int)additionalTime;
+        //StopCoroutine(ForAdditionalTime());
+        StopAllCoroutines();
+        duration = duration + (int)additionalTime;
 
         SetGameState(GameplayState.Play);
         additional.gameObject.SetActive(false);
+    }
+    public void Continiue()
+    {
+        StopAllCoroutines();
+        SetGameState(GameplayState.Play);
+        additional.gameObject.SetActive(false);
+
+        Lose();
     }
 }
