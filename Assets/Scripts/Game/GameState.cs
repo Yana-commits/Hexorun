@@ -27,7 +27,7 @@ public class GameState : MonoBehaviour
 
     private void Start()
     {
-        hud.OnPause += () => SetGameState(GameplayState.Pause);
+        hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
     }
 
     public void StartGame(GameParameters parameters)
@@ -69,11 +69,11 @@ public class GameState : MonoBehaviour
             case GameplayState.Stop:
                 break;
             case GameplayState.Play:
-                Time.timeScale = 1;
+                //Time.timeScale = 1;
                 player.enabled = true;
                 break;
             case GameplayState.Pause:
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
                 player.enabled = false;
                 break;
             case GameplayState.GameOver:
