@@ -75,11 +75,11 @@ public class GameState : MonoBehaviour
             case GameplayState.Stop:
                 break;
             case GameplayState.Play:
-                Time.timeScale = 1;
+                //Time.timeScale = 1;
                 player.enabled = true;
                 break;
             case GameplayState.Pause:
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
                 player.enabled = false;
                 break;
             case GameplayState.GameOver:
@@ -172,10 +172,11 @@ public class GameState : MonoBehaviour
     private IEnumerator ForAdditionalTime()
     {
         plusTime = false;
+        additional.SetTimer(additionalTimePanel);
         SetGameState(GameplayState.Pause);
         additional.gameObject.SetActive(true);
 
-        yield return new WaitForSecondsRealtime(additionalTimePanel);
+        yield return new WaitForSeconds(additionalTimePanel);
        
         SetGameState(GameplayState.Play);
         additional.gameObject.SetActive(false);

@@ -36,7 +36,7 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 8
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
@@ -53,7 +53,7 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 10
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
@@ -70,7 +70,7 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 10
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
@@ -87,7 +87,7 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 10
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
@@ -104,7 +104,7 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 12
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
@@ -121,7 +121,7 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 12
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
@@ -138,13 +138,13 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 12
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
@@ -155,13 +155,13 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 15
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
@@ -172,13 +172,13 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 15
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
       Value: 1
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
@@ -189,13 +189,13 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 15
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
@@ -206,13 +206,13 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 18
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
-        minValue: 0.3
-        maxValue: 0.4
+        minValue: 0.25
+        maxValue: 0.3
       holeProbability:
         minValue: 0.3
         maxValue: 0.4
@@ -223,9 +223,9 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 18
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.25
@@ -240,9 +240,9 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 18
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.25
@@ -257,9 +257,9 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 20
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.25
@@ -274,9 +274,9 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 20
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.25
@@ -291,9 +291,9 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 20
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.25
@@ -308,9 +308,9 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 20
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.25
@@ -325,9 +325,9 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 25
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.25
@@ -342,9 +342,9 @@ MonoBehaviour:
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
-      Value: 5
+      Value: 25
     - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db, type: 3}
-      Value: 1
+      Value: 2
     obstaclesParam:
       obstacleProbability:
         minValue: 0.3
