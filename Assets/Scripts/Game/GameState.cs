@@ -146,6 +146,7 @@ public class GameState : MonoBehaviour
             if (plusTime)
             {
                 StartCoroutine(ForAdditionalTime());
+                Debug.Log("888");
             }
             else
             {
