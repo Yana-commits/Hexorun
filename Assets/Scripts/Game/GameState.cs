@@ -18,8 +18,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private Map map;
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
-    [SerializeField] private StartGameWindow startGameWindow;
-
+ 
     private GameParameters gameParameters;
 
     private float elapsedTime;
@@ -31,7 +30,7 @@ public class GameState : MonoBehaviour
     private bool plusTime = true;
     private void Start()
     {
-        hud.OnPause += () => SetGameState(GameplayState.Pause);
+        hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
         additional.OnAddTime += () => AddTime();
         additional.OnContiniue += () => Continiue();
     }
