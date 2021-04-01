@@ -1,3 +1,4 @@
+using MoreMountains.NiceVibrations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +15,10 @@ public class Star : MonoBehaviour
     {
         if (other.TryGetComponent<Player>(out var player))
         {
-          var  newExplosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity).GetComponent<ParticleSystem>().startLifetime;
-
-            Handheld.Vibrate();
+            var newExplosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+            MMVibrationManager.Haptic(HapticTypes.Success);       
             Score();
+            Destroy(newExplosion, 2f);
             Destroy(gameObject);
         }
     }

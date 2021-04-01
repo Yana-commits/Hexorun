@@ -11,9 +11,7 @@ public class StartGameWindowV2 : MonoBehaviour
     [SerializeField] LevelRepository levels;
     [SerializeField] GameState gameState;
     [SerializeField] Text levelText;
-
-    public Button startButton;
-  
+    
     public StartGameEvent OnStartGame;
 
     private void Start()
@@ -27,20 +25,9 @@ public class StartGameWindowV2 : MonoBehaviour
         levelText.text = "Level " +(level + 1).ToString();
     }
 
-    private void OnStartClick()
+    public void OnStartClick()
     {
-
         gameState.SetGameState(GameplayState.Play);
         OnStartGame?.Invoke(null);       
     }
-
-    private void OnEnable()
-    {
-        startButton.onClick.AddListener(OnStartClick);
-
-        var names = datas
-            .Select(d => new Dropdown.OptionData(d.name))
-            .ToList();
-    }
-    private void OnDisable() => startButton.onClick.RemoveListener(OnStartClick);
 }

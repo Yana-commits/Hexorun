@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8090138596686894423}
   - component: {fileID: 5300917405044008948}
-  - component: {fileID: 62709942110977725}
+  - component: {fileID: 7528100266852615985}
   - component: {fileID: 7176123062537426086}
   m_Layer: 0
   m_Name: SmallCoinPrefab
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 398942834805256364, guid: a6f0bc7ca6c660149a9eb5ff430cc707,
     type: 3}
---- !u!65 &62709942110977725
-BoxCollider:
+--- !u!135 &7528100266852615985
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -59,8 +59,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.09914048, y: 0.338324, z: 0.30869514}
-  m_Center: {x: 0, y: -0.000000007450581, z: -0.000000007450581}
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &7176123062537426086
 Animator:
   serializedVersion: 3
