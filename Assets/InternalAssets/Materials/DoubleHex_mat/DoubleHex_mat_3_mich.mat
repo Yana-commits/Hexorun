@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DoubleHex_mat
+  m_Name: DoubleHex_mat_3_mich
   m_Shader: {fileID: -6465566751694194690, guid: f8a64d6054970b64c978fde4a1d6c8e3,
     type: 3}
   m_ShaderKeywords: 
@@ -67,22 +67,25 @@ Material:
     - Vector1_e5262d8cf2f24f28a92c302136008c85: 0.15
     - Vector1_f7ebe24382624cd9a8f9ab1a2be472e4: 2
     m_Colors:
-    - Color_3e89439ef0ca43e7844edd8f86857924: {r: 6.964404, g: 0, b: 0, a: 0}
-    - Color_612d997f59d848ee897dc95c6995fef3: {r: 0.20392157, g: 4, b: 0, a: 0}
+    - Color_3e89439ef0ca43e7844edd8f86857924: {r: 0, g: 0.6780594, b: 0.8301887, a: 1}
+    - Color_612d997f59d848ee897dc95c6995fef3: {r: 0.8584906, g: 0.45767823, b: 0.10123708,
+        a: 0}
     - Color_6d8787a5ee644853a64f4482b50de5f5: {r: 0.8113208, g: 0.18752226, b: 0.18752226,
         a: 0}
     - Color_9b9631ede24f4b5380f4e3599dd167ac: {r: 0.26692602, g: 0.19339623, b: 0.7735849,
         a: 1}
-    - Color_9f2dc0f622c84fa38268329f508f28eb: {r: 2.8705883, g: 0, b: 1.5215687, a: 0}
-    - Color_aafab1edaca542e3b097a8f3b4082509: {r: 0, g: 0, b: 0, a: 0}
-    - Color_c6983388708144e58d8f6579849ab813: {r: 0, g: 0.23529412, b: 4, a: 0}
-    - Color_d3dd389a6bdf417b9488a8327843b52d: {r: 0, g: 0, b: 0, a: 0}
-    - Color_d3dd389a6bdf417b9488a8327843b52d_1: {r: 0.010528979, g: 0, b: 0.4339623,
+    - Color_9f2dc0f622c84fa38268329f508f28eb: {r: 0.83137256, g: 0.3254902, b: 0.5803922,
         a: 0}
-    - Color_e7c7508242134d118cd78693679b45c7: {r: 0.99215686, g: 0.003921569, b: 0.003921569,
+    - Color_aafab1edaca542e3b097a8f3b4082509: {r: 0, g: 0.6415094, b: 0.4492299, a: 1}
+    - Color_c6983388708144e58d8f6579849ab813: {r: 0.3529412, g: 0.3529412, b: 1, a: 0}
+    - Color_d3dd389a6bdf417b9488a8327843b52d: {r: 0, g: 0.25794807, b: 0.5377358,
         a: 1}
-    - Color_e7c7508242134d118cd78693679b45c7_1: {r: 0.31290174, g: 0.004672473, b: 0.3301887,
+    - Color_d3dd389a6bdf417b9488a8327843b52d_1: {r: 0.67058825, g: 0.3254902, b: 0.83137256,
         a: 0}
-    - Color_e7c7508242134d118cd78693679b45c7_2: {r: 0.09503964, g: 0.4811321, b: 0,
+    - Color_e7c7508242134d118cd78693679b45c7: {r: 0, g: 0.26352766, b: 0.31132078,
+        a: 1}
+    - Color_e7c7508242134d118cd78693679b45c7_1: {r: 0.83137256, g: 0.3254902, b: 0.5803922,
+        a: 0}
+    - Color_e7c7508242134d118cd78693679b45c7_2: {r: 0.8301887, g: 0.44444343, b: 0.41901034,
         a: 0}
   m_BuildTextureStacks: []

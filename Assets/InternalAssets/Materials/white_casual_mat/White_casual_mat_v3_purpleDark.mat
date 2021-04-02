@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: White_casual_mat_v2
+  m_Name: White_casual_mat_v3_purpleDark
   m_Shader: {fileID: -6465566751694194690, guid: d814ff67764cfaa4a8b9c64c7d42dfb5,
     type: 3}
   m_ShaderKeywords: 
@@ -143,18 +143,17 @@ Material:
     - Color_0dd8e58060b845fc948a315469ea40d4: {r: 0.04313726, g: 0.7490196, b: 0,
         a: 0}
     - Color_1: {r: 1, g: 0, b: 0.2066951, a: 0}
-    - Color_256774a4842a417fb2b9e8e8f5fc8eda: {r: 0.2392157, g: 0.18039216, b: 0.16862746,
+    - Color_256774a4842a417fb2b9e8e8f5fc8eda: {r: 0.47682124, g: 0.18178178, b: 0.8962264,
         a: 1}
     - Color_3BEE2782: {r: 0, g: 0.9381461, b: 1, a: 0}
     - Color_47722A9E: {r: 0, g: 0.2532594, b: 1, a: 0}
     - Color_89D4D418: {r: 1, g: 0, b: 0, a: 0}
-    - Color_d3dd389a6bdf417b9488a8327843b52d: {r: 0.52358484, g: 0.8396226, b: 0,
+    - Color_d3dd389a6bdf417b9488a8327843b52d: {r: 1, g: 0.2028302, b: 0.42354128,
         a: 1}
-    - Color_d3dd389a6bdf417b9488a8327843b52d_1: {r: 0.9921569, g: 0.3372549, b: 0.20392159,
+    - Color_d3dd389a6bdf417b9488a8327843b52d_1: {r: 0, g: 0.44154477, b: 1, a: 1}
+    - Color_e7c7508242134d118cd78693679b45c7: {r: 0.2509804, g: 0.86274517, b: 0.027450982,
         a: 1}
-    - Color_e7c7508242134d118cd78693679b45c7: {r: 0.64705884, g: 0.3372549, b: 0.9058824,
-        a: 1}
-    - Color_e7c7508242134d118cd78693679b45c7_1: {r: 0, g: 0.8862746, b: 0.5058824,
+    - Color_e7c7508242134d118cd78693679b45c7_1: {r: 1, g: 0.4599963, b: 0.08018869,
         a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

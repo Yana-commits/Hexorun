@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: White_casual_mat_v5
+  m_Name: White_casual_mat_v1_purpleLight
   m_Shader: {fileID: -6465566751694194690, guid: d814ff67764cfaa4a8b9c64c7d42dfb5,
     type: 3}
   m_ShaderKeywords: 
@@ -97,7 +97,7 @@ Material:
     - Boolean_1: 0
     - Boolean_7A195443: 0
     - Vector1_1: 0
-    - Vector1_1306D47F: 0.299
+    - Vector1_1306D47F: 0
     - Vector1_2: 1
     - Vector1_448671D5: 1
     - Vector1_46ffb50d67c94179adf7e6736d2658b4: 1
@@ -105,7 +105,7 @@ Material:
     - Vector1_57B2F474: 1
     - Vector1_5B0BFD77: 0
     - Vector1_682d2a01d30b47848adec186b97a7354: -1.38
-    - Vector1_6D098D4: 0.527
+    - Vector1_6D098D4: 0
     - Vector1_6ed1ec315095483fb0049d3b763a543d: 1
     - Vector1_7fa99c924e124f2eae02d196bb216297: 0
     - Vector1_84f16e8e62d94805b27249a3c6d172c9: 0.15
@@ -143,17 +143,18 @@ Material:
     - Color_0dd8e58060b845fc948a315469ea40d4: {r: 0.04313726, g: 0.7490196, b: 0,
         a: 0}
     - Color_1: {r: 1, g: 0, b: 0.2066951, a: 0}
-    - Color_256774a4842a417fb2b9e8e8f5fc8eda: {r: 0.033641864, g: 0.113433436, b: 0.26415092,
-        a: 1}
+    - Color_256774a4842a417fb2b9e8e8f5fc8eda: {r: 0.4455902, g: 0.3726415, b: 1, a: 1}
     - Color_3BEE2782: {r: 0, g: 0.9381461, b: 1, a: 0}
     - Color_47722A9E: {r: 0, g: 0.2532594, b: 1, a: 0}
     - Color_89D4D418: {r: 1, g: 0, b: 0, a: 0}
-    - Color_d3dd389a6bdf417b9488a8327843b52d: {r: 0.9716981, g: 0.93961376, b: 0.93961376,
+    - Color_d3dd389a6bdf417b9488a8327843b52d: {r: 0.37254903, g: 0.9725491, b: 0.16862746,
         a: 1}
-    - Color_d3dd389a6bdf417b9488a8327843b52d_1: {r: 0, g: 0.2735037, b: 0.9716981,
+    - Color_d3dd389a6bdf417b9488a8327843b52d_1: {r: 1, g: 0.43867925, b: 0.28773582,
         a: 1}
-    - Color_e7c7508242134d118cd78693679b45c7: {r: 0.508695, g: 0.06132078, b: 1, a: 1}
-    - Color_e7c7508242134d118cd78693679b45c7_1: {r: 0, g: 0.6386905, b: 1, a: 1}
+    - Color_e7c7508242134d118cd78693679b45c7: {r: 0.10849059, g: 0.63724786, b: 1,
+        a: 1}
+    - Color_e7c7508242134d118cd78693679b45c7_1: {r: 1, g: 0.90196085, b: 0.10196079,
+        a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
