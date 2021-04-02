@@ -75,11 +75,11 @@ public class GameState : MonoBehaviour
             case GameplayState.Stop:
                 break;
             case GameplayState.Play:
-                Time.timeScale = 1;
+                //Time.timeScale = 1;
                 player.enabled = true;
                 break;
             case GameplayState.Pause:
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
                 player.enabled = false;
                 break;
             case GameplayState.GameOver:
@@ -109,6 +109,10 @@ public class GameState : MonoBehaviour
             case PlayerState.Win:
                 StartCoroutine(player.Winner(ReloadScene));
                 GamePlayerPrefs.LastLevel = gameParameters.id;
+                if (GamePlayerPrefs.BestScore < hud.coinAmount)
+                {
+                    GamePlayerPrefs.BestScore = hud.coinAmount;
+                }
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
@@ -119,7 +123,6 @@ public class GameState : MonoBehaviour
             default:
                 break;
         }
-
     }
 
     private void ReloadScene()
@@ -172,10 +175,11 @@ public class GameState : MonoBehaviour
     private IEnumerator ForAdditionalTime()
     {
         plusTime = false;
+        additional.SetTimer(additionalTimePanel);
         SetGameState(GameplayState.Pause);
         additional.gameObject.SetActive(true);
 
-        yield return new WaitForSecondsRealtime(additionalTimePanel);
+        yield return new WaitForSEcondsRealTime(additionalTimePanel);
        
         SetGameState(GameplayState.Play);
         additional.gameObject.SetActive(false);

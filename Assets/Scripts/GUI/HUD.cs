@@ -13,7 +13,7 @@ public class HUD : MonoBehaviour
     [SerializeField] Text levelText;
     [SerializeField] Text scoreText;
 
-    private int coinAmount = 0;
+    public int coinAmount = 0;
 
     public event UnityAction OnPause
     {

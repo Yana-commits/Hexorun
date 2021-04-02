@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class AdditionalTime : MonoBehaviour
 {
     [SerializeField] Button continuieBtn;
-
     [SerializeField] Button giveUpBtn;
+    [SerializeField] Image circleImg;
+    [SerializeField] Text timerLabel;
 
+    private float timer;
     public event UnityAction OnAddTime
     {
         add => continuieBtn.onClick.AddListener(value);
@@ -21,14 +24,13 @@ public class AdditionalTime : MonoBehaviour
         remove => giveUpBtn.onClick.RemoveListener(value);
     }
 
-    void Start()
+    public void SetTimer(float _timer)
     {
-        
+        timer = _timer;
+        circleImg.DOFillAmount(0.0f, timer).OnUpdate(()=> {
+            
+            timerLabel.text = ((int)(circleImg.fillAmount * (timer)) + 1).ToString();
+        });
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
