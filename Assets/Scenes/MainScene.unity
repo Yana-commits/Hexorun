@@ -386,7 +386,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: 0.000000022880089, z: -0.000000008283735, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: 0.000000022640435, z: -0.0000000081969675, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1315,6 +1315,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6747061407024216807}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2022286736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1863743840535244071, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 6747061407024216807}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2065306244 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3224673043336517221, guid: e0f902b474ac90c45bd662abd5a9b2c5,
@@ -1386,7 +1398,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.0000000028474538, z: 0.000000002372878, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1492,11 +1504,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1052079592}
     m_Modifications:
+    - target: {fileID: 5908703286994946581, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -114
+      objectReference: {fileID: 0}
+    - target: {fileID: 5908703286994946581, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 61
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747061406307034602, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+        type: 3}
+      propertyPath: bestScore
+      value: 
+      objectReference: {fileID: 2022286736}
     - target: {fileID: 6747061406307034602, guid: e0f902b474ac90c45bd662abd5a9b2c5,
         type: 3}
       propertyPath: gameState
       value: 
       objectReference: {fileID: 374825334}
+    - target: {fileID: 6747061406307034604, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747061407332461035, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Joystic
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747061407536548179, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6747061407833112331, guid: e0f902b474ac90c45bd662abd5a9b2c5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1611,6 +1653,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7275366168092557433, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Coins '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971424017661555335, guid: e0f902b474ac90c45bd662abd5a9b2c5,
+        type: 3}
+      propertyPath: m_Name
+      value: 'CoinsIcon '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0f902b474ac90c45bd662abd5a9b2c5, type: 3}
