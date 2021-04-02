@@ -18,7 +18,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private Map map;
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
- 
+
     private GameParameters gameParameters;
 
     private float elapsedTime;
@@ -30,6 +30,7 @@ public class GameState : MonoBehaviour
     private bool plusTime = true;
     private void Start()
     {
+     
         hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
         additional.OnAddTime += () => AddTime();
         additional.OnContiniue += () => Continiue();
@@ -91,9 +92,9 @@ public class GameState : MonoBehaviour
 
     private void PlayerInit()
     {
-        var hex = map[gameParameters.size.x/2, 0];
+        var hex = map[gameParameters.size.x / 2, 0];
         Vector3 startPos = hex.transform.position;
-        player.transform.SetPositionAndRotation(startPos,Quaternion.identity);
+        player.transform.SetPositionAndRotation(startPos, Quaternion.identity);
         player.Initializie(gameParameters.playerSpeed, map.Bounds, joystick);
         player.stateChanged += OnPlayerStateChanged;
         player.enabled = false;
@@ -109,10 +110,7 @@ public class GameState : MonoBehaviour
             case PlayerState.Win:
                 StartCoroutine(player.Winner(ReloadScene));
                 GamePlayerPrefs.LastLevel = gameParameters.id;
-                if (GamePlayerPrefs.BestScore < hud.coinAmount)
-                {
-                    GamePlayerPrefs.BestScore = hud.coinAmount;
-                }
+                GamePlayerPrefs.BestScore += hud.coinAmount;
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
@@ -140,7 +138,7 @@ public class GameState : MonoBehaviour
     {
         if (gameState != GameplayState.Play)
             return;
-        
+
         elapsedTime += Time.deltaTime;
 
         if (elapsedTime > duration)
@@ -180,7 +178,7 @@ public class GameState : MonoBehaviour
         additional.gameObject.SetActive(true);
 
         yield return new WaitForSEcondsRealTime(additionalTimePanel);
-       
+
         SetGameState(GameplayState.Play);
         additional.gameObject.SetActive(false);
         Lose();

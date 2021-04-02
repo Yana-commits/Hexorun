@@ -16,8 +16,8 @@ public class Star : MonoBehaviour
         if (other.TryGetComponent<Player>(out var player))
         {
             var newExplosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
-            MMVibrationManager.Haptic(HapticTypes.Success);       
-            Score();
+            MMVibrationManager.Haptic(HapticTypes.Success);
+            Score?.Invoke();
             Destroy(newExplosion, 2f);
             Destroy(gameObject);
         }

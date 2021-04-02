@@ -16,8 +16,8 @@ public static class GamePlayerPrefs
     }
     public static int BestScore
     {
-        get => PlayerPrefs.GetInt(nameof(LastLevel), 0);
-        set => PlayerPrefs.SetInt(nameof(LastLevel), value);
+        get => PlayerPrefs.GetInt(nameof(BestScore), 0);
+        set => PlayerPrefs.SetInt(nameof(BestScore), value);
     }
 
 }
