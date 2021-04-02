@@ -440,7 +440,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: -0.000000022876653, z: 0.00000000828249, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: -0.000000022880089, z: 0.000000008283735, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1651,7 +1651,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: 5.1082694e-11, z: -4.2567727e-11, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1902,6 +1902,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 7703110699256713348, guid: fe7c03ffecee55545a240170d1ae6621,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9214384987148015909, guid: fe7c03ffecee55545a240170d1ae6621,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1936,6 +1941,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1892632044}
     m_Modifications:
+    - target: {fileID: 4869144586392969426, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869144586392969426, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869144586392969426, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 40.071957
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869144586392969426, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 437.96402
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869144586392969426, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552385750710273174, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552385750710273174, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552385750710273174, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552385750710273174, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 368.42804
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552385750710273174, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7803144304232318094, guid: 2467269404b6ad9468b3a27bf781d9b6,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2045,6 +2100,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GamePlayPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7803144304232318095, guid: 2467269404b6ad9468b3a27bf781d9b6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2467269404b6ad9468b3a27bf781d9b6, type: 3}
