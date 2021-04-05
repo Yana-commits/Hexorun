@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class AdditionalTime : MonoBehaviour
 {
@@ -11,26 +12,66 @@ public class AdditionalTime : MonoBehaviour
     [SerializeField] Button giveUpBtn;
     [SerializeField] Image circleImg;
     [SerializeField] Text timerLabel;
+    [SerializeField] Text addTimeLbl;
 
-    private float timer;
-    public event UnityAction OnAddTime
+    private float _duration = 6;
+    private Action<bool> _callback;
+
+
+    private void OnEnable()
     {
-        add => continuieBtn.onClick.AddListener(value);
-        remove => continuieBtn.onClick.RemoveListener(value);
-    }
-    public event UnityAction OnContiniue
-    {
-        add => giveUpBtn.onClick.AddListener(value);
-        remove => giveUpBtn.onClick.RemoveListener(value);
+        continuieBtn.onClick.AddListener(OnContinue);
+        giveUpBtn.onClick.AddListener(OnCancel);
     }
 
-    public void SetTimer(float _timer)
+    private void OnDisable()
     {
-        timer = _timer;
-        circleImg.DOFillAmount(0.0f, timer).OnUpdate(()=> {
-            
-            timerLabel.text = ((int)(circleImg.fillAmount * (timer)) + 1).ToString();
-        });
+        continuieBtn.onClick.RemoveListener(OnContinue);
+        giveUpBtn.onClick.RemoveListener(OnCancel);
+        _callback = null;
+    }
+
+    private void OnContinue()
+    {
+        _callback?.Invoke(true);
+    }
+
+    private void OnCancel()
+    {
+        _callback?.Invoke(false);
+    }
+
+    public void Initialize (float duration, float addSeconds, Action<bool> callback)
+    {
+        _duration = duration;
+        _callback = callback;
+        _callback += _ => gameObject.SetActive(false);
+
+        addTimeLbl.text = $"{addSeconds:+#;-#;0}";
+
+        StopCoroutine(nameof(Countdown));
+        gameObject.SetActive(true);
+        StartCoroutine(nameof(Countdown));
+    }
+
+    private IEnumerator Countdown()
+    {
+        circleImg.fillAmount = 1f;
+        timerLabel.text = $"{_duration}";
+
+        float elapsedTime = 0;
+        while (elapsedTime <= _duration)
+        {
+            yield return null;
+
+            elapsedTime += Time.deltaTime;
+            float normalizedValue = Mathf.Clamp01(elapsedTime/_duration);
+            circleImg.fillAmount = 1f - normalizedValue;
+
+            timerLabel.text = $"{Mathf.CeilToInt(_duration - elapsedTime)}";
+        }
+
+        _callback?.Invoke(false);
     }
 
 }

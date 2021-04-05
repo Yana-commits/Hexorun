@@ -3,7 +3,8 @@ using System.Collections;
 
 public static class GamePlayerPrefs
 {
-    public static int LastTheme {
+    public static int LastTheme
+    {
         get => PlayerPrefs.GetInt(nameof(LastTheme), 0);
         set => PlayerPrefs.SetInt(nameof(LastTheme), value);
     }
@@ -13,4 +14,10 @@ public static class GamePlayerPrefs
         get => PlayerPrefs.GetInt(nameof(LastLevel), -1);
         set => PlayerPrefs.SetInt(nameof(LastLevel), value);
     }
+    public static int TotalCoins
+    {
+        get => PlayerPrefs.GetInt(nameof(TotalCoins), 0);
+        set => PlayerPrefs.SetInt(nameof(TotalCoins), value);
+    }
+
 }

@@ -18,12 +18,12 @@ MonoBehaviour:
     main: {fileID: 2100000, guid: 14ac8f5661a178a4d9ae1ad0cf0b4981, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: 1dbe6a7ec6ed2cb4face0a88072605c5, type: 2}
-  - name: White 1
+  - name: PurpleLight
     preview: {fileID: 0}
     main: {fileID: 2100000, guid: 79ce4a68bbb4542448cf3e553c9e1bb2, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: a32b711f705334640971cac2a395fea2, type: 2}
-  - name: White 2
+  - name: BrownDark
     preview: {fileID: 0}
     main: {fileID: 2100000, guid: 38357590a6bde5348b509a9a40cd66dd, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
@@ -38,3 +38,38 @@ MonoBehaviour:
     main: {fileID: 2100000, guid: 80755f5e70bfd6b43b2c5b9ebbe4a5b2, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: b4d509e95faab444682ad58d4d54000c, type: 2}
+  - name: PurpleDark
+    preview: {fileID: 0}
+    main: {fileID: 2100000, guid: e5c5156822107de42a8e417fbaa2a967, type: 2}
+    target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
+    plane: {fileID: 2100000, guid: ab3aed2f2ab23664097cbeac27818c1a, type: 2}
+  - name: PurpleWhiteBlue
+    preview: {fileID: 0}
+    main: {fileID: 2100000, guid: 1ba64c52edc801a44b9c7549d2a8f277, type: 2}
+    target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
+    plane: {fileID: 2100000, guid: a4ce72633cd9ade478057c3f1b498976, type: 2}
+  - name: PurpleBlueDark
+    preview: {fileID: 0}
+    main: {fileID: 2100000, guid: ae8bd8d7dd1055c479638aa7222d5f15, type: 2}
+    target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
+    plane: {fileID: 2100000, guid: 46e3cac531374e440a6a5ce3b900da04, type: 2}
+  - name: PurpleBlackOrange
+    preview: {fileID: 0}
+    main: {fileID: 2100000, guid: c9b659c0645ad8b4e9c1ad5eb8a55f06, type: 2}
+    target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
+    plane: {fileID: 2100000, guid: 26aa104ade5dcde43854f762a158a91a, type: 2}
+  - name: PurpleBlackPink
+    preview: {fileID: 0}
+    main: {fileID: 2100000, guid: aee69f8027b9e9847a14c44dcc0459b9, type: 2}
+    target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
+    plane: {fileID: 2100000, guid: 2ebac706644da9e4fa82c567601b57a6, type: 2}
+  - name: DoubleHexBlue
+    preview: {fileID: 0}
+    main: {fileID: 2100000, guid: f3180ee468572384e993d41a25eb1523, type: 2}
+    target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
+    plane: {fileID: 2100000, guid: f00ef3ca09ada6846a31408fc6e65416, type: 2}
+  - name: DoubleHexMich
+    preview: {fileID: 0}
+    main: {fileID: 2100000, guid: 1849e09b91176a9489ff4440270f67aa, type: 2}
+    target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
+    plane: {fileID: 2100000, guid: fcaab2e9c477b6b43a7a93a2c9cf6e42, type: 2}

@@ -18,7 +18,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private Map map;
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
- 
+
     private GameParameters gameParameters;
 
     private float elapsedTime;
@@ -37,13 +37,12 @@ public class GameState : MonoBehaviour
     private float additionalTimePanel = 6;
     private float additionalTime = 10;
     private float duration;
-    private bool plusTime = true;
+
+    private bool IsAdditionalTime = false;
 
     private void Start()
     {
         hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
-        additional.OnAddTime += () => AddTime();
-        additional.OnContiniue += () => Continiue();
     }
 
     public void StartGame(GameParameters parameters)
@@ -82,18 +81,13 @@ public class GameState : MonoBehaviour
         gameState = state;
         switch (state)
         {
-            case GameplayState.Stop:
-                break;
             case GameplayState.Play:
                 //Time.timeScale = 1;
                 player.enabled = true;
                 break;
+            case GameplayState.Stop:
             case GameplayState.Pause:
-                //Time.timeScale = 0;
-                player.enabled = false;
-                break;
             case GameplayState.GameOver:
-                DG.Tweening.DOTween.KillAll();
                 player.enabled = false;
                 break;
         }
@@ -101,9 +95,9 @@ public class GameState : MonoBehaviour
 
     private void PlayerInit()
     {
-        var hex = map[gameParameters.size.x/2, 0];
+        var hex = map[gameParameters.size.x / 2, 0];
         Vector3 startPos = hex.transform.position;
-        player.transform.SetPositionAndRotation(startPos,Quaternion.identity);
+        player.transform.SetPositionAndRotation(startPos, Quaternion.identity);
         player.Initializie(gameParameters.playerSpeed, map.Bounds, joystick);
         player.stateChanged += OnPlayerStateChanged;
         player.enabled = false;
@@ -119,9 +113,29 @@ public class GameState : MonoBehaviour
             case PlayerState.Win:
                 StartCoroutine(player.Winner(ReloadScene));
                 GamePlayerPrefs.LastLevel = gameParameters.id;
+                GamePlayerPrefs.TotalCoins += CoinAmount;
                 break;
             case PlayerState.Lose:
-                StartCoroutine(player.Looser(ReloadScene));
+
+                if (!IsAdditionalTime)
+                {
+                    IsAdditionalTime = true;
+                    additional.Initialize(additionalTimePanel, additionalTime, state => {
+                        if (state)
+                        {
+                            duration += additionalTime;
+                            SetGameState(GameplayState.Play);
+                        }
+                        else
+                        {
+                            OnPlayerStateChanged(PlayerState.Lose);
+                        }
+                    });
+                }
+                else
+                {
+                    StartCoroutine(player.Looser(ReloadScene));
+                }
                 break;
             case PlayerState.Fall:
                 StartCoroutine(player.FallDown(ReloadScene));
@@ -129,7 +143,6 @@ public class GameState : MonoBehaviour
             default:
                 break;
         }
-
     }
 
     private void ReloadScene()
@@ -147,19 +160,13 @@ public class GameState : MonoBehaviour
     {
         if (gameState != GameplayState.Play)
             return;
-        
+
         elapsedTime += Time.deltaTime;
 
         if (elapsedTime > duration)
         {
-            if (plusTime)
-            {
-                StartCoroutine(ForAdditionalTime());
-            }
-            else
-            {
-                Lose();
-            }
+            elapsedTime = duration;
+            OnPlayerStateChanged(PlayerState.Lose);
         }
 
         generatorTime += Time.deltaTime;
@@ -170,48 +177,5 @@ public class GameState : MonoBehaviour
         }
 
         hud.UpdateScoreValue(duration - elapsedTime);
-    }
-
-    /// <summary>
-    /// ////////////////////////////////////////////////////
-    /// </summary>
-
-    private void Lose()
-    {
-        OnPlayerStateChanged(PlayerState.Lose);
-        elapsedTime = duration;
-        plusTime = true;
-    }
-
-    private IEnumerator ForAdditionalTime()
-    {
-        plusTime = false;
-        additional.SetTimer(additionalTimePanel);
-        SetGameState(GameplayState.Pause);
-        additional.gameObject.SetActive(true);
-
-        yield return new WaitForSeconds(additionalTimePanel);
-       
-        SetGameState(GameplayState.Play);
-        additional.gameObject.SetActive(false);
-        Lose();
-    }
-
-    public void AddTime()
-    {
-        //StopCoroutine(ForAdditionalTime());
-        StopAllCoroutines();
-        duration = duration + (int)additionalTime;
-
-        SetGameState(GameplayState.Play);
-        additional.gameObject.SetActive(false);
-    }
-    public void Continiue()
-    {
-        StopAllCoroutines();
-        SetGameState(GameplayState.Play);
-        additional.gameObject.SetActive(false);
-
-        Lose();
     }
 }
