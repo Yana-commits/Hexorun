@@ -24,10 +24,21 @@ public class GameState : MonoBehaviour
     private float elapsedTime;
     private float generatorTime;
     private GameplayState gameState = GameplayState.Stop;
+
+    private int _coinsCollect = 0;
+    public int CoinAmount {
+        get => _coinsCollect;
+        set {
+            _coinsCollect = value;
+            hud.ScoreAmount(_coinsCollect);
+        }
+    }
+
     private float additionalTimePanel = 6;
     private float additionalTime = 10;
     private float duration;
     private bool plusTime = true;
+
     private void Start()
     {
         hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
@@ -50,6 +61,7 @@ public class GameState : MonoBehaviour
         hud.UpdateLevel(gameParameters.id + 1);
 
         generatorTime = gameParameters.changesTime - 1;
+        CoinAmount = 0;
 
         //TODO: move into another place
         var list = map.Shuffle().ToList();
@@ -63,8 +75,6 @@ public class GameState : MonoBehaviour
                 star.transform.localPosition = Vector3.up * 0.5f;
             }
         }
-
-        //SetGameState(GameplayState.Play);
     }
 
     public void SetGameState(GameplayState state)
@@ -161,6 +171,10 @@ public class GameState : MonoBehaviour
 
         hud.UpdateScoreValue(duration - elapsedTime);
     }
+
+    /// <summary>
+    /// ////////////////////////////////////////////////////
+    /// </summary>
 
     private void Lose()
     {

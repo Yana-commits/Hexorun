@@ -12,7 +12,6 @@ public class ObstacleGenerator : MonoBehaviour
     [Space]
     [SerializeField] LayerMask hexLayer;
     [SerializeField] float _overlapSphereRadius = 0.5f;
-    [SerializeField] Star starPrefab;
 
     public event Action<IDictionary<Vector2Int, HexState>> ObstaclesGenerated;
 
