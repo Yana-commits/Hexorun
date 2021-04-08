@@ -13,22 +13,26 @@ public class GameState : MonoBehaviour
     [SerializeField] private AdditionalTime additional;
     [SerializeField] private Joystick joystick;
 
+    [SerializeField] private EndlessMode endlessMode;
+    [SerializeField] private NormalMode normalMode;
+
     [Space]
     [SerializeField] private Player player;
-    [SerializeField] private Map map;
-    [SerializeField] private ObstacleGenerator obstacleGenerator;
-    [SerializeField] private ObstaclePresenter obstaclePresenter;
+    [SerializeField] private Chunk chunkPrefab;
 
     private GameParameters gameParameters;
 
     private float elapsedTime;
     private float generatorTime;
     private GameplayState gameState = GameplayState.Stop;
+    private GameModeState gameMode = GameModeState.Normal;
 
     private int _coinsCollect = 0;
-    public int CoinAmount {
+    public int CoinAmount
+    {
         get => _coinsCollect;
-        set {
+        set
+        {
             _coinsCollect = value;
             hud.ScoreAmount(_coinsCollect);
         }
@@ -40,6 +44,8 @@ public class GameState : MonoBehaviour
 
     private bool IsAdditionalTime = false;
 
+    public Action OnChangedHexPosition;
+
     private void Start()
     {
         hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
@@ -49,31 +55,15 @@ public class GameState : MonoBehaviour
     {
         gameParameters = parameters;
         duration = gameParameters.duration;
-
-        map.Initializie(gameParameters.size, gameParameters.theme);
-        map.gameObject.SetActive(true);
-
         PlayerInit();
-        obstaclePresenter.Initialize();
-        obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam);
+        if (gameMode == GameModeState.Normal)
+            normalMode.Initialized(player);
+        else
+            endlessMode.Initialized(player);
 
         hud.UpdateLevel(gameParameters.id + 1);
-
         generatorTime = gameParameters.changesTime - 1;
         CoinAmount = 0;
-
-        //TODO: move into another place
-        var list = map.Shuffle().ToList();
-        int index = 0;
-
-        foreach (var pair in gameParameters.collectableItems)
-        {
-            for (int i = 0; i < pair.Value; index++, i++)
-            {
-                GameObject star = Instantiate(pair.Key, list[index].transform);
-                star.transform.localPosition = Vector3.up * 0.5f;
-            }
-        }
     }
 
     public void SetGameState(GameplayState state)
@@ -95,13 +85,9 @@ public class GameState : MonoBehaviour
 
     private void PlayerInit()
     {
-        var hex = map[gameParameters.size.x / 2, 0];
-        Vector3 startPos = hex.transform.position;
-        player.transform.SetPositionAndRotation(startPos, Quaternion.identity);
-        player.Initializie(gameParameters.playerSpeed, map.Bounds, joystick);
+        player.Initializie(joystick);
         player.stateChanged += OnPlayerStateChanged;
         player.enabled = false;
-        player.gameObject.SetActive(true);
     }
 
     private void OnPlayerStateChanged(PlayerState obj)
@@ -120,7 +106,8 @@ public class GameState : MonoBehaviour
                 if (!IsAdditionalTime)
                 {
                     IsAdditionalTime = true;
-                    additional.Initialize(additionalTimePanel, additionalTime, state => {
+                    additional.Initialize(additionalTimePanel, additionalTime, state =>
+                    {
                         if (state)
                         {
                             duration += additionalTime;
@@ -172,7 +159,7 @@ public class GameState : MonoBehaviour
         generatorTime += Time.deltaTime;
         if (generatorTime > gameParameters.changesTime)
         {
-            obstacleGenerator.Generate();
+            OnChangedHexPosition?.Invoke();
             generatorTime = 0;
         }
 

@@ -76,6 +76,8 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         return this[Hexagonal.Offset.QFromCube(hex)];
     }
 
+    
+
     #region IEnumerable
 
     public IEnumerator<Hex> GetEnumerator()

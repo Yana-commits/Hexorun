@@ -18,12 +18,15 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Bounds mapBounds;
 
-    public void Initializie(float speed, Bounds bounds, Joystick joystick)
+    public void Initializie(Joystick joystick)
     {
         this.joystick = joystick;
+    }
+
+    public void SetGamePlaySettings(float speed, Bounds bounds)
+    {
         this.speed = speed;
         this.mapBounds = bounds;
-        //TODO: refactoring
         mapBounds.Expand(new Vector3(1, 0, Mathf.Sqrt(3)) * -Map.hexRadius);
     }
 
