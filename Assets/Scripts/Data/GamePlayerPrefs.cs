@@ -14,10 +14,10 @@ public static class GamePlayerPrefs
         get => PlayerPrefs.GetInt(nameof(LastLevel), -1);
         set => PlayerPrefs.SetInt(nameof(LastLevel), value);
     }
-    public static int BestScore
+    public static int TotalCoins
     {
-        get => PlayerPrefs.GetInt(nameof(BestScore), 0);
-        set => PlayerPrefs.SetInt(nameof(BestScore), value);
+        get => PlayerPrefs.GetInt(nameof(TotalCoins), 0);
+        set => PlayerPrefs.SetInt(nameof(TotalCoins), value);
     }
 
 }

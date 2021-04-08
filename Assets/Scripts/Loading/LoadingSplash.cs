@@ -14,7 +14,13 @@ public class LoadingSplash : MonoBehaviour
 
     IEnumerator Loading()
     {
+        var status = SceneManager.LoadSceneAsync(1);
+        status.allowSceneActivation = false;
+
         yield return new WaitForSeconds(timer);
-        SceneManager.LoadScene(1);
+        yield return new WaitUntil(() => status.progress >= 0.9f);
+
+        status.allowSceneActivation = true;
+        yield return status;
     }
 }

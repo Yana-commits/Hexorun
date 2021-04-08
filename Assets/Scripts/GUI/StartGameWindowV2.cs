@@ -24,7 +24,7 @@ public class StartGameWindowV2 : MonoBehaviour
         GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
         gameState.StartGame(gameParams);
         levelText.text = "Level " +(level + 1).ToString();
-        bestScore.text = GamePlayerPrefs.BestScore.ToString();
+        bestScore.text = GamePlayerPrefs.TotalCoins.ToString();
     }
 
     public void OnStartClick()
