@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Donut_mat
+  m_Shader: {fileID: -6465566751694194690, guid: 52f20a3c6d0baf84a951b2553e352f65,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_3124b180fb4247a99cb08ddc9beb41b0:
+        m_Texture: {fileID: 2800000, guid: aa7033b2cb7e3ce4eab420142341a31d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_8927bf16a5164d3d94887edf0b4b2ada:
+        m_Texture: {fileID: 2800000, guid: ef3831baf6cf474458a7cb91bcdd382f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_b665db3968c541ca8a202cf4e2ef7fd7:
+        m_Texture: {fileID: 2800000, guid: 6b1c0b70a0c5fea4c803acef6a01824c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_b82a58e6f382412d9e70d431aa13867c:
+        m_Texture: {fileID: 2800000, guid: 6b1c0b70a0c5fea4c803acef6a01824c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_fd52d6cd32a149ffa2fac7df617c501a:
+        m_Texture: {fileID: 2800000, guid: 8e2a3c1b58031d548adba345e308c0a6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_0aa7c48466fc4c75921cf9fa6fc5024f: -0.43
+    - Vector1_0e005d54220b4d06b35067ea28668f3d: 0
+    - Vector1_0ec9fcc23b1e4958a605875591ddad39: 0
+    - Vector1_1306D47F: 0
+    - Vector1_1f3dcbc2223f435399c58ac5eb82067d: 0.305
+    - Vector1_266a4e574ccb4c36a443d983cb2caf0b: 1
+    - Vector1_2e94fe3fc5b54ab89cffacb11910da76: 0
+    - Vector1_46ffb50d67c94179adf7e6736d2658b4: 0
+    - Vector1_4c97c0a3156448d4b3e7ce81858010e7: 0.305
+    - Vector1_4e1f2acc054b45ae8462b2be8bb8daed: 0.5
+    - Vector1_551edc83f86e48edbd6d73f836d763fc: 0
+    - Vector1_682d2a01d30b47848adec186b97a7354: 0
+    - Vector1_6D098D4: 0
+    - Vector1_6a82af0ffd75460291a422f49e08c396: 0.62
+    - Vector1_6fa0c5bd329542bcbe0cd9ea8a1b8ab9: 0.305
+    - Vector1_7c7605cbf97a4d4596147b5ce3029d79: 0
+    - Vector1_81a1b2f1dac841e982fdf44b33d65058: 0
+    - Vector1_834900ebf6c64d94a0fcdd945160111f: 0
+    - Vector1_84f16e8e62d94805b27249a3c6d172c9: 0
+    - Vector1_869a964f6c0d465da98c2e4ba190ab02: 0
+    - Vector1_8ccdb9710d0a4154861188ad2928b33e: 0
+    - Vector1_8ec82eee9f6e43cb94252fa5d1025055: 0.62
+    - Vector1_927a7846296b419780df3dc8906d584b: 0
+    - Vector1_94900d10b90041449e21fc08dc8777c2: 0
+    - Vector1_9a2220ea07604417851aae0893d80cf2: 0
+    - Vector1_a3d0a0f63b734bb79d2ea8248fc492ed: 0
+    - Vector1_c87f76c53e064ebc93c4090d1afba91e: 2.68
+    - Vector1_f7ebe24382624cd9a8f9ab1a2be472e4: 2
+    m_Colors:
+    - Color_256774a4842a417fb2b9e8e8f5fc8eda: {r: 1, g: 1, b: 1, a: 0}
+    - Color_d3dd389a6bdf417b9488a8327843b52d: {r: 0.9433962, g: 0.6590466, b: 0.4227483,
+        a: 0}
+    - Color_d3dd389a6bdf417b9488a8327843b52d_1: {r: 0.9433962, g: 0.6590466, b: 0.4227483,
+        a: 0}
+    - Color_e7c7508242134d118cd78693679b45c7: {r: 0.5206479, g: 0.6002241, b: 0.9433962,
+        a: 0}
+    - Color_e7c7508242134d118cd78693679b45c7_1: {r: 0.5206479, g: 0.6002241, b: 0.9433962,
+        a: 0}
+  m_BuildTextureStacks: []
