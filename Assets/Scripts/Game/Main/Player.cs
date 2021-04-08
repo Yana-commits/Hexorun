@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private Animator animator;      
 
-    private float speed;
+    public float speed;
     private Joystick joystick;
 
     public event Action<PlayerState> stateChanged;

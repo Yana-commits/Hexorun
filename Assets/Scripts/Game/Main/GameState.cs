@@ -119,16 +119,22 @@ public class GameState : MonoBehaviour
 
                 if (!IsAdditionalTime)
                 {
+                    player.speed = 0;
                     IsAdditionalTime = true;
                     additional.Initialize(additionalTimePanel, additionalTime, state => {
+                        player.enabled = false;
                         if (state)
                         {
                             duration += additionalTime;
                             SetGameState(GameplayState.Play);
+                            player.speed = gameParameters.playerSpeed;
+                            player.enabled = true;
                         }
                         else
                         {
                             OnPlayerStateChanged(PlayerState.Lose);
+                            player.speed = gameParameters.playerSpeed;
+                            player.enabled = true;
                         }
                     });
                 }
