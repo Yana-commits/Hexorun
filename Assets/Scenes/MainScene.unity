@@ -172,8 +172,7 @@ MonoBehaviour:
   endlessMode: {fileID: 641449434}
   normalMode: {fileID: 2141475172}
   player: {fileID: 1051566764}
-  chunkPrefab: {fileID: 8328084201240121504, guid: b81827ca1dc275546b5bc627638c7322,
-    type: 3}
+  gameMode: 1
 --- !u!4 &374825335
 Transform:
   m_ObjectHideFlags: 0
@@ -290,9 +289,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas: {fileID: 11400000, guid: e67491d76a9a48a42a98b2a213dd045b, type: 2}
   levels: {fileID: 11400000, guid: 87fde29953db20045904e8dceaac7316, type: 2}
-  gameState: {fileID: 374825334}
   chunkPrefab: {fileID: 8328084201240121504, guid: b81827ca1dc275546b5bc627638c7322,
     type: 3}
+  gameState: {fileID: 374825334}
 --- !u!4 &641449435
 Transform:
   m_ObjectHideFlags: 0
@@ -467,7 +466,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: -0.000000022895163, z: 0.0000000082891916, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: 0.000000021306631, z: -0.000000007714064, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1490,7 +1489,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: -0.00000003653988, z: 0.000000030449897, w: 1}
+  m_LocalRotation: {x: -0, y: -0.0000000019460895, z: 0.000000001621741, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

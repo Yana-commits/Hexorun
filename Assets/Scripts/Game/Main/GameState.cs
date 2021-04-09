@@ -18,13 +18,15 @@ public class GameState : MonoBehaviour
 
     [Space]
     [SerializeField] private Player player;
-    [SerializeField] private Chunk chunkPrefab;
 
     private GameParameters gameParameters;
+    private Mode mode;
 
     private float elapsedTime;
     private float generatorTime;
     private GameplayState gameState = GameplayState.Stop;
+    [Space]
+    [SerializeField]
     private GameModeState gameMode = GameModeState.Normal;
 
     private int _coinsCollect = 0;
@@ -55,15 +57,22 @@ public class GameState : MonoBehaviour
     {
         gameParameters = parameters;
         duration = gameParameters.duration;
-        PlayerInit();
+       
         if (gameMode == GameModeState.Normal)
-            normalMode.Initialized(player);
+            mode = normalMode;
         else
-            endlessMode.Initialized(player);
-
+            mode = endlessMode;
+        mode.Initialized(player);
+        PlayerInit();
         hud.UpdateLevel(gameParameters.id + 1);
         generatorTime = gameParameters.changesTime - 1;
         CoinAmount = 0;
+    }
+
+    public void StartNormalMode()
+    {
+        SetGameState(GameplayState.Play);
+        mode?.ChangedHexState();
     }
 
     public void SetGameState(GameplayState state)
@@ -159,7 +168,7 @@ public class GameState : MonoBehaviour
         generatorTime += Time.deltaTime;
         if (generatorTime > gameParameters.changesTime)
         {
-            OnChangedHexPosition?.Invoke();
+            mode?.ChangedHexState();
             generatorTime = 0;
         }
 

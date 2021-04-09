@@ -2,22 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalMode : MonoBehaviour
+public class NormalMode : Mode
 {
-    [SerializeField] MaterialRepository datas;
-    [SerializeField] LevelRepository levels;
-    [SerializeField] private Chunk chunkPrefab;
-
     private Player player;
     private GameParameters gameParameters;
+    private Chunk chunk;
 
     // Start is called before the first frame update
     void Start()
     {
-
+       
     }
 
-    public void Initialized(Player _player)
+    public override void Initialized(Player _player)
     {
         player = _player;
         int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count - 1);
@@ -25,7 +22,7 @@ public class NormalMode : MonoBehaviour
         gameParameters.id = level;
         gameParameters.theme = datas.Materials[GamePlayerPrefs.LastTheme];
 
-        var chunk = Instantiate(chunkPrefab);
+        chunk = Instantiate(chunkPrefab);
         chunk.Initialize(player.transform, gameParameters);
 
         var hex = chunk.Map[gameParameters.size.x / 2, 0];
@@ -35,9 +32,19 @@ public class NormalMode : MonoBehaviour
         player.gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ChangedHexState()
     {
-
+        chunk.ChangeHexes();
     }
+
+}
+
+public abstract class Mode : MonoBehaviour
+{
+    public MaterialRepository datas;
+    public LevelRepository levels;
+    public Chunk chunkPrefab;
+
+    public abstract void Initialized(Player _player);
+    public abstract void ChangedHexState();
 }

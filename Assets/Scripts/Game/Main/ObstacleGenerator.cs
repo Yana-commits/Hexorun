@@ -44,7 +44,7 @@ public class ObstacleGenerator : MonoBehaviour
             offset += obstacle.Height;
             patterns.Add(obstacle);
         }
-        Generate();
+        //Generate();
     }
 
     internal void Generate()

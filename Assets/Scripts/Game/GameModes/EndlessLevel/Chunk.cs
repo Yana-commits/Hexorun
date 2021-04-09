@@ -13,7 +13,7 @@ public class Chunk : MonoBehaviour
     public void Initialize(Transform _player, GameParameters parameters)
     {
         map.Initializie(parameters.size, parameters.theme);
-        map.gameObject.SetActive(true);
+        map.gameObject.SetActive(true);      
         obstacleGenerator.Initialize(_player.transform, parameters.obstaclesParam);
 
         var list = Map.Shuffle().ToList();
@@ -29,11 +29,9 @@ public class Chunk : MonoBehaviour
         }
     }
 
-    public void SubcribeOnChangedHex(Action OnChaned)
+    public void ChangeHexes()
     {
-        OnChaned += () => {
-            obstacleGenerator.Generate();
-        };
+        obstacleGenerator.Generate();
     }
 
 
