@@ -9,12 +9,13 @@ public class Player : MonoBehaviour
     private readonly int SpeedKeyHash = Animator.StringToHash("Speed");
 
     [SerializeField] private Rigidbody rigidbody;
-    [SerializeField] private Animator animator;      
+    [SerializeField] private Animator animator;
 
     public float speed;
     private Joystick joystick;
 
     public event Action<PlayerState> stateChanged;
+    private PlayerState playerState = PlayerState.None;
 
     [SerializeField] private Bounds mapBounds;
 
@@ -32,8 +33,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move(joystick.Direction);
-        ClampPosition();
+        if (playerState == PlayerState.Playing)
+        {
+            Move(joystick.Direction);
+            ClampPosition();
+        }
     }
 
     public void Move(Vector2 direction)
@@ -56,10 +60,23 @@ public class Player : MonoBehaviour
         rigidbody.position = position;
     }
 
-    public void DestinationReached() 
-        => stateChanged?.Invoke(PlayerState.Win);
-    public void Fall() 
-        => stateChanged?.Invoke(PlayerState.Fall);
+    public void DestinationReached()
+    {
+        playerState = PlayerState.Win;
+        stateChanged?.Invoke(playerState);
+
+    }
+    public void Fall()
+    {
+        playerState = PlayerState.Fall;
+        stateChanged?.Invoke(PlayerState.Fall);
+    }
+    public void StartPlaying()
+    {
+        playerState = PlayerState.Playing;
+        this.enabled = true;
+    }
+
 
     public IEnumerator Winner(Action callback)
     {
@@ -67,6 +84,13 @@ public class Player : MonoBehaviour
         animator.SetTrigger("Win");
         yield return new WaitForSeconds(6);
         callback?.Invoke();
+    }
+
+    public void StopPlayer()
+    {
+        playerState = PlayerState.None;
+        rigidbody.velocity = Vector3.zero;
+        animator.SetFloat(SpeedKeyHash, 0);  
     }
 
     public IEnumerator Looser(Action callback)

@@ -51,6 +51,7 @@ public class GameState : MonoBehaviour
     private void Start()
     {
         hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
+        
     }
 
     public void StartGame(GameParameters parameters)
@@ -82,12 +83,12 @@ public class GameState : MonoBehaviour
         {
             case GameplayState.Play:
                 //Time.timeScale = 1;
-                player.enabled = true;
+                player.StartPlaying();
                 break;
             case GameplayState.Stop:
             case GameplayState.Pause:
             case GameplayState.GameOver:
-                player.enabled = false;
+                player.StopPlayer();
                 break;
         }
     }
@@ -111,15 +112,17 @@ public class GameState : MonoBehaviour
                 GamePlayerPrefs.TotalCoins += CoinAmount;
                 break;
             case PlayerState.Lose:
-
+                
                 if (!IsAdditionalTime)
                 {
+                    player.StopPlayer();
                     IsAdditionalTime = true;
                     additional.Initialize(additionalTimePanel, additionalTime, state =>
                     {
                         if (state)
                         {
                             duration += additionalTime;
+                            player.StartPlaying();
                             SetGameState(GameplayState.Play);
                         }
                         else
