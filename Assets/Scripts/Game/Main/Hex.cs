@@ -21,7 +21,7 @@ public class Hex : MonoBehaviour
 
     public bool TrySetState(HexState state)
     {
-        if (IsTarget) return false;
+        if (IsTarget || State == HexState.Disable) return false;
 
         State = state;
 

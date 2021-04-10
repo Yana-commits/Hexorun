@@ -7,8 +7,10 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    [SerializeField] Button pauseBtn;
+    public AdditionalTime additional;
 
+    [SerializeField] Button pauseBtn;
+    
     [SerializeField] Text timeText;
     [SerializeField] Text levelText;
     [SerializeField] Text scoreText;

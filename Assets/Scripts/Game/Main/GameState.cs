@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class GameState : MonoBehaviour
 {
     [SerializeField] private HUD hud;
-    [SerializeField] private AdditionalTime additional;
+
     [SerializeField] private Joystick joystick;
 
     [SerializeField] private EndlessMode endlessMode;
@@ -22,9 +22,9 @@ public class GameState : MonoBehaviour
     private GameParameters gameParameters;
     private Mode mode;
 
-    private float elapsedTime;
+
     private float generatorTime;
-    private GameplayState gameState = GameplayState.Stop;
+    private GameplayState gamePlayState = GameplayState.Stop;
     [Space]
     [SerializeField]
     private GameModeState gameMode = GameModeState.Normal;
@@ -40,31 +40,28 @@ public class GameState : MonoBehaviour
         }
     }
 
-    private float additionalTimePanel = 6;
-    private float additionalTime = 10;
-    private float duration;
+    public GameplayState GamePlayState { get => gamePlayState; }
 
-    private bool IsAdditionalTime = false;
+
 
     public Action OnChangedHexPosition;
 
     private void Start()
     {
-        hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
-        
+        hud.OnPause += () => { SetGameState(gamePlayState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
+
     }
 
     public void StartGame(GameParameters parameters)
     {
         gameParameters = parameters;
-        duration = gameParameters.duration;
-       
-        if (gameMode == GameModeState.Normal)
-            mode = normalMode;
-        else
-            mode = endlessMode;
-        mode.Initialized(player);
+
+        mode = normalMode;
+        mode.gameObject.SetActive(true);
+        mode.Initialized(player, hud);
+
         PlayerInit();
+
         hud.UpdateLevel(gameParameters.id + 1);
         generatorTime = gameParameters.changesTime - 1;
         CoinAmount = 0;
@@ -76,13 +73,22 @@ public class GameState : MonoBehaviour
         mode?.ChangedHexState();
     }
 
+    public void StartEndlessMode()
+    {
+        mode.gameObject.SetActive(false);
+        mode = endlessMode;
+        mode.gameObject.SetActive(true);
+        mode.Initialized(player, hud);
+        SetGameState(GameplayState.Play);
+        mode?.ChangedHexState();
+    }
+
     public void SetGameState(GameplayState state)
     {
-        gameState = state;
+        gamePlayState = state;
         switch (state)
         {
             case GameplayState.Play:
-                //Time.timeScale = 1;
                 player.StartPlaying();
                 break;
             case GameplayState.Stop:
@@ -100,7 +106,7 @@ public class GameState : MonoBehaviour
         player.enabled = false;
     }
 
-    private void OnPlayerStateChanged(PlayerState obj)
+    public void OnPlayerStateChanged(PlayerState obj)
     {
         SetGameState(GameplayState.GameOver);
 
@@ -112,29 +118,7 @@ public class GameState : MonoBehaviour
                 GamePlayerPrefs.TotalCoins += CoinAmount;
                 break;
             case PlayerState.Lose:
-                
-                if (!IsAdditionalTime)
-                {
-                    player.StopPlayer();
-                    IsAdditionalTime = true;
-                    additional.Initialize(additionalTimePanel, additionalTime, state =>
-                    {
-                        if (state)
-                        {
-                            duration += additionalTime;
-                            player.StartPlaying();
-                            SetGameState(GameplayState.Play);
-                        }
-                        else
-                        {
-                            OnPlayerStateChanged(PlayerState.Lose);
-                        }
-                    });
-                }
-                else
-                {
-                    StartCoroutine(player.Looser(ReloadScene));
-                }
+                StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
                 StartCoroutine(player.FallDown(ReloadScene));
@@ -157,16 +141,10 @@ public class GameState : MonoBehaviour
 
     private void Update()
     {
-        if (gameState != GameplayState.Play)
+        if (gamePlayState != GameplayState.Play)
             return;
 
-        elapsedTime += Time.deltaTime;
 
-        if (elapsedTime > duration)
-        {
-            elapsedTime = duration;
-            OnPlayerStateChanged(PlayerState.Lose);
-        }
 
         generatorTime += Time.deltaTime;
         if (generatorTime > gameParameters.changesTime)
@@ -175,6 +153,6 @@ public class GameState : MonoBehaviour
             generatorTime = 0;
         }
 
-        hud.UpdateScoreValue(duration - elapsedTime);
+
     }
 }

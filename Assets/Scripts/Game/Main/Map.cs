@@ -13,6 +13,8 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
     [SerializeField] GameObject arrowPrefab;
 
+    private MaterialRepository.Data data;
+
     private List<Hex> hexes = new List<Hex>();
     public Vector2Int size
     {
@@ -30,6 +32,8 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     public void Initializie(Vector2Int size, MaterialRepository.Data data)
     {
         this.size = size;
+        this.data = data;
+
         _bounds = new Bounds(transform.position, Vector3.zero);
 
         hexPrefab.Renderer.material = data.main;
@@ -50,18 +54,6 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
                 _bounds.Encapsulate(hex_go.Renderer.bounds);
             }
 
-        var targetIndex = new Vector2Int(
-            Random.Range(0, size.x),
-            Random.Range(size.y-5, size.y-2)
-            );
-
-        var rend = this[targetIndex].Renderer;
-        rend.material = data.target;
-        this[targetIndex].IsTarget = true;
-
-        var arrow = Instantiate(arrowPrefab, this[targetIndex].transform);
-        arrow.transform.localPosition = Vector3.up;
-
         var cent = deathTrigger.transform.InverseTransformPoint(_bounds.center);
         deathTrigger.size = _bounds.size;
         deathTrigger.center = cent + Vector3.down*0.5f;
@@ -76,8 +68,32 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         return this[Hexagonal.Offset.QFromCube(hex)];
     }
 
-    
+    public void SetTheme(MaterialRepository.Data data)
+    {
+        planeRenderer.material = data.plane;
+        foreach (var item in hexes)
+        {
+            item.Renderer.material = data.main;
+           
+            
+        }
+       
+    }
+    public void SetTarget()
+    {
+        var targetIndex = new Vector2Int(
+          Random.Range(0, size.x),
+          Random.Range(size.y - 5, size.y - 2)
+          );
 
+        var rend = this[targetIndex].Renderer;
+        rend.material = data.target;
+        this[targetIndex].IsTarget = true;
+
+        var arrow = Instantiate(arrowPrefab, this[targetIndex].transform);
+        arrow.transform.localPosition = Vector3.up;
+    }
+   
     #region IEnumerable
 
     public IEnumerator<Hex> GetEnumerator()

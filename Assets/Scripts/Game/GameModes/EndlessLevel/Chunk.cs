@@ -34,5 +34,9 @@ public class Chunk : MonoBehaviour
         obstacleGenerator.Generate();
     }
 
+    public void ChangeChunkTheme(MaterialRepository.Data _data)
+    {
+        Map.SetTheme(_data);
+    }
 
 }
