@@ -98,7 +98,9 @@ public class ObstacleGenerator : MonoBehaviour
         var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
         var hexIndexes = colliders.Select(c => c.GetComponent<Hex>().index);
 
-       return obstacles.Except(hexIndexes);
+       return obstacles
+            .Except(hexIndexes)
+            .Select(ind => Offset.QFromCube(ind));
     }
 
 }

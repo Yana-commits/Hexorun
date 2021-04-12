@@ -12,7 +12,7 @@ public class Chunk : MonoBehaviour
 
     public void Initialize(Transform _player, GameParameters parameters)
     {
-        map.Initializie(parameters.size, parameters.theme);
+        map.Initializie(parameters.size, new HexShape(), parameters.theme);
         map.gameObject.SetActive(true);      
         obstacleGenerator.Initialize(_player.transform, parameters.obstaclesParam);
 

@@ -55,7 +55,7 @@ public class EndlessMode : Mode
         depthFull = chunks[currentChunkIndex].Map.Bounds.size.z;
         depthHalf = depthFull / 2;
 
-        var hex = chunks[0].Map[param.size.x / 2, 0];
+        var hex = chunks[0].Map[new Vector2Int(param.size.x / 2, 0)];
         var bound = chunks[0].Map.Bounds;
         bound.Expand(new Vector3(0, 0, zPos));
         Vector3 startPos = hex.transform.position;

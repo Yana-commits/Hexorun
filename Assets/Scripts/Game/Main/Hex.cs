@@ -16,7 +16,7 @@ public class Hex : MonoBehaviour
         [HexState.Hole] = new[] {-3f}
     };
 
-    public Vector2Int index;
+    public Vector3Int index;
     public bool IsTarget;
 
     public bool TrySetState(HexState state)
@@ -44,7 +44,7 @@ public class Hex : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        //UnityEditor.Handles.Label(transform.position, $"{index}");
+        UnityEditor.Handles.Label(transform.position, $"{index}");
     }
 #endif
 
