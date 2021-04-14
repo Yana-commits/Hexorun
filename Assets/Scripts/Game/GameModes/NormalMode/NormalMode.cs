@@ -33,6 +33,7 @@ public class NormalMode : Mode
         gameParameters.theme = datas.Materials[GamePlayerPrefs.LastTheme];
         duration = gameParameters.duration;
 
+
         chunk = Instantiate(chunkPrefab,this.transform);
         chunk.Initialize(player.transform, gameParameters);
         chunk.Map.SetTarget();
@@ -60,9 +61,9 @@ public class NormalMode : Mode
         hud.UpdateScoreValue(duration - elapsedTime);
     }
 
-    public override void ChangedHexState()
+    public override void ChangedHexState(KindOfMapBehavor mapBehavor)
     {
-        chunk.ChangeHexes();
+        chunk.ChangeHexes(mapBehavor);
     }
 
     private void CheckForAdditionalTime()
@@ -104,5 +105,5 @@ public abstract class Mode : MonoBehaviour
     public GameState gameState;
 
     public abstract void Initialized(Player _player, HUD hud);
-    public abstract void ChangedHexState();
+    public abstract void ChangedHexState(KindOfMapBehavor mapBehavor);
 }

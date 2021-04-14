@@ -23,7 +23,9 @@ public class GameState : MonoBehaviour
     private Mode mode;
 
 
-    private float generatorTime;
+    private float generatorTime ;
+    private float generatorTimeForMap;
+    private float changesTime =2;
     private GameplayState gamePlayState = GameplayState.Stop;
     [Space]
     [SerializeField]
@@ -64,13 +66,14 @@ public class GameState : MonoBehaviour
 
         hud.UpdateLevel(gameParameters.id + 1);
         generatorTime = gameParameters.changesTime - 1;
+
         CoinAmount = 0;
     }
 
     public void StartNormalMode()
     {
         SetGameState(GameplayState.Play);
-        mode?.ChangedHexState();
+        mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
     }
 
     public void StartEndlessMode()
@@ -80,7 +83,7 @@ public class GameState : MonoBehaviour
         mode.gameObject.SetActive(true);
         mode.Initialized(player, hud);
         SetGameState(GameplayState.Play);
-        mode?.ChangedHexState();
+        mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
     }
 
     public void SetGameState(GameplayState state)
@@ -139,20 +142,50 @@ public class GameState : MonoBehaviour
             player.stateChanged -= OnPlayerStateChanged;
     }
 
+    //private void Update()
+    //{
+    //    if (gamePlayState != GameplayState.Play)
+    //        return;
+
+    //    generatorTime += Time.deltaTime;
+    //    if (generatorTime > changesTime)
+    //    {
+    //        changesTime = changesTime == 6 ? 2 : 6;
+
+    //        mode?.ChangedHexState(KindOfMapBehavor.AllDown);
+
+    //        generatorTime = 0;
+    //    }
+    //}
+
     private void Update()
     {
         if (gamePlayState != GameplayState.Play)
             return;
 
-
-
         generatorTime += Time.deltaTime;
-        if (generatorTime > gameParameters.changesTime)
+        if (generatorTime > changesTime)
         {
-            mode?.ChangedHexState();
+            changesTime = changesTime == 6 ? 2 : 6;
+            if (changesTime == 2)
+            {
+                generatorTimeForMap += Time.deltaTime;
+                if (generatorTimeForMap > gameParameters.changesTime)
+                {
+                    mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
+                    generatorTimeForMap = 0;
+                }
+            }
+            else
+            {
+                mode?.ChangedHexState(KindOfMapBehavor.AllDown);
+            }
             generatorTime = 0;
         }
-
-
     }
+}
+public enum KindOfMapBehavor
+{
+    AllDown,
+    DiffMoove
 }

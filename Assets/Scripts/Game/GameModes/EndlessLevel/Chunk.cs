@@ -29,9 +29,9 @@ public class Chunk : MonoBehaviour
         }
     }
 
-    public void ChangeHexes()
+    public void ChangeHexes(KindOfMapBehavor mapBehavor)
     {
-        obstacleGenerator.Generate();
+        obstacleGenerator.Generate(mapBehavor);
     }
 
     public void ChangeChunkTheme(MaterialRepository.Data _data)

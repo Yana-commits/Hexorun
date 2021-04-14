@@ -27,4 +27,5 @@ public enum PatternEnum
     Wall2,
     Wall3,
     Path1,
+    RoundMapZones
 }

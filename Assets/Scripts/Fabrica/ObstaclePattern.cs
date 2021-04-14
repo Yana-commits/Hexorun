@@ -20,7 +20,8 @@ namespace Factory.ObstaclePattern
             [PatternEnum.Wall1] = new WallFirstCreator(),
             [PatternEnum.Wall2] = new WallSecondCreator(),
             [PatternEnum.Wall3] = new WallThirdCreator(),
-            [PatternEnum.Path1] = new Path1Creator()
+            [PatternEnum.Path1] = new Path1Creator(),
+            [PatternEnum.RoundMapZones] = new RoundMapZonesCreator()
         };
 
         private readonly ObstacleFactory factory;
@@ -54,6 +55,12 @@ namespace Factory.ObstaclePattern
     {
         public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset) 
             => new Path1(mapSize, offset);
+    }
+
+    internal class RoundMapZonesCreator : ObstacleFactory
+    {
+        public override ObstacleProduct Generate(Vector2Int mapSize, Vector2Int offset)
+            => new RoundMapZones(mapSize, offset);
     }
     #endregion
 
@@ -242,6 +249,50 @@ namespace Factory.ObstaclePattern
                 obstaclesField[item] = HexState.None;
             }
 
+            return obstaclesField;
+        }
+    }
+
+    internal class RoundMapZones : ObstacleProduct
+    {
+        public RoundMapZones(Vector2Int mapSize, Vector2Int offset)
+                  : base(mapSize, offset, 0, HexState.None)
+        { }
+
+        protected override IDictionary<Vector2Int, HexState> Generate()
+        {
+             IEnumerable<Vector3Int> zones(Vector2Int mapSize)
+            {
+                var m = mapSize.x / 2;
+                
+                yield return new Vector3Int(0, 0, 0);
+                yield return new Vector3Int(m, -m, 0);
+                yield return new Vector3Int(m, 0, -m);
+                yield return new Vector3Int(0, m, -m);
+
+                yield return new Vector3Int(-m, m, 0);
+                yield return new Vector3Int(-m, 0, m);
+                yield return new Vector3Int(0, -m, m);
+            }
+
+            var neighbours = new List<Vector3Int>();
+
+            foreach (var item in zones(mapSize))
+            {
+                neighbours.Add(item);
+                var stopZone = Cube.GetNeighbour(item);
+                foreach (var n in stopZone)
+                {
+                    neighbours.Add(n);
+                }
+            }
+
+            IDictionary<Vector2Int, HexState> obstaclesField = new Dictionary<Vector2Int, HexState>();
+            foreach (var item in neighbours)
+            {
+                var key = Offset.QFromCube(item);
+                obstaclesField.Add(key, HexState.Disable);
+            }
             return obstaclesField;
         }
     }

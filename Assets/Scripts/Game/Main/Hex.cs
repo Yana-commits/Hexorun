@@ -13,7 +13,8 @@ public class Hex : MonoBehaviour
     {
         [HexState.None] = new[] {0f},
         [HexState.Hill] = new[] {0.5f, 1f},
-        [HexState.Hole] = new[] {-3f}
+        [HexState.Hole] = new[] {-3f},
+        [HexState.Disable] = new[] { 0f }
     };
 
     public Vector3Int index;

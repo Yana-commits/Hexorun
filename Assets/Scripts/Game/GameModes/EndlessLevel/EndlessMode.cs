@@ -70,7 +70,7 @@ public class EndlessMode : Mode
         var chunk = chunks[CheckNextIndex()];
         chunk.transform.localPosition = new Vector3(0, 0, nextChunkPos);     
         chunk.gameObject.SetActive(true);
-        chunk.ChangeHexes();
+        chunk.ChangeHexes(KindOfMapBehavor.DiffMoove);
         depthHalf = depthHalf + chunk.Map.Bounds.size.z;
     }
 
@@ -89,11 +89,11 @@ public class EndlessMode : Mode
     }
 
 
-    public override void ChangedHexState()
+    public override void ChangedHexState(KindOfMapBehavor mapBehavor)
     {
         foreach (var item in chunks)
         {
-            item.ChangeHexes();
+            item.ChangeHexes(mapBehavor);
         }
     }
 
