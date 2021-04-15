@@ -26,6 +26,10 @@ public class GameState : MonoBehaviour
     private float generatorTime ;
     private float generatorTimeForMap;
     private float changesTime =2;
+    int n = 0;
+    int m = 0;
+    int stopDoDiffMoove = 3;
+    int stopDoDown = 1;
     private GameplayState gamePlayState = GameplayState.Stop;
     [Space]
     [SerializeField]
@@ -164,25 +168,26 @@ public class GameState : MonoBehaviour
             return;
 
         generatorTime += Time.deltaTime;
-        if (generatorTime > changesTime)
+        if ((generatorTime > changesTime) && (n <= stopDoDiffMoove))
         {
-            changesTime = changesTime == 6 ? 2 : 6;
-            if (changesTime == 2)
-            {
-                generatorTimeForMap += Time.deltaTime;
-                if (generatorTimeForMap > gameParameters.changesTime)
-                {
-                    mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
-                    generatorTimeForMap = 0;
-                }
-            }
-            else
-            {
-                mode?.ChangedHexState(KindOfMapBehavor.AllDown);
-            }
+            mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
+            n++;
+            m = 0;
             generatorTime = 0;
         }
+        else if ((generatorTime > changesTime) && (n > stopDoDiffMoove)&& (m <= stopDoDown))
+        {
+            mode?.ChangedHexState(KindOfMapBehavor.AllDown);
+            generatorTime = 0;
+            m++;
+        }
+        else if (m>stopDoDown)
+        {
+            n = 0;
+        }
     }
+
+    
 }
 public enum KindOfMapBehavor
 {
