@@ -168,26 +168,30 @@ public class GameState : MonoBehaviour
             return;
 
         generatorTime += Time.deltaTime;
-        if ((generatorTime > changesTime) && (n <= stopDoDiffMoove))
+
+        if ((generatorTime > gameParameters.changesTime) && (n <= stopDoDiffMoove))
         {
             mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
             n++;
             m = 0;
             generatorTime = 0;
         }
-        else if ((generatorTime > changesTime) && (n > stopDoDiffMoove)&& (m <= stopDoDown))
+        else if ((generatorTime > gameParameters.changesTime) && (n > stopDoDiffMoove) && (m <= stopDoDown))
         {
             mode?.ChangedHexState(KindOfMapBehavor.AllDown);
             generatorTime = 0;
             m++;
         }
-        else if (m>stopDoDown)
+        else if (m > stopDoDown)
         {
             n = 0;
         }
+
+
+
     }
 
-    
+  
 }
 public enum KindOfMapBehavor
 {
