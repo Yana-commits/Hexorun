@@ -19,6 +19,7 @@ public class ObstacleGenerator : MonoBehaviour
     private GameParameters.Obstacles _obstaclesParam;
     private List<ObstacleProduct> patterns;
     private HexState hexState = HexState.None;
+   
 
     public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
     {
@@ -31,12 +32,12 @@ public class ObstacleGenerator : MonoBehaviour
         //    .Select(p => new ObstacleCreator(p))
         //    .Shuffle();
 
-
         var obstacle = new ObstacleCreator(PatternEnum.RoundMapZones);
         int offset = 0;
         var patObstacle = obstacle.Generate(_map.size, Vector2Int.up * offset);
         patterns.Add(patObstacle);
 
+    
     }
 
     internal void Generate(KindOfMapBehavor mapBehavor)
@@ -54,7 +55,6 @@ public class ObstacleGenerator : MonoBehaviour
     public void SimpleGenerator(KindOfMapBehavor mapBehavor)
     {
         Dictionary<Vector2Int, HexState> hexObstacles = new Dictionary<Vector2Int, HexState>();
-
 
         if (mapBehavor == KindOfMapBehavor.DiffMoove)
         {
@@ -125,4 +125,5 @@ public class ObstacleGenerator : MonoBehaviour
             //.Except(hexIndexes)
             .Select(ind => Offset.QFromCube(ind));
     }
+   
 }

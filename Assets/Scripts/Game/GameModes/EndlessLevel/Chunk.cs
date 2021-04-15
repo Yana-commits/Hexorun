@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using System.Linq;
+using System.Collections.Generic;
+using static Hexagonal;
 
 public class Chunk : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class Chunk : MonoBehaviour
         var list = Map.Shuffle().ToList();
         int index = 0;
 
+       
         foreach (var pair in parameters.collectableItems)
         {
             for (int i = 0; i < pair.Value; index++, i++)

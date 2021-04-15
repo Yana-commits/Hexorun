@@ -21,10 +21,11 @@ public class HexShape : IShape
 {
     public IEnumerable<Vector3Int> GetIndexes(Vector2Int size)
     {
-        for (int q = -size.x; q <= size.x; q++)
+        var radius = size.y / 2;
+        for (int q = -radius; q <= radius; q++)
         {
-            int r1 = Mathf.Max(-size.x, -q - size.x);
-            int r2 = Mathf.Min(size.x, -q + size.x);
+            int r1 = Mathf.Max(-radius, -q - radius);
+            int r2 = Mathf.Min(radius, -q + radius);
             for (int r = r1; r <= r2; r++)
                 yield return new Vector3Int(q, r, -q - r);
         }

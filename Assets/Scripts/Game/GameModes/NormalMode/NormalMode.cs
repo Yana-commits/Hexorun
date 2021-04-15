@@ -38,7 +38,7 @@ public class NormalMode : Mode
         chunk.Initialize(player.transform, gameParameters);
         chunk.Map.SetTarget();
 
-        var hex = chunk.Map[new Vector2Int(0, -gameParameters.size.x +1)];
+        var hex = chunk.Map[new Vector2Int(0, -gameParameters.size.y/2 +1)];
         Vector3 startPos = hex.transform.position;
         player.transform.SetPositionAndRotation(startPos, Quaternion.identity);
         player.SetGamePlaySettings(gameParameters.playerSpeed, chunk.Map.Bounds);

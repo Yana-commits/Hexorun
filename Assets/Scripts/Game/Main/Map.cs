@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using static Hexagonal;
 
 public class Map : MonoBehaviour, IEnumerable<Hex>
 {
@@ -87,10 +88,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     }
     public void SetTarget()
     {
-        var targetIndex = new Vector2Int(
-          Random.Range(0, size.x),
-          Random.Range(size.y - 5, size.y - 2)
-          );
+        var targetIndex = new Vector2Int(0,0);
 
         Renderer rend = this[targetIndex]?.Renderer;
         if (rend)
@@ -101,8 +99,34 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
             var arrow = Instantiate(arrowPrefab, this[targetIndex].transform);
             arrow.transform.localPosition = Vector3.up;
         }
+
+        var neighbours = Offset.GetQNeighbour(targetIndex);
+        foreach (var item in neighbours)
+        {
+            RedZOnes(item);
+        }
+
+
+        foreach (var item in zones(size))
+        {
+            var qqq = Offset.QFromCube(item);
+            RedZOnes(qqq);
+            var redZones = Offset.GetQNeighbour(qqq);
+            foreach (var ttt in redZones)
+            {
+                RedZOnes(ttt);
+            }
+        }
+     }
+
+    public void RedZOnes(Vector2Int vector)
+    {
+        Renderer _rend = this[vector]?.Renderer;
+        if (_rend)
+        {
+            _rend.material = data.target;
+        }
     }
-   
     #region IEnumerable
 
     public IEnumerator<Hex> GetEnumerator()
@@ -119,5 +143,22 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(Bounds.center, Bounds.size);
     }
+
+    IEnumerable<Vector3Int> zones(Vector2Int mapSize)
+    {
+        var m = (int)mapSize.y / 4;
+
+        yield return new Vector3Int(0, 0, 0);
+        yield return new Vector3Int(m, -m, 0);
+        yield return new Vector3Int(m, 0, -m);
+        yield return new Vector3Int(0, m, -m);
+
+        yield return new Vector3Int(-m, m, 0);
+        yield return new Vector3Int(-m, 0, m);
+        yield return new Vector3Int(0, -m, m);
+    }
+
+   
+   
 #endif
 }
