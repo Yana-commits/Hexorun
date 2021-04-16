@@ -3,6 +3,7 @@ public enum HexState
     None,
     Hill,
     Hole,
+    Zone,
     Disable
 }
 

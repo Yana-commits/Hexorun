@@ -261,18 +261,12 @@ namespace Factory.ObstaclePattern
 
         protected override IDictionary<Vector2Int, HexState> Generate()
         {
-             IEnumerable<Vector3Int> zones(Vector2Int mapSize)
+            IEnumerable<Vector3Int> zones(Vector2Int mapSize)
             {
-                var m = (int) mapSize.y / 2;
-                
-                yield return new Vector3Int(0, 0, 0);
-                yield return new Vector3Int(m, -m, 0);
-                yield return new Vector3Int(m, 0, -m);
-                yield return new Vector3Int(0, m, -m);
-
-                yield return new Vector3Int(-m, m, 0);
-                yield return new Vector3Int(-m, 0, m);
-                yield return new Vector3Int(0, -m, m);
+                var m = (int)mapSize.y / 2;
+                var indexes = Cube.directions.Select(d => d * m).Append(Vector3Int.zero);
+                indexes.ToList().Add(new Vector3Int(0, 0, 0));
+                return indexes;
             }
 
             var neighbours = new List<Vector3Int>();
@@ -291,7 +285,7 @@ namespace Factory.ObstaclePattern
             foreach (var item in neighbours)
             {
                 var key = Offset.QFromCube(item);
-                obstaclesField.Add(key, HexState.Disable);
+                obstaclesField.Add(key, HexState.Zone);
             }
             return obstaclesField;
         }

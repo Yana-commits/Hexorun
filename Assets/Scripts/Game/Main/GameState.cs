@@ -101,7 +101,7 @@ public class GameState : MonoBehaviour
         mode.gameObject.SetActive(true);
         mode.Initialized(player, hud);
         SetGameState(GameplayState.Play);
-        mode?.ChangedHexState(KindOfMapBehavor.AllDown);
+        mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
     }
 
     public void SetGameState(GameplayState state)
