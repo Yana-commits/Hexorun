@@ -20,4 +20,9 @@ public static class GamePlayerPrefs
         set => PlayerPrefs.SetInt(nameof(TotalCoins), value);
     }
 
+    public static int BestScore
+    {
+        get => PlayerPrefs.GetInt(nameof(BestScore), 0);
+        set => PlayerPrefs.SetInt(nameof(BestScore), value);
+    }
 }

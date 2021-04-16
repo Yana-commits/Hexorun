@@ -5,3 +5,9 @@ public enum HexState
     Hole,
     Disable
 }
+
+public enum HexItem
+{
+    Empty,
+    Fill
+}

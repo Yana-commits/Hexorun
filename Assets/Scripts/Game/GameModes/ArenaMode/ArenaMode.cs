@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalMode : Mode
+public class ArenaMode : Mode
 {
     private Player player;
     private HUD hud;
@@ -12,11 +12,14 @@ public class NormalMode : Mode
     private float elapsedTime;
     private float duration;
 
-
     private float additionalTimePanel = 6;
     private float additionalTime = 10;
     private bool IsAdditionalTime = false;
+    private int m;
     private float generatorTime;
+    private int n;
+    private int stopDoDiffMoove;
+    private int stopDoDown;
 
     // Start is called before the first frame update
     void Start()
@@ -38,11 +41,11 @@ public class NormalMode : Mode
 
 
         chunk = Instantiate(chunkPrefab,this.transform);
-        chunk.Initialize(player.transform, new RectShape(),gameParameters);
-        chunk.Map.SetTarget();
+        chunk.Initialize(player.transform, new HexShape(), gameParameters);
+        chunk.Map.SetArenaTarget();
 
-        var hex = chunk.Map[new Vector2Int(gameParameters.size.x / 2, 0)];
-        Vector3 startPos = hex.transform.position;
+        var hex = chunk.Map[new Vector2Int(0, -gameParameters.size.y +1)];
+        Vector3 startPos = hex.transform.position + Vector3.up;
         player.transform.SetPositionAndRotation(startPos, Quaternion.identity);
         player.SetGamePlaySettings(gameParameters.playerSpeed, chunk.Map.Bounds);
         player.gameObject.SetActive(true);
@@ -54,19 +57,23 @@ public class NormalMode : Mode
             return;
 
         generatorTime += Time.deltaTime;
-        if (generatorTime > gameParameters.changesTime)
+
+        if ((generatorTime > gameParameters.changesTime) && (n <= stopDoDiffMoove))
         {
             ChangedHexState(KindOfMapBehavor.DiffMoove);
+            n++;
+            m = 0;
             generatorTime = 0;
         }
-
-        elapsedTime += Time.deltaTime;
-
-        if (elapsedTime > duration)
+        else if ((generatorTime > gameParameters.changesTime) && (n > stopDoDiffMoove) && (m <= stopDoDown))
         {
-            elapsedTime = duration;
-            gameState.SetGameState(GameplayState.GameOver);
-            CheckForAdditionalTime();
+            ChangedHexState(KindOfMapBehavor.AllDown);
+            generatorTime = 0;
+            m++;
+        }
+        else if (m > stopDoDown)
+        {
+            n = 0;
         }
         hud.UpdateScoreValue(duration - elapsedTime);
     }
@@ -103,3 +110,4 @@ public class NormalMode : Mode
     }
 
 }
+

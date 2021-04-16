@@ -7,14 +7,15 @@ public class Hex : MonoBehaviour
     [SerializeField] private Renderer _renderer;
     public Renderer Renderer => _renderer;
 
-    public HexState State { get; private set; } = HexState.None;
+    public HexState State { get;  set; } = HexState.None;
+    public HexItem ItemState { get; set; } = HexItem.Empty;
 
     private Dictionary<HexState, float[]> hexPositionByState = new Dictionary<HexState, float[]>
     {
         [HexState.None] = new[] {0f},
         [HexState.Hill] = new[] {0.5f, 1f},
         [HexState.Hole] = new[] {-3f},
-        [HexState.Disable] = new[] { 0f }
+        [HexState.Disable] = new[] { -3f }
     };
 
     public Vector3Int index;
@@ -40,13 +41,18 @@ public class Hex : MonoBehaviour
             this.enabled = false;
         }
     }
-
+   
+    public void DisableHex()
+    {
+        State = HexState.Disable;
+        transform.DOLocalMoveY(-3f, 0.5f).OnComplete(()=> { this.gameObject.SetActive(false); });      
+    }
 
 #if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        UnityEditor.Handles.Label(transform.position, $"{index}");
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    UnityEditor.Handles.Label(transform.position, $"{index}");
+    //}
 #endif
 
 }

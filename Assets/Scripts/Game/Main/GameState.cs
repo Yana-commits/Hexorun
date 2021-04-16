@@ -15,6 +15,7 @@ public class GameState : MonoBehaviour
 
     [SerializeField] private EndlessMode endlessMode;
     [SerializeField] private NormalMode normalMode;
+    [SerializeField] private ArenaMode arenaMode;
 
     [Space]
     [SerializeField] private Player player;
@@ -22,14 +23,6 @@ public class GameState : MonoBehaviour
     private GameParameters gameParameters;
     private Mode mode;
 
-
-    private float generatorTime ;
-    private float generatorTimeForMap;
-    private float changesTime =2;
-    int n = 0;
-    int m = 0;
-    int stopDoDiffMoove = 3;
-    int stopDoDown = 1;
     private GameplayState gamePlayState = GameplayState.Stop;
     [Space]
     [SerializeField]
@@ -43,6 +36,17 @@ public class GameState : MonoBehaviour
         {
             _coinsCollect = value;
             hud.ScoreAmount(_coinsCollect);
+        }
+    }
+
+    private int _pointsCollect = 0;
+    public int PointsAmount
+    {
+        get => _pointsCollect;
+        set
+        {
+            _pointsCollect = value;
+            hud.PointsAmount(_pointsCollect);
         }
     }
 
@@ -69,8 +73,6 @@ public class GameState : MonoBehaviour
         PlayerInit();
 
         hud.UpdateLevel(gameParameters.id + 1);
-        generatorTime = gameParameters.changesTime - 1;
-
         CoinAmount = 0;
     }
 
@@ -82,12 +84,24 @@ public class GameState : MonoBehaviour
 
     public void StartEndlessMode()
     {
+        gameMode = GameModeState.Endless;
         mode.gameObject.SetActive(false);
         mode = endlessMode;
         mode.gameObject.SetActive(true);
         mode.Initialized(player, hud);
         SetGameState(GameplayState.Play);
         mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
+    }
+
+    public void StartArenaLevel()
+    {
+        gameMode = GameModeState.Arena;
+        mode.gameObject.SetActive(false);
+        mode = arenaMode;
+        mode.gameObject.SetActive(true);
+        mode.Initialized(player, hud);
+        SetGameState(GameplayState.Play);
+        mode?.ChangedHexState(KindOfMapBehavor.AllDown);
     }
 
     public void SetGameState(GameplayState state)
@@ -128,7 +142,8 @@ public class GameState : MonoBehaviour
                 StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
-                StartCoroutine(player.FallDown(ReloadScene));
+                CheckBestScore();
+                StartCoroutine(player.FallDown(ReloadScene));     
                 break;
             default:
                 break;
@@ -146,52 +161,12 @@ public class GameState : MonoBehaviour
             player.stateChanged -= OnPlayerStateChanged;
     }
 
-    //private void Update()
-    //{
-    //    if (gamePlayState != GameplayState.Play)
-    //        return;
 
-    //    generatorTime += Time.deltaTime;
-    //    if (generatorTime > changesTime)
-    //    {
-    //        changesTime = changesTime == 6 ? 2 : 6;
-
-    //        mode?.ChangedHexState(KindOfMapBehavor.AllDown);
-
-    //        generatorTime = 0;
-    //    }
-    //}
-
-    private void Update()
+    private void CheckBestScore()
     {
-        if (gamePlayState != GameplayState.Play)
-            return;
-
-        generatorTime += Time.deltaTime;
-
-        if ((generatorTime > gameParameters.changesTime) && (n <= stopDoDiffMoove))
-        {
-            mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
-            n++;
-            m = 0;
-            generatorTime = 0;
-        }
-        else if ((generatorTime > gameParameters.changesTime) && (n > stopDoDiffMoove) && (m <= stopDoDown))
-        {
-            mode?.ChangedHexState(KindOfMapBehavor.AllDown);
-            generatorTime = 0;
-            m++;
-        }
-        else if (m > stopDoDown)
-        {
-            n = 0;
-        }
-
-
-
+        if (gameMode == GameModeState.Endless && PointsAmount > GamePlayerPrefs.BestScore)
+            GamePlayerPrefs.BestScore = PointsAmount;
     }
-
-  
 }
 public enum KindOfMapBehavor
 {

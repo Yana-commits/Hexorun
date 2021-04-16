@@ -21,7 +21,7 @@ public class HexShape : IShape
 {
     public IEnumerable<Vector3Int> GetIndexes(Vector2Int size)
     {
-        var radius = size.y / 2;
+        var radius = size.y;
         for (int q = -radius; q <= radius; q++)
         {
             int r1 = Mathf.Max(-radius, -q - radius);

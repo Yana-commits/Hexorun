@@ -263,7 +263,7 @@ namespace Factory.ObstaclePattern
         {
              IEnumerable<Vector3Int> zones(Vector2Int mapSize)
             {
-                var m = (int) mapSize.y / 4;
+                var m = (int) mapSize.y / 2;
                 
                 yield return new Vector3Int(0, 0, 0);
                 yield return new Vector3Int(m, -m, 0);

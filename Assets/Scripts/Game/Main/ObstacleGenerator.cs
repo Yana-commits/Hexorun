@@ -19,25 +19,54 @@ public class ObstacleGenerator : MonoBehaviour
     private GameParameters.Obstacles _obstaclesParam;
     private List<ObstacleProduct> patterns;
     private HexState hexState = HexState.None;
-   
 
-    public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
+
+    //public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
+    //{
+    //    patterns = new List<ObstacleProduct>();
+    //    _player = player;
+    //    _obstaclesParam = obstaclesParam;
+
+
+    //}
+
+    public void Initialize(Transform player, IShape shape, GameParameters.Obstacles obstaclesParam)
     {
         patterns = new List<ObstacleProduct>();
         _player = player;
         _obstaclesParam = obstaclesParam;
 
-        //IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
-        ////    //new PatternEnum[] { PatternEnum.Wall3 }
-        //    .Select(p => new ObstacleCreator(p))
-        //    .Shuffle();
 
-        var obstacle = new ObstacleCreator(PatternEnum.RoundMapZones);
-        int offset = 0;
-        var patObstacle = obstacle.Generate(_map.size, Vector2Int.up * offset);
-        patterns.Add(patObstacle);
+        if (shape is RectShape)
+        {
+            IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
 
-    
+                .Select(p => new ObstacleCreator(p))
+                .Shuffle();
+
+            int patternsHeight = creators.Sum(c => c.Generate(_map.size, Vector2Int.zero).Height);
+            int range = _map.size.y - patternsHeight - 10;
+
+            int offset = 5;
+            foreach (var factory in creators)
+            {
+                int ttt = Random.Range(0, range);
+                range -= ttt;
+                offset += ttt;
+
+                var obstacle = factory.Generate(_map.size, Vector2Int.up * offset);
+                offset += obstacle.Height;
+                patterns.Add(obstacle);
+            }
+        }
+        else
+        {
+            var obstacle = new ObstacleCreator(PatternEnum.RoundMapZones);
+            int offset = 0;
+            var patObstacle = obstacle.Generate(_map.size, Vector2Int.up * offset);
+            patterns.Add(patObstacle);
+        }
+
     }
 
     internal void Generate(KindOfMapBehavor mapBehavor)
@@ -118,12 +147,12 @@ public class ObstacleGenerator : MonoBehaviour
                .Select(h => h.index);
 
         //TODO: если клетка опущена Physics.OverlapSphere не может ее отловить
-        //var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
-        //var hexIndexes = colliders.Select(c => c.GetComponent<Hex>().index);
+        var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
+        var hexIndexes = colliders.Select(c => c.GetComponent<Hex>().index);
 
         return obstacles
-            //.Except(hexIndexes)
-            .Select(ind => Offset.QFromCube(ind));
+             .Except(hexIndexes)
+             .Select(ind => Offset.QFromCube(ind));
     }
-   
+
 }

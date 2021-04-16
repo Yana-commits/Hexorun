@@ -150,6 +150,8 @@ MonoBehaviour:
   map: {fileID: 2339778811879956480}
   obstacleGenerator: {fileID: 480623377039618242}
   obstaclePresenter: {fileID: 480623377039618243}
+  pointsPrefab: {fileID: 3821720450235083012, guid: fc0eaafd1290dcb49a4baa82d139b7f3,
+    type: 3}
 --- !u!1001 &480623377232792417
 PrefabInstance:
   m_ObjectHideFlags: 0

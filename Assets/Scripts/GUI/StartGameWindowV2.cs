@@ -11,8 +11,9 @@ public class StartGameWindowV2 : MonoBehaviour
     [SerializeField] LevelRepository levels;
     [SerializeField] GameState gameState;
     [SerializeField] Text levelText;
+    [SerializeField] Text totalCoins;
     [SerializeField] Text bestScore;
-    [SerializeField] Button endlessBtn;
+    [SerializeField] Button endlessBtn,arenaBtn;
 
     public StartGameEvent OnStartGame;
 
@@ -23,6 +24,11 @@ public class StartGameWindowV2 : MonoBehaviour
             gameState?.StartEndlessMode();
             OnStartGame?.Invoke(null);
         });
+        arenaBtn.onClick.AddListener(() =>
+        {
+            gameState?.StartArenaLevel();
+            OnStartGame?.Invoke(null);
+        });
 
         int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count - 1);
         var gameParams = levels[level];
@@ -31,7 +37,8 @@ public class StartGameWindowV2 : MonoBehaviour
         GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
         gameState.StartGame(gameParams);
         levelText.text = "Level " + (level + 1).ToString();
-        bestScore.text = GamePlayerPrefs.TotalCoins.ToString();
+        totalCoins.text = GamePlayerPrefs.TotalCoins.ToString();
+        bestScore.text = "BEST: "+ GamePlayerPrefs.BestScore.ToString();
     }
 
     public void OnStartClick()

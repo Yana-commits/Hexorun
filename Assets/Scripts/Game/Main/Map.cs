@@ -19,7 +19,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     private Dictionary<Vector3Int, Hex> hexes = new Dictionary<Vector3Int, Hex>();
 
     public Hex this[Vector2Int key] => this[Hexagonal.Offset.QToCube(key)];
-    public Hex this[Vector3Int key] 
+    public Hex this[Vector3Int key]
     {
         get
         {
@@ -57,14 +57,23 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
                 index,
                 Vector2.one * hexRadius);
             hex_go.name = "Hex_" + index.x + "_" + index.y;
-            hexes.Add(index,hex_go);
+            hexes.Add(index, hex_go);
 
             _bounds.Encapsulate(hex_go.Renderer.bounds);
         }
-      
+
         var cent = deathTrigger.transform.InverseTransformPoint(_bounds.center);
         deathTrigger.size = _bounds.size;
-        deathTrigger.center = cent + Vector3.down*0.5f;
+        deathTrigger.center = cent + Vector3.down * 0.5f;
+    }
+
+    public void SetTheme(MaterialRepository.Data data)
+    {
+        planeRenderer.material = data.plane;
+        foreach (var item in hexes.Values)
+        {
+            item.Renderer.material = data.main;
+        }
     }
 
     public Hex GetHexByPosition(Vector3 worldPos)
@@ -76,19 +85,48 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         return hexes[hex];
     }
 
-    public void SetTheme(MaterialRepository.Data data)
+    public void SetThemeWithDelay(MaterialRepository.Data data)
     {
         planeRenderer.material = data.plane;
-        foreach (var item in hexes.Values)
-        {
-            item.Renderer.material = data.main;
-            
-        }
-       
+        StartCoroutine(ChangeTheme(data.main));
     }
+
+    private IEnumerator ChangeTheme(Material mat)
+    {
+        float tick = 0.0001f;
+        var list = hexes.Values.Shuffle().ToList();
+        int index = 0;
+        while (list.Count > index)
+        {
+            list[index].Renderer.material = mat;
+            index++;
+            yield return tick;
+        }
+
+        
+    }
+
     public void SetTarget()
     {
-        var targetIndex = new Vector2Int(0,0);
+        var targetIndex = new Vector2Int(
+          Random.Range(0, size.x),
+          Random.Range(size.y - 5, size.y - 2)
+          );
+
+        Renderer rend = this[targetIndex]?.Renderer;
+        if (rend)
+        {
+            rend.material = data.target;
+            this[targetIndex].IsTarget = true;
+
+            var arrow = Instantiate(arrowPrefab, this[targetIndex].transform);
+            arrow.transform.localPosition = Vector3.up;
+        }
+    }
+
+    public void SetArenaTarget()
+    {
+        var targetIndex = new Vector2Int(0, 0);
 
         Renderer rend = this[targetIndex]?.Renderer;
         if (rend)
@@ -117,7 +155,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
                 RedZOnes(ttt);
             }
         }
-     }
+    }
 
     public void RedZOnes(Vector2Int vector)
     {
@@ -127,6 +165,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
             _rend.material = data.target;
         }
     }
+
     #region IEnumerable
 
     public IEnumerator<Hex> GetEnumerator()
@@ -146,7 +185,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
     IEnumerable<Vector3Int> zones(Vector2Int mapSize)
     {
-        var m = (int)mapSize.y / 4;
+        var m = (int)mapSize.y / 2;
 
         yield return new Vector3Int(0, 0, 0);
         yield return new Vector3Int(m, -m, 0);
@@ -158,7 +197,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         yield return new Vector3Int(0, -m, m);
     }
 
-   
-   
+
+
 #endif
 }
