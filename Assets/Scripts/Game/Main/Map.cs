@@ -94,17 +94,18 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
     private IEnumerator ChangeTheme(Material mat)
     {
-        float tick = 0.0001f;
-        var list = hexes.Values.Shuffle().ToList();
+        var list = hexes.Values.ToList();
         int index = 0;
-        while (list.Count > index)
-        {
-            list[index].Renderer.material = mat;
-            index++;
-            yield return tick;
-        }
 
-        
+        for (int i = 0; i < list.Count / 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                list[index].Renderer.material = mat;
+                index++;
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 
     public void SetTarget()
@@ -150,7 +151,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         {
             var qqq = Offset.QFromCube(item);
             var safeZone = Instantiate(safeAreaPrefab, this[qqq].transform);
-            safeZone.transform.localPosition = Vector3.up * 0.7f;
+            safeZone.transform.localPosition = Vector3.zero;
 
             RedZOnes(qqq);
             var redZones = Offset.GetQNeighbour(qqq);
@@ -181,12 +182,6 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
     #endregion
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(Bounds.center, Bounds.size);
-    }
 
     IEnumerable<Vector3Int> zones(Vector2Int mapSize)
     {
@@ -194,6 +189,13 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
         var indexes = Cube.directions.Select(d => d * m).Append(Vector3Int.zero);
         return indexes;
+    }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(Bounds.center, Bounds.size);
     }
 
 #endif
