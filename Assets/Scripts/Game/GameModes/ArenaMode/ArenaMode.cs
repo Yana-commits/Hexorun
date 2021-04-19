@@ -18,7 +18,7 @@ public class ArenaMode : Mode
     private int m;
     private float generatorTime;
     private int n;
-    private int stopDoDiffMoove = 5;
+    private int stopDoDiffMoove = 3;
     private int stopDoDown = 1;
 
     // Start is called before the first frame update

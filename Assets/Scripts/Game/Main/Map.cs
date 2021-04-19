@@ -13,6 +13,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     [SerializeField] BoxCollider deathTrigger;
 
     [SerializeField] GameObject arrowPrefab;
+    [SerializeField] GameObject safeAreaPrefab;
 
     private MaterialRepository.Data data;
 
@@ -148,6 +149,9 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         foreach (var item in zones(size))
         {
             var qqq = Offset.QFromCube(item);
+            var safeZone = Instantiate(safeAreaPrefab, this[qqq].transform);
+            safeZone.transform.localPosition = Vector3.up * 0.7f;
+
             RedZOnes(qqq);
             var redZones = Offset.GetQNeighbour(qqq);
             foreach (var ttt in redZones)
@@ -155,6 +159,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
                 RedZOnes(ttt);
             }
         }
+
     }
 
     public void RedZOnes(Vector2Int vector)
@@ -187,17 +192,9 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     {
         var m = (int)mapSize.y / 2;
 
-        yield return new Vector3Int(0, 0, 0);
-        yield return new Vector3Int(m, -m, 0);
-        yield return new Vector3Int(m, 0, -m);
-        yield return new Vector3Int(0, m, -m);
-
-        yield return new Vector3Int(-m, m, 0);
-        yield return new Vector3Int(-m, 0, m);
-        yield return new Vector3Int(0, -m, m);
+        var indexes = Cube.directions.Select(d => d * m).Append(Vector3Int.zero);
+        return indexes;
     }
-
-
 
 #endif
 }
