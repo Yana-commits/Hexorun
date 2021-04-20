@@ -59,7 +59,7 @@ public class GameState : MonoBehaviour
     private void Start()
     {
         hud.OnPause += () => { SetGameState(gamePlayState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
-
+        Application.targetFrameRate = 60;
     }
 
     public void StartGame(GameParameters parameters)
