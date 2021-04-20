@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 74, y: -60}
+  m_AnchoredPosition: {x: 74, y: -44}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5407600308008126522
@@ -78,9 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'BEST: 1500
-
-'
+  m_Text: 'BEST: 1500'
 --- !u!1 &951052774251567916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1167,10 @@ MonoBehaviour:
   levels: {fileID: 11400000, guid: 87fde29953db20045904e8dceaac7316, type: 2}
   gameState: {fileID: 0}
   levelText: {fileID: 7375357923103247502}
-  bestScore: {fileID: 3357939167655123023}
+  totalCoins: {fileID: 3357939167655123023}
+  bestScore: {fileID: 7157896735263309926}
+  endlessBtn: {fileID: 5234535570564035004}
+  arenaBtn: {fileID: 3076124563628265981}
   OnStartGame:
     m_PersistentCalls:
       m_Calls:

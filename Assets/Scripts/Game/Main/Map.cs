@@ -150,7 +150,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         {
             var qqq = Offset.QFromCube(item);
             var safeZone = Instantiate(safeAreaPrefab, this[qqq].transform);
-            safeZone.transform.localPosition = Vector3.up * 0.7f;
+            safeZone.transform.localPosition = Vector3.up * 0.1f;
 
             RedZOnes(qqq);
             var redZones = Offset.GetQNeighbour(qqq);

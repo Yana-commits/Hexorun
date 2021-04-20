@@ -9,36 +9,26 @@ public class ArenaMode : Mode
     private GameParameters gameParameters;
     private Chunk chunk;
 
-    private float elapsedTime;
-    private float duration;
+    [SerializeField] float crushTime = 6;
 
-    private float additionalTimePanel = 6;
-    private float additionalTime = 10;
-    private bool IsAdditionalTime = false;
-    private int m;
     private float generatorTime;
-    private int n;
-    private int stopDoDiffMoove = 3;
-    private int stopDoDown = 1;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
+    private float changeTime;
+    private bool isCrush = false;
 
     public override void Initialized(Player _player,HUD hud)
     {
         player = _player;
         this.hud = hud;
-        hud.SetActiveNormalPanel();
+        hud.SetArenaPanel();
 
         int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count - 1);
         gameParameters = levels[level];
         gameParameters.id = level;
         gameParameters.theme = datas.Materials[GamePlayerPrefs.LastTheme];
-        duration = gameParameters.duration;
         gameParameters.size = new Vector2Int(10, 40);
+
+        generatorTime = crushTime;
+        changeTime = gameParameters.changesTime;
 
         chunk = Instantiate(chunkPrefab,this.transform);
         chunk.Initialize(player.transform, new HexShape(), gameParameters);
@@ -57,57 +47,47 @@ public class ArenaMode : Mode
         if (gameState.GamePlayState != GameplayState.Play)
             return;
 
-        generatorTime += Time.deltaTime;
+        generatorTime -= Time.deltaTime;
+        changeTime -= Time.deltaTime;
 
-        if ((generatorTime > gameParameters.changesTime) && (n <= stopDoDiffMoove))
+        if (generatorTime > 0)
         {
-            ChangedHexState(KindOfMapBehavor.DiffMoove);
-            n++;
-            m = 0;
-            generatorTime = 0;
-        }
-        else if ((generatorTime > gameParameters.changesTime) && (n > stopDoDiffMoove) && (m <= stopDoDown))
-        {
-            ChangedHexState(KindOfMapBehavor.AllDown);
-            generatorTime = 0;
-            m++;
-        }
-        else if (m > stopDoDown)
-        {
-            n = 0;
-        }
-        hud.UpdateScoreValue(duration - elapsedTime);
-    }
-
-    public override void ChangedHexState(KindOfMapBehavor mapBehavor)
-    {
-        chunk.ChangeHexes(mapBehavor);
-    }
-
-    private void CheckForAdditionalTime()
-    {
-        if (!IsAdditionalTime)
-        {
-            player.StopPlayer();
-            IsAdditionalTime = true;
-           hud.additional.Initialize(additionalTimePanel, additionalTime, state =>
+            if (changeTime <= 0)
             {
-                if (state)
-                {
-                    duration += additionalTime;
-                    player.StartPlaying();
-                    gameState.SetGameState(GameplayState.Play);
-                }
-                else
-                {
-                    gameState.OnPlayerStateChanged(PlayerState.Lose);
-                }
-            });
+                ChangedHexState(KindOfMapBehavor.DiffMoove);
+                changeTime = gameParameters.changesTime;
+            }          
+            CalculateCrush(); //update crush hud
         }
         else
         {
-            gameState.OnPlayerStateChanged(PlayerState.Lose);
+            if (!isCrush)
+            {
+                changeTime = gameParameters.changesTime;
+                isCrush = true;
+                ChangedHexState(KindOfMapBehavor.AllDown);
+            }
+
+            if (changeTime <= 0)
+            {
+                changeTime = gameParameters.changesTime;
+                generatorTime = crushTime;
+                isCrush = false;
+                ChangedHexState(KindOfMapBehavor.DiffMoove);
+            }
         }
+
+    }
+
+    public void CalculateCrush()
+    {
+        var val = generatorTime / crushTime;
+        hud.UpDateCrashTimer(val,generatorTime);
+    }
+  
+    public override void ChangedHexState(KindOfMapBehavor mapBehavor)
+    {
+        chunk.ChangeHexes(mapBehavor);
     }
 
 }

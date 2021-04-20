@@ -127,6 +127,8 @@ public class ObstacleGenerator : MonoBehaviour
 
         foreach (var item in randomObstacles)
             hexObstacles.Add(item, hexState);
+
+        hexState = HexState.None;
     }
 
     private IEnumerable<Vector2Int> AllObstacles()

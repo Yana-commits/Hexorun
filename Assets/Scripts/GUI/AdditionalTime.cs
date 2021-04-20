@@ -10,7 +10,7 @@ public class AdditionalTime : MonoBehaviour
 {
     [SerializeField] Button continuieBtn;
     [SerializeField] Button giveUpBtn;
-    [SerializeField] Image circleImg;
+    [SerializeField] Image lineImg;
     [SerializeField] Text timerLabel;
     [SerializeField] Text addTimeLbl;
 
@@ -56,7 +56,7 @@ public class AdditionalTime : MonoBehaviour
 
     private IEnumerator Countdown()
     {
-        circleImg.fillAmount = 1f;
+        lineImg.fillAmount = 1f;
         timerLabel.text = $"{_duration}";
 
         float elapsedTime = 0;
@@ -66,12 +66,12 @@ public class AdditionalTime : MonoBehaviour
 
             elapsedTime += Time.deltaTime;
             float normalizedValue = Mathf.Clamp01(elapsedTime/_duration);
-            circleImg.fillAmount = 1f - normalizedValue;
+            lineImg.fillAmount = 1f - normalizedValue;
 
             timerLabel.text = $"{Mathf.CeilToInt(_duration - elapsedTime)}";
         }
 
-        _callback?.Invoke(false);
+        
     }
 
 }

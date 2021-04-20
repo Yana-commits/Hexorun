@@ -11,13 +11,19 @@ public class HUD : MonoBehaviour
 
     [SerializeField] GameObject normalGamePlayPnl;
     [SerializeField] GameObject endlessGamePlayPnl;
+    [SerializeField] GameObject timerContainer;
+    [SerializeField] GameObject arenaGamePlayPnl;
+
+    [SerializeField] Image lineImg;
 
     [SerializeField] Button pauseBtn;
     
+
     [SerializeField] Text timeText;
     [SerializeField] Text levelText;
     [SerializeField] Text scoreText;
     [SerializeField] Text pointsText;
+    [SerializeField] Text arenaTimerText;
 
     public event UnityAction OnPause
     {
@@ -28,11 +34,20 @@ public class HUD : MonoBehaviour
     public void SetActiveNormalPanel()
     {
         normalGamePlayPnl.SetActive(true);
+        timerContainer.SetActive(true);
     }
 
     public void SetEndlessPanel()
     {
         endlessGamePlayPnl.SetActive(true);
+        timerContainer.SetActive(true);
+    }
+
+    public void SetArenaPanel()
+    {
+        arenaGamePlayPnl.SetActive(true);
+        timerContainer.SetActive(false);
+        normalGamePlayPnl.SetActive(false);
     }
 
     public void UpdateScoreValue(float value)
@@ -54,4 +69,11 @@ public class HUD : MonoBehaviour
     {
         pointsText.text = $"{value}";
     }
+
+    public void UpDateCrashTimer(float _value, float time)
+    {
+        lineImg.fillAmount = _value;
+        arenaTimerText.text = $"{(int) time}";
+    }
+
 }
