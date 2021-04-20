@@ -83,7 +83,7 @@ public class NormalMode : Mode
             player.StopPlayer();
             IsAdditionalTime = true;
            hud.additional.Initialize(additionalTimePanel, additionalTime, state =>
-            {
+           {
                 if (state)
                 {
                     duration += additionalTime;
@@ -94,7 +94,7 @@ public class NormalMode : Mode
                 {
                     gameState.OnPlayerStateChanged(PlayerState.Lose);
                 }
-            });
+           });
         }
         else
         {
