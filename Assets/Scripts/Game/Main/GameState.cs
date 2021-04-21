@@ -59,8 +59,9 @@ public class GameState : MonoBehaviour
     private void Start()
     {
         hud.OnPause += () => { SetGameState(gamePlayState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
-        hud.overEndless.continueFall += AfterFall;
+        hud.overEndless.continueFall += ReloadScene;
 
+        Time.timeScale = 1;
         Application.targetFrameRate = 60;
     }
 
@@ -131,7 +132,7 @@ public class GameState : MonoBehaviour
 
     public void OnPlayerStateChanged(PlayerState obj)
     {
-        Debug.Log("444");
+
         SetGameState(GameplayState.GameOver);
 
         switch (obj)
@@ -162,7 +163,6 @@ public class GameState : MonoBehaviour
     private void EndlessPlayerFall()
     {
         player.stateChanged -= OnPlayerStateChanged;
-        Debug.Log("999");
         CheckBestScore();
         Time.timeScale = 0;
         hud.gamePlay.SetActive(false);

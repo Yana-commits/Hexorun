@@ -24,7 +24,6 @@ public class GameOverEndless : MonoBehaviour
     {
         continuieBtn.onClick.RemoveListener(OnContinue);
         giveUpBtn.onClick.RemoveListener(OnCancel);
-        continueFall = null;
     }
 
     private void OnContinue()

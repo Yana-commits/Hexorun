@@ -71,7 +71,7 @@ public class AdditionalTime : MonoBehaviour
             timerLabel.text = $"{Mathf.CeilToInt(_duration - elapsedTime)}";
         }
 
-        
+        OnCancel();
     }
 
 }

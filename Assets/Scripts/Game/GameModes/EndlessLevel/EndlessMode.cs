@@ -52,7 +52,7 @@ public class EndlessMode : Mode
         if (waveDelay <= 0)
         {
             TryMoveHexDown();
-            waveDelay = 0.033f; 
+            waveDelay = 0.037f; 
         }
 
     }
