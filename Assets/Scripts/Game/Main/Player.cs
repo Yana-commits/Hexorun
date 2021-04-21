@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
     public void Fall()
     {
         playerState = PlayerState.Fall;
-        stateChanged?.Invoke(PlayerState.Fall);
+        stateChanged?.Invoke(playerState);
     }
     public void StartPlaying()
     {

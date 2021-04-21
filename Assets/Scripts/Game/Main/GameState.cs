@@ -59,6 +59,8 @@ public class GameState : MonoBehaviour
     private void Start()
     {
         hud.OnPause += () => { SetGameState(gamePlayState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
+        hud.overEndless.continueFall += AfterFall;
+
         Application.targetFrameRate = 60;
     }
 
@@ -129,6 +131,7 @@ public class GameState : MonoBehaviour
 
     public void OnPlayerStateChanged(PlayerState obj)
     {
+        Debug.Log("444");
         SetGameState(GameplayState.GameOver);
 
         switch (obj)
@@ -142,12 +145,36 @@ public class GameState : MonoBehaviour
                 StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
-                CheckBestScore();
-                StartCoroutine(player.FallDown(ReloadScene));     
+                if (gameMode == GameModeState.Endless)
+                {
+                    EndlessPlayerFall();
+                }
+                else 
+                { 
+                    AfterFall();
+                }
                 break;
             default:
                 break;
         }
+    }
+
+    private void EndlessPlayerFall()
+    {
+        player.stateChanged -= OnPlayerStateChanged;
+        Debug.Log("999");
+        CheckBestScore();
+        Time.timeScale = 0;
+        hud.gamePlay.SetActive(false);
+        hud.overEndless.gameObject.SetActive(true);
+        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, 67);
+    }
+
+    private void AfterFall()
+    {
+        Time.timeScale = 1;
+        hud.gamePlay.SetActive(true);
+        StartCoroutine(player.FallDown(ReloadScene));
     }
 
     private void ReloadScene()

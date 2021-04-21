@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     public AdditionalTime additional;
+    public GameOverEndless overEndless;
+    public GameObject gamePlay;
 
     [SerializeField] GameObject normalGamePlayPnl;
     [SerializeField] GameObject endlessGamePlayPnl;

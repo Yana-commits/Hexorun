@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 2668631508282885948}
   - component: {fileID: 4402975943911440999}
   m_Layer: 5
-  m_Name: 'SecondsText '
+  m_Name: 'ScoreText '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1522,7 +1522,7 @@ GameObject:
   - component: {fileID: 5860773484299312229}
   - component: {fileID: 4889162908885069997}
   m_Layer: 5
-  m_Name: Text
+  m_Name: BestScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2051,16 +2051,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5402671900208987450}
-  - component: {fileID: 845756616856449515}
   - component: {fileID: 7016733858494634623}
   - component: {fileID: 8146131317118078438}
+  - component: {fileID: 432802562301448687}
   m_Layer: 5
   m_Name: GameOverToEndless
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5402671900208987450
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2087,23 +2087,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &845756616856449515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6017995796744877129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b7549a0025e9194eab2102914b8b1af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  continuieBtn: {fileID: 4430393903972612012}
-  giveUpBtn: {fileID: 7080336804175964856}
-  lineImg: {fileID: 0}
-  timerLabel: {fileID: 0}
-  addTimeLbl: {fileID: 4889162908885069997}
 --- !u!222 &7016733858494634623
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2142,6 +2125,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &432802562301448687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6017995796744877129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c687392d20ab2f54dbc528456252d046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  continuieBtn: {fileID: 4430393903972612012}
+  giveUpBtn: {fileID: 7080336804175964856}
+  scoreText: {fileID: 4402975943911440999}
+  bestScoreText: {fileID: 4889162908885069997}
+  coinsText: {fileID: 5311202105254065584}
 --- !u!1 &6110281879735277943
 GameObject:
   m_ObjectHideFlags: 0
@@ -3981,7 +3981,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7803144304232318094
 RectTransform:
   m_ObjectHideFlags: 0
