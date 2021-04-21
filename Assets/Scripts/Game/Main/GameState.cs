@@ -167,7 +167,7 @@ public class GameState : MonoBehaviour
         Time.timeScale = 0;
         hud.gamePlay.SetActive(false);
         hud.overEndless.gameObject.SetActive(true);
-        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, 67);
+        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect);
     }
 
     private void AfterFall()
