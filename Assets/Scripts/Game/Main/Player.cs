@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public event Action<PlayerState> stateChanged;
     private PlayerState playerState = PlayerState.None;
 
+    public event Action forPass;
+
     [SerializeField] private Bounds mapBounds;
 
     public void Initializie(Joystick joystick)
@@ -65,6 +67,11 @@ public class Player : MonoBehaviour
         playerState = PlayerState.Win;
         stateChanged?.Invoke(playerState);
 
+    }
+    public void CreatePass()
+    {
+       
+        forPass?.Invoke();
     }
     public void Fall()
     {

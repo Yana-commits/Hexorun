@@ -8,6 +8,7 @@ public class NormalMode : Mode
     private HUD hud;
     private GameParameters gameParameters;
     private Chunk chunk;
+    private Chunk ch;
 
     private float elapsedTime;
     private float duration;
@@ -17,11 +18,12 @@ public class NormalMode : Mode
     private float additionalTime = 10;
     private bool IsAdditionalTime = false;
     private float generatorTime;
+    float hexRadius = 0.9755461f / 2;
 
     // Start is called before the first frame update
     void Start()
     {
-       
+        player.forPass += LoadPass;
     }
 
     public override void Initialized(Player _player,HUD hud)
@@ -40,6 +42,8 @@ public class NormalMode : Mode
         chunk = Instantiate(chunkPrefab,this.transform);
         chunk.Initialize(player.transform, new RectShape(),gameParameters);
         chunk.Map.SetTarget();
+        ch = Instantiate(chunkPrefab, this.transform);
+        Debug.Log($"{chunk.Map.targetIndex}");
 
         var hex = chunk.Map[new Vector2Int(gameParameters.size.x / 2, 0)];
         Vector3 startPos = hex.transform.position;
@@ -69,6 +73,8 @@ public class NormalMode : Mode
             CheckForAdditionalTime();
         }
         hud.UpdateScoreValue(duration - elapsedTime);
+
+        
     }
 
     public override void ChangedHexState(KindOfMapBehavor mapBehavor)
@@ -102,4 +108,22 @@ public class NormalMode : Mode
         }
     }
 
+    private void LoadPass()
+    {
+
+      var  nextChunkPos = chunk.Map.Bounds.size.z - hexRadius;
+       ch.Map.Initializie(new Vector2Int(2,10), new RectShape(), gameParameters.theme);
+        ch.Map.gameObject.SetActive(true);
+        //var passX = Hexagonal.Offset.QToCube(chunk.Map.targetIndex);
+        var passX = Hexagonal.Cube.HexToPixel(
+               Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
+               Vector2.one * hexRadius);
+        ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
+       
+    }
+
+    private void OnDisable()
+    {
+        player.forPass -= LoadPass;
+    }
 }

@@ -39,6 +39,8 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     private Bounds _bounds;
     public Bounds Bounds => _bounds;
 
+    public Vector2Int targetIndex;
+
     public void Initializie(Vector2Int size, IShape shape, MaterialRepository.Data data)
     {
         this.size = size;
@@ -110,9 +112,9 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
     public void SetTarget()
     {
-        var targetIndex = new Vector2Int(
+        targetIndex = new Vector2Int(
           Random.Range(0, size.x),
-          Random.Range(size.y - 5, size.y - 2)
+          Random.Range(size.y - 1, size.y)
           );
 
         Renderer rend = this[targetIndex]?.Renderer;
@@ -128,7 +130,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
     public void SetArenaTarget()
     {
-        var targetIndex = new Vector2Int(0, 0);
+       targetIndex = new Vector2Int(0, 0);
 
         Renderer rend = this[targetIndex]?.Renderer;
         if (rend)
