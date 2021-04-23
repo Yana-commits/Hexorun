@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NormalMode : Mode
@@ -13,6 +14,9 @@ public class NormalMode : Mode
     private float elapsedTime;
     private float duration;
 
+    private List<Chunk> pass = new List<Chunk>();
+    private List<Hex> visiblePass = new List<Hex>();
+
 
     private float additionalTimePanel = 6;
     private float additionalTime = 10;
@@ -20,10 +24,17 @@ public class NormalMode : Mode
     private float generatorTime;
     float hexRadius = 0.9755461f / 2;
 
+    float nextChPos = 0;
+    private float depthFull;
+    private float depthHalf ;
+    private int currentChunkIndex;
+    private float nextChunkPos;
+    private Vector3 passX;
+
     // Start is called before the first frame update
     void Start()
     {
-        player.forPass += LoadPass;
+        player.forPass += LoadPass1;
     }
 
     public override void Initialized(Player _player,HUD hud)
@@ -42,7 +53,7 @@ public class NormalMode : Mode
         chunk = Instantiate(chunkPrefab,this.transform);
         chunk.Initialize(player.transform, new RectShape(),gameParameters);
         chunk.Map.SetTarget();
-        ch = Instantiate(chunkPrefab, this.transform);
+
         Debug.Log($"{chunk.Map.targetIndex}");
 
         var hex = chunk.Map[new Vector2Int(gameParameters.size.x / 2, 0)];
@@ -74,7 +85,12 @@ public class NormalMode : Mode
         }
         hud.UpdateScoreValue(duration - elapsedTime);
 
-        
+        if (player.transform.position.z >= depthHalf)
+        {
+            LoadNextChunk();
+        }
+        if (player.transform.position.z >= depthFull)
+            ChangeCurrentChunk();
     }
 
     public override void ChangedHexState(KindOfMapBehavor mapBehavor)
@@ -108,22 +124,95 @@ public class NormalMode : Mode
         }
     }
 
-    private void LoadPass()
-    {
+    //private void LoadPass()
+    //{
 
-      var  nextChunkPos = chunk.Map.Bounds.size.z - hexRadius;
-       ch.Map.Initializie(new Vector2Int(2,10), new RectShape(), gameParameters.theme);
-        ch.Map.gameObject.SetActive(true);
-        //var passX = Hexagonal.Offset.QToCube(chunk.Map.targetIndex);
-        var passX = Hexagonal.Cube.HexToPixel(
-               Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
-               Vector2.one * hexRadius);
-        ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
+    //  var  nextChunkPos = chunk.Map.Bounds.size.z - hexRadius;
+    //    ch = Instantiate(chunkPrefab, this.transform);
+    //    ch.Map.Initializie(new Vector2Int(2,10), new RectShape(), gameParameters.theme);
+    //    ch.Map.gameObject.SetActive(true);
+    //    //var passX = Hexagonal.Offset.QToCube(chunk.Map.targetIndex);
+    //    var passX = Hexagonal.Cube.HexToPixel(
+    //           Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
+    //           Vector2.one * hexRadius);
+    //    ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
+    //}
+
+    private void LoadPass1()
+    {
+        var nextChunkPos = chunk.Map.Bounds.size.z - hexRadius -1;
+
+        passX = Hexagonal.Cube.HexToPixel(
+              Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
+              Vector2.one * hexRadius);
+
+        for (int i = 0; i < 10; i++)
+        {
+            ch = Instantiate(chunkPrefab, this.transform);
+            ch.Map.Initializie(new Vector2Int(2, (int)chunk.Map.Bounds.size.z), new RectShape(), gameParameters.theme);
+            ch.Map.gameObject.SetActive(true);
+
+            
+
+            ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
+      
+            pass.Add(ch);
+            ch.gameObject.SetActive(false);
+            nextChunkPos += chunk.Map.Bounds.size.z - hexRadius;
+            
+        }
        
+
+       
+        pass[currentChunkIndex].gameObject.SetActive(true);
+        depthFull = chunk.Map.Bounds.size.z;
+        depthHalf = depthFull / 2;
+        visiblePass = pass[currentChunkIndex].Map.ToList();
+
+
+        Bounds bound;
+
+        bound = new Bounds(new Vector3(passX.x+0.5f, 0, chunk.Map.Bounds.size.z  + 5), new Vector3(1.5f, 0, chunk.Map.Bounds.size.z-4));
+        //bound = pass[0].Map.Bounds;
+        //bound.Expand(new Vector3(2, 0, 12));
+
+        player.SetGamePlaySettings(gameParameters.playerSpeed+1, bound);
+    }
+
+    private void LoadNextChunk()
+    {
+        passX = Hexagonal.Cube.HexToPixel(
+              Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
+              Vector2.one * hexRadius);
+
+        currentChunkIndex = 0;
+        nextChPos += pass[currentChunkIndex].Map.Bounds.size.z - hexRadius;
+        var chunkPass = pass[CheckNextIndex()];
+        chunkPass.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
+        chunkPass.Map.SetTheme(gameParameters.theme);
+        chunkPass.gameObject.SetActive(true);
+        depthHalf = depthHalf + chunkPass.Map.Bounds.size.z;
+        visiblePass.AddRange(chunkPass.Map.ToList());
+    }
+
+    private int CheckNextIndex()
+    {
+        return currentChunkIndex + 1 >= pass.Count ? 0 : currentChunkIndex + 1;
+    }
+
+    private void ChangeCurrentChunk()
+    {
+        currentChunkIndex = CheckNextIndex();
+        depthFull += pass[currentChunkIndex].Map.Bounds.size.z;
+
+        foreach (var item in pass.GetRange(0, currentChunkIndex + 1))
+        {
+            item.ChangeChunkTheme(gameParameters.theme);
+        }
     }
 
     private void OnDisable()
     {
-        player.forPass -= LoadPass;
+        player.forPass -= LoadPass1;
     }
 }
