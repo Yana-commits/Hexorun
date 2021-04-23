@@ -85,11 +85,11 @@ public class NormalMode : Mode
         }
         hud.UpdateScoreValue(duration - elapsedTime);
 
-        if (player.transform.position.z >= depthHalf)
+        if (player.transform.position.z >= depthHalf + chunk.Map.Bounds.size.z)
         {
             LoadNextChunk();
         }
-        if (player.transform.position.z >= depthFull)
+        if (player.transform.position.z >= depthFull + chunk.Map.Bounds.size.x )
             ChangeCurrentChunk();
     }
 
@@ -161,9 +161,9 @@ public class NormalMode : Mode
             nextChunkPos += chunk.Map.Bounds.size.z - hexRadius;
             
         }
-       
 
-       
+
+        currentChunkIndex = 0;
         pass[currentChunkIndex].gameObject.SetActive(true);
         depthFull = chunk.Map.Bounds.size.z;
         depthHalf = depthFull / 2;
@@ -185,7 +185,7 @@ public class NormalMode : Mode
               Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
               Vector2.one * hexRadius);
 
-        currentChunkIndex = 0;
+
         nextChPos += pass[currentChunkIndex].Map.Bounds.size.z - hexRadius;
         var chunkPass = pass[CheckNextIndex()];
         chunkPass.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
