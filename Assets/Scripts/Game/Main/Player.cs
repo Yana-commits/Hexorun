@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
 
     public float speed;
     private Joystick joystick;
-    public float passSpeed = 5f;
+    public float passSpeed = 0.01f;
+    private bool passKlue = true;
 
     public event Action<PlayerState> stateChanged;
     private PlayerState playerState = PlayerState.None;
@@ -38,8 +39,17 @@ public class Player : MonoBehaviour
     {
         if (playerState == PlayerState.Playing)
         {
-            Move(joystick.Direction);
-            ClampPosition();
+            if (passKlue)
+            {
+                Move(joystick.Direction);
+               
+            }
+            else
+            {
+                MovePass(joystick.Direction);
+                ClampPosition();
+            }
+
         }
     }
 
@@ -83,6 +93,7 @@ public class Player : MonoBehaviour
     public void CreatePass()
     {
         forPass?.Invoke();
+        passKlue = false;
     }
     public void Fall()
     {
