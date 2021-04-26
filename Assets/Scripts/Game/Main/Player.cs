@@ -88,7 +88,6 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.Win;
         stateChanged?.Invoke(playerState);
-
     }
     public void CreatePass()
     {
