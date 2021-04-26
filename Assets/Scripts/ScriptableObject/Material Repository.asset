@@ -78,11 +78,6 @@ MonoBehaviour:
     main: {fileID: 2100000, guid: aa20b1c5ff3c80c4498b4df853e5ddd8, type: 2}
     target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
     plane: {fileID: 2100000, guid: 5812d8f9880fd014bbd9e521aa775da5, type: 2}
-  - name: Maincraft
-    preview: {fileID: 0}
-    main: {fileID: 2100000, guid: aa20b1c5ff3c80c4498b4df853e5ddd8, type: 2}
-    target: {fileID: 2100000, guid: 7e66e818774927c479f08079109bfbe4, type: 2}
-    plane: {fileID: 2100000, guid: 5812d8f9880fd014bbd9e521aa775da5, type: 2}
   - name: Donut
     preview: {fileID: 0}
     main: {fileID: 2100000, guid: 651436a8bed5d16479e984af69b2c8cd, type: 2}
