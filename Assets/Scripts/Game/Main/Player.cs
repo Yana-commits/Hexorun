@@ -47,9 +47,9 @@ public class Player : MonoBehaviour
             else
             {
                 MovePass(joystick.Direction);
-                ClampPosition();
+               
             }
-
+            ClampPosition();
         }
     }
 
