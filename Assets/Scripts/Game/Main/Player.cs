@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     public float speed;
     private Joystick joystick;
+    public float passSpeed = 5f;
 
     public event Action<PlayerState> stateChanged;
     private PlayerState playerState = PlayerState.None;
@@ -53,6 +54,17 @@ public class Player : MonoBehaviour
         velocity.y = rigidbody.velocity.y;
         rigidbody.velocity = velocity;
     }
+    public void MovePass(Vector2 direction)
+    {
+        Vector3 velocity = new Vector3(direction.x, 0, passSpeed) * speed;
+
+        if (velocity.magnitude > 0)
+            rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
+        animator.SetFloat(SpeedKeyHash, velocity.magnitude);
+
+        velocity.y = rigidbody.velocity.y;
+        rigidbody.velocity = velocity;
+    }
 
     private void ClampPosition()
     {
@@ -70,7 +82,6 @@ public class Player : MonoBehaviour
     }
     public void CreatePass()
     {
-       
         forPass?.Invoke();
     }
     public void Fall()
