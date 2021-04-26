@@ -14,9 +14,9 @@ public class PixelToHexTest : MonoBehaviour
         var pos = hex.transform.position;
 
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(pos, Map.hexRadius/2);
+        Gizmos.DrawSphere(pos, Map.hexRadius / 2);
 
-        var neigh = Hexagonal.Offset.GetQNeighbour(hex.index)
+        var neigh = Hexagonal.Cube.GetNeighbour(hex.index)
             .Where(d => (d - hex.index).y >= (hex.index.x & 1))
             .Select(n => map[n].transform.position);
 

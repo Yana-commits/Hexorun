@@ -23,7 +23,7 @@ public class ObstaclePresenter : MonoBehaviour
         foreach (var item in _map)
         {
             HexState state = HexState.None;
-            indexes.TryGetValue(item.index, out state);
+            indexes.TryGetValue(Hexagonal.Offset.QFromCube(item.index), out state);
             item.TrySetState(state);
         }
     }

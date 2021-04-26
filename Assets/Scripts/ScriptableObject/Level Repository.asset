@@ -15,7 +15,7 @@ MonoBehaviour:
   _parameters:
   - size: {x: 10, y: 20}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -32,7 +32,7 @@ MonoBehaviour:
       pattern: 
   - size: {x: 10, y: 20}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -49,7 +49,7 @@ MonoBehaviour:
       pattern: 02000000
   - size: {x: 10, y: 26}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -66,7 +66,7 @@ MonoBehaviour:
       pattern: 00000000
   - size: {x: 10, y: 26}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -83,7 +83,7 @@ MonoBehaviour:
       pattern: 01000000
   - size: {x: 10, y: 26}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -100,7 +100,7 @@ MonoBehaviour:
       pattern: 03000000
   - size: {x: 10, y: 32}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -117,7 +117,7 @@ MonoBehaviour:
       pattern: 0000000002000000
   - size: {x: 10, y: 32}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -134,7 +134,7 @@ MonoBehaviour:
       pattern: 0100000002000000
   - size: {x: 10, y: 32}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -151,7 +151,7 @@ MonoBehaviour:
       pattern: 0000000003000000
   - size: {x: 10, y: 38}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -168,7 +168,7 @@ MonoBehaviour:
       pattern: 000000000100000002000000
   - size: {x: 10, y: 38}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -185,7 +185,7 @@ MonoBehaviour:
       pattern: 000000000100000003000000
   - size: {x: 10, y: 38}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -202,7 +202,7 @@ MonoBehaviour:
       pattern: 010000000200000003000000
   - size: {x: 10, y: 44}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -219,7 +219,7 @@ MonoBehaviour:
       pattern: 010000000100000003000000
   - size: {x: 10, y: 44}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -236,7 +236,7 @@ MonoBehaviour:
       pattern: 020000000300000003000000
   - size: {x: 10, y: 44}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -253,7 +253,7 @@ MonoBehaviour:
       pattern: 030000000300000003000000
   - size: {x: 10, y: 50}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -270,7 +270,7 @@ MonoBehaviour:
       pattern: 02000000020000000100000003000000
   - size: {x: 10, y: 50}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -287,7 +287,7 @@ MonoBehaviour:
       pattern: 00000000010000000200000003000000
   - size: {x: 10, y: 50}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -304,7 +304,7 @@ MonoBehaviour:
       pattern: 01000000010000000200000003000000
   - size: {x: 10, y: 50}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -321,7 +321,7 @@ MonoBehaviour:
       pattern: 02000000010000000300000003000000
   - size: {x: 10, y: 50}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}
@@ -338,7 +338,7 @@ MonoBehaviour:
       pattern: 00000000010000000300000003000000
   - size: {x: 10, y: 56}
     duration: 30
-    playerSpeed: 2
+    playerSpeed: 2.5
     changesTime: 2
     collectableItems:
     - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5, type: 3}

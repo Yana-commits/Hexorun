@@ -18,38 +18,60 @@ public class ObstacleGenerator : MonoBehaviour
     private Transform _player;
     private GameParameters.Obstacles _obstaclesParam;
     private List<ObstacleProduct> patterns;
+    private HexState hexState = HexState.None;
 
-    public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
+
+    //public void Initialize(Transform player, GameParameters.Obstacles obstaclesParam)
+    //{
+    //    patterns = new List<ObstacleProduct>();
+    //    _player = player;
+    //    _obstaclesParam = obstaclesParam;
+
+
+    //}
+
+    public void Initialize(Transform player, IShape shape, GameParameters.Obstacles obstaclesParam)
     {
         patterns = new List<ObstacleProduct>();
         _player = player;
         _obstaclesParam = obstaclesParam;
 
-        IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
-            //new PatternEnum[] { PatternEnum.Wall3 }
-            .Select(p => new ObstacleCreator(p))
-            .Shuffle();
-            
-        int patternsHeight = creators.Sum(c => c.Generate(_map.size, Vector2Int.zero).Height);
-        int range = _map.size.y - patternsHeight - 10;
 
-        int offset = 5;
-        foreach (var factory in creators)
+        if (shape is RectShape)
         {
-            int ttt = Random.Range(0, range);
-            range -= ttt;
-            offset += ttt;
-            
-            var obstacle = factory.Generate(_map.size, Vector2Int.up * offset);
-            offset += obstacle.Height;
-            patterns.Add(obstacle);
+            IEnumerable<ObstacleFactory> creators = _obstaclesParam.pattern
+
+                .Select(p => new ObstacleCreator(p))
+                .Shuffle();
+
+            int patternsHeight = creators.Sum(c => c.Generate(_map.size, Vector2Int.zero).Height);
+            int range = _map.size.y - patternsHeight - 10;
+
+            int offset = 5;
+            foreach (var factory in creators)
+            {
+                int ttt = Random.Range(0, range);
+                range -= ttt;
+                offset += ttt;
+
+                var obstacle = factory.Generate(_map.size, Vector2Int.up * offset);
+                offset += obstacle.Height;
+                patterns.Add(obstacle);
+            }
         }
-        Generate();
+        else
+        {
+            var obstacle = new ObstacleCreator(PatternEnum.RoundMapZones);
+            int offset = 0;
+            var patObstacle = obstacle.Generate(_map.size, Vector2Int.up * offset);
+            patterns.Add(patObstacle);
+        }
+
     }
 
-    internal void Generate()
+    internal void Generate(KindOfMapBehavor mapBehavor)
     {
-        SimpleGenerator();
+        SimpleGenerator(mapBehavor);
     }
 
 #if UNITY_EDITOR
@@ -59,20 +81,18 @@ public class ObstacleGenerator : MonoBehaviour
         //Gizmos.DrawSphere(_player.position, _overlapSphereRadius);
     }
 #endif
-
-    public void SimpleGenerator()
+    public void SimpleGenerator(KindOfMapBehavor mapBehavor)
     {
         Dictionary<Vector2Int, HexState> hexObstacles = new Dictionary<Vector2Int, HexState>();
-      
-        var randomObstacles = RandomObstacles();
 
-        foreach (var item in randomObstacles)
-            hexObstacles.Add(item, HexState.Hill);
-
-        int holes = (int)(_obstaclesParam.holeProbability.Random() * randomObstacles.Count());
-        var holesIndexes = randomObstacles.Shuffle().Take(holes);
-        foreach (var item in holesIndexes)
-            hexObstacles[item] = HexState.Hole;
+        if (mapBehavor == KindOfMapBehavor.DiffMoove)
+        {
+            DiffDirections(hexObstacles);
+        }
+        else
+        {
+            AllDown(hexObstacles);
+        }
 
         var patt = patterns.SelectMany(p => p.GetValues());
 
@@ -84,6 +104,40 @@ public class ObstacleGenerator : MonoBehaviour
         foreach (var item in patterns)
             item.ChangeValue();
 
+    }
+
+    public void DiffDirections(Dictionary<Vector2Int, HexState> hexObstacles)
+    {
+        var randomObstacles = RandomObstacles();
+
+        foreach (var item in randomObstacles)
+            hexObstacles.Add(item, HexState.Hill);
+
+        int holes = (int)(_obstaclesParam.holeProbability.Random() * randomObstacles.Count());
+        var holesIndexes = randomObstacles.Shuffle().Take(holes);
+        foreach (var item in holesIndexes)
+            hexObstacles[item] = HexState.Hole;
+    }
+
+    private void AllDown(Dictionary<Vector2Int, HexState> hexObstacles)
+    {
+        var randomObstacles = AllObstacles();
+
+        hexState = hexState == HexState.None ? HexState.Hole : HexState.None;
+
+        foreach (var item in randomObstacles)
+            hexObstacles.Add(item, hexState);
+
+        hexState = HexState.None;
+    }
+
+    private IEnumerable<Vector2Int> AllObstacles()
+    {
+        //return new Vector2Int[0];
+        var obstacles = _map.Select(h => h.index);
+
+        return obstacles
+            .Select(ind => Offset.QFromCube(ind));
     }
 
     private IEnumerable<Vector2Int> RandomObstacles()
@@ -98,7 +152,9 @@ public class ObstacleGenerator : MonoBehaviour
         var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
         var hexIndexes = colliders.Select(c => c.GetComponent<Hex>().index);
 
-       return obstacles.Except(hexIndexes);
+        return obstacles
+             .Except(hexIndexes)
+             .Select(ind => Offset.QFromCube(ind));
     }
 
 }

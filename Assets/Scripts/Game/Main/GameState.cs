@@ -10,102 +10,129 @@ using Random = UnityEngine.Random;
 public class GameState : MonoBehaviour
 {
     [SerializeField] private HUD hud;
-    [SerializeField] private AdditionalTime additional;
+
     [SerializeField] private Joystick joystick;
+
+    [SerializeField] private EndlessMode endlessMode;
+    [SerializeField] private NormalMode normalMode;
+    [SerializeField] private ArenaMode arenaMode;
 
     [Space]
     [SerializeField] private Player player;
-    [SerializeField] private Map map;
-    [SerializeField] private ObstacleGenerator obstacleGenerator;
-    [SerializeField] private ObstaclePresenter obstaclePresenter;
 
     private GameParameters gameParameters;
+    private Mode mode;
 
-    private float elapsedTime;
-    private float generatorTime;
-    private GameplayState gameState = GameplayState.Stop;
+    private GameplayState gamePlayState = GameplayState.Stop;
+    [Space]
+    [SerializeField]
+    private GameModeState gameMode = GameModeState.Normal;
 
     private int _coinsCollect = 0;
-    public int CoinAmount {
+    public int CoinAmount
+    {
         get => _coinsCollect;
-        set {
+        set
+        {
             _coinsCollect = value;
             hud.ScoreAmount(_coinsCollect);
         }
     }
 
-    private float additionalTimePanel = 6;
-    private float additionalTime = 10;
-    private float duration;
+    private int _pointsCollect = 0;
+    public int PointsAmount
+    {
+        get => _pointsCollect;
+        set
+        {
+            _pointsCollect = value;
+            hud.PointsAmount(_pointsCollect);
+        }
+    }
 
-    private bool IsAdditionalTime = false;
+    public GameplayState GamePlayState { get => gamePlayState; }
+
+
+
+    public Action OnChangedHexPosition;
 
     private void Start()
     {
-        hud.OnPause += () => { SetGameState(gameState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
+        hud.OnPause += () => { SetGameState(gamePlayState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
+        hud.overEndless.continueFall += ReloadScene;
+
+        Time.timeScale = 1;
+        Application.targetFrameRate = 60;
     }
 
     public void StartGame(GameParameters parameters)
     {
         gameParameters = parameters;
-        duration = gameParameters.duration;
 
-        map.Initializie(gameParameters.size, gameParameters.theme);
-        map.gameObject.SetActive(true);
+        mode = normalMode;
+        mode.gameObject.SetActive(true);
+        mode.Initialized(player, hud);
 
         PlayerInit();
-        obstaclePresenter.Initialize();
-        obstacleGenerator.Initialize(player.transform, gameParameters.obstaclesParam);
 
         hud.UpdateLevel(gameParameters.id + 1);
-
-        generatorTime = gameParameters.changesTime - 1;
         CoinAmount = 0;
+    }
 
-        //TODO: move into another place
-        var list = map.Shuffle().ToList();
-        int index = 0;
+    public void StartNormalMode()
+    {
+        SetGameState(GameplayState.Play);
+        mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
+    }
 
-        foreach (var pair in gameParameters.collectableItems)
-        {
-            for (int i = 0; i < pair.Value; index++, i++)
-            {
-                GameObject star = Instantiate(pair.Key, list[index].transform);
-                star.transform.localPosition = Vector3.up * 0.5f;
-            }
-        }
+    public void StartEndlessMode()
+    {
+        gameMode = GameModeState.Endless;
+        mode.gameObject.SetActive(false);
+        mode = endlessMode;
+        mode.gameObject.SetActive(true);
+        mode.Initialized(player, hud);
+        SetGameState(GameplayState.Play);
+        mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
+    }
+
+    public void StartArenaLevel()
+    {
+        gameMode = GameModeState.Arena;
+        mode.gameObject.SetActive(false);
+        mode = arenaMode;
+        mode.gameObject.SetActive(true);
+        mode.Initialized(player, hud);
+        SetGameState(GameplayState.Play);
+        mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
     }
 
     public void SetGameState(GameplayState state)
     {
-        gameState = state;
+        gamePlayState = state;
         switch (state)
         {
             case GameplayState.Play:
-                //Time.timeScale = 1;
-                player.enabled = true;
+                player.StartPlaying();
                 break;
             case GameplayState.Stop:
             case GameplayState.Pause:
             case GameplayState.GameOver:
-                player.enabled = false;
+                player.StopPlayer();
                 break;
         }
     }
 
     private void PlayerInit()
     {
-        var hex = map[gameParameters.size.x / 2, 0];
-        Vector3 startPos = hex.transform.position;
-        player.transform.SetPositionAndRotation(startPos, Quaternion.identity);
-        player.Initializie(gameParameters.playerSpeed, map.Bounds, joystick);
+        player.Initializie(joystick);
         player.stateChanged += OnPlayerStateChanged;
         player.enabled = false;
-        player.gameObject.SetActive(true);
     }
 
-    private void OnPlayerStateChanged(PlayerState obj)
+    public void OnPlayerStateChanged(PlayerState obj)
     {
+
         SetGameState(GameplayState.GameOver);
 
         switch (obj)
@@ -116,39 +143,38 @@ public class GameState : MonoBehaviour
                 GamePlayerPrefs.TotalCoins += CoinAmount;
                 break;
             case PlayerState.Lose:
-
-                if (!IsAdditionalTime)
-                {
-                    player.speed = 0;
-                    IsAdditionalTime = true;
-                    additional.Initialize(additionalTimePanel, additionalTime, state => {
-                        player.enabled = false;
-                        if (state)
-                        {
-                            duration += additionalTime;
-                            SetGameState(GameplayState.Play);
-                            player.speed = gameParameters.playerSpeed;
-                            player.enabled = true;
-                        }
-                        else
-                        {
-                            OnPlayerStateChanged(PlayerState.Lose);
-                            player.speed = gameParameters.playerSpeed;
-                            player.enabled = true;
-                        }
-                    });
-                }
-                else
-                {
-                    StartCoroutine(player.Looser(ReloadScene));
-                }
+                StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
-                StartCoroutine(player.FallDown(ReloadScene));
+                if (gameMode == GameModeState.Endless)
+                {
+                    EndlessPlayerFall();
+                }
+                else 
+                { 
+                    AfterFall();
+                }
                 break;
             default:
                 break;
         }
+    }
+
+    private void EndlessPlayerFall()
+    {
+        player.stateChanged -= OnPlayerStateChanged;
+        CheckBestScore();
+        Time.timeScale = 0;
+        hud.gamePlay.SetActive(false);
+        hud.overEndless.gameObject.SetActive(true);
+        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect);
+    }
+
+    private void AfterFall()
+    {
+        Time.timeScale = 1;
+        hud.gamePlay.SetActive(true);
+        StartCoroutine(player.FallDown(ReloadScene));
     }
 
     private void ReloadScene()
@@ -162,26 +188,15 @@ public class GameState : MonoBehaviour
             player.stateChanged -= OnPlayerStateChanged;
     }
 
-    private void Update()
+
+    private void CheckBestScore()
     {
-        if (gameState != GameplayState.Play)
-            return;
-
-        elapsedTime += Time.deltaTime;
-
-        if (elapsedTime > duration)
-        {
-            elapsedTime = duration;
-            OnPlayerStateChanged(PlayerState.Lose);
-        }
-
-        generatorTime += Time.deltaTime;
-        if (generatorTime > gameParameters.changesTime)
-        {
-            obstacleGenerator.Generate();
-            generatorTime = 0;
-        }
-
-        hud.UpdateScoreValue(duration - elapsedTime);
+        if (gameMode == GameModeState.Endless && PointsAmount > GamePlayerPrefs.BestScore)
+            GamePlayerPrefs.BestScore = PointsAmount;
     }
+}
+public enum KindOfMapBehavor
+{
+    AllDown,
+    DiffMoove
 }
