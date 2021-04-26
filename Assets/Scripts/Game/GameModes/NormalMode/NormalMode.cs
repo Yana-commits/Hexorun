@@ -31,6 +31,7 @@ public class NormalMode : Mode
     private float nextChunkPos = 0;
     private Vector3 passX;
     private bool firstChunk = true;
+    private bool isPass = true;
 
     // Start is called before the first frame update
     void Start()
@@ -76,7 +77,10 @@ public class NormalMode : Mode
             generatorTime = 0;
         }
 
-        elapsedTime += Time.deltaTime;
+        if (isPass)
+        {
+            elapsedTime += Time.deltaTime;
+        }
 
         if (elapsedTime > duration)
         {
@@ -128,22 +132,10 @@ public class NormalMode : Mode
         }
     }
 
-    //private void LoadPass()
-    //{
-
-    //  var  nextChunkPos = chunk.Map.Bounds.size.z - hexRadius;
-    //    ch = Instantiate(chunkPrefab, this.transform);
-    //    ch.Map.Initializie(new Vector2Int(2,10), new RectShape(), gameParameters.theme);
-    //    ch.Map.gameObject.SetActive(true);
-    //    //var passX = Hexagonal.Offset.QToCube(chunk.Map.targetIndex);
-    //    var passX = Hexagonal.Cube.HexToPixel(
-    //           Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
-    //           Vector2.one * hexRadius);
-    //    ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
-    //}
-
     private void LoadPass1()
     {
+        isPass = false;
+
         var nextChunkPos = chunk.Map.Bounds.size.z - hexRadius ;
 
         passX = Hexagonal.Cube.HexToPixel(
@@ -153,7 +145,7 @@ public class NormalMode : Mode
         for (int i = 0; i < 10; i++)
         {
             ch = Instantiate(chunkPrefab, this.transform);
-            ch.Map.Initializie(new Vector2Int(2, 10), new RectShape(), gameParameters.theme);
+            ch.Map.Initializie(new Vector2Int(3, 10), new RectShape(), gameParameters.theme);
             ch.Map.gameObject.SetActive(true);
 
             ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
@@ -171,10 +163,8 @@ public class NormalMode : Mode
         depthHalf =  depthFull / 2;
         visiblePass = pass[currentChunkIndex].Map.ToList();
      
-       var bound = new Bounds(new Vector3(passX.x+0.5f, 0, chunk.Map.Bounds.size.z  + 5), new Vector3(1.5f, 0, chunk.Map.Bounds.size.z *10));
-        //bound = pass[0].Map.Bounds;
-        //bound.Expand(new Vector3(2, 0, 12));
-
+       var bound = new Bounds(new Vector3(passX.x+0.75f, 0, chunk.Map.Bounds.size.z  + 5), new Vector3(2.5f, 0, chunk.Map.Bounds.size.z *10));
+       
         player.SetGamePlaySettings(gameParameters.playerSpeed+1, bound);
     }
 

@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
 
         if (velocity.magnitude > 0)
             rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
-        animator.SetFloat(SpeedKeyHash, velocity.magnitude);
+        animator.SetFloat("Pass", velocity.magnitude);
 
         velocity.y = rigidbody.velocity.y;
         rigidbody.velocity = velocity;

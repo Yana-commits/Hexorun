@@ -4,4 +4,5 @@ public enum GameplayState
     Play, 
     Pause,
     GameOver,
+    Pass,
 };

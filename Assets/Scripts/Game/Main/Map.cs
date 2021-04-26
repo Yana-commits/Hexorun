@@ -113,7 +113,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
     public void SetTarget()
     {
         targetIndex = new Vector2Int(
-          Random.Range(0, size.x),
+          Random.Range(1, size.x-1),
           Random.Range(size.y - 1, size.y)
           );
 

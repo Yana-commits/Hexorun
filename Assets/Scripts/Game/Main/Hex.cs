@@ -47,7 +47,13 @@ public class Hex : MonoBehaviour
     public void DisableHex()
     {
         State = HexState.Disable;
-        transform.DOLocalMoveY(-3f, 0.5f).OnComplete(()=> { this.gameObject.SetActive(false); });      
+        transform.DOLocalMoveY(-3f, 0.5f).OnComplete(()=> 
+        { 
+            
+            this.gameObject.SetActive(false); 
+        
+        }); 
+        //transform.DOMove(Vector3.zero,1f).on
     }
 
 #if UNITY_EDITOR
