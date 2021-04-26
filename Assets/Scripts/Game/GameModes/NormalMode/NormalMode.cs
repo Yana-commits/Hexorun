@@ -89,12 +89,10 @@ public class NormalMode : Mode
         if (player.transform.position.z >= depthHalf + chunk.Map.Bounds.size.z)
         {
             LoadNextChunk();
-            Debug.Log($"{currentChunkIndex}");
         }
         if (player.transform.position.z >= depthFull + chunk.Map.Bounds.size.z)
         {
             ChangeCurrentChunk();
-            Debug.Log($"{222}");
         }
       
     }
@@ -172,10 +170,8 @@ public class NormalMode : Mode
         depthFull =  pass[currentChunkIndex].Map.Bounds.size.z;
         depthHalf =  depthFull / 2;
         visiblePass = pass[currentChunkIndex].Map.ToList();
-       
-        Bounds bound;
-
-        bound = new Bounds(new Vector3(passX.x+0.5f, 0, chunk.Map.Bounds.size.z  + 5), new Vector3(1.5f, 0, chunk.Map.Bounds.size.z+10));
+     
+       var bound = new Bounds(new Vector3(passX.x+0.5f, 0, chunk.Map.Bounds.size.z  + 5), new Vector3(1.5f, 0, chunk.Map.Bounds.size.z *10));
         //bound = pass[0].Map.Bounds;
         //bound.Expand(new Vector3(2, 0, 12));
 
@@ -184,10 +180,7 @@ public class NormalMode : Mode
 
     private void LoadNextChunk()
     {
-        passX = Hexagonal.Cube.HexToPixel(
-              Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
-              Vector2.one * hexRadius);
-
+       
         if (firstChunk)
         {
             nextChunkPos += chunk.Map.Bounds.size.z + ch.Map.Bounds.size.z - hexRadius * 2;
@@ -203,23 +196,23 @@ public class NormalMode : Mode
         chunkPass.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
         chunkPass.Map.SetTheme(gameParameters.theme);
         chunkPass.gameObject.SetActive(true);
-        depthHalf = depthHalf + chunkPass.Map.Bounds.size.z;
+        depthHalf = depthHalf + chunkPass.Map.Bounds.size.z -1;
         visiblePass.AddRange(chunkPass.Map.ToList());
 
-       var bound = chunkPass.Map.Bounds;
-        bound.Expand(new Vector3(0, 0, nextChunkPos));
+       //var bound = chunkPass.Map.Bounds;
+        //bound.Expand(new Vector3(0, 0, nextChunkPos));
+        //bound.Encapsulate(new Vector3(passX.x, 0, nextChunkPos+10));
     }
 
     private int CheckNextIndex()
     {
         return currentChunkIndex +1  >= pass.Count ? 0 : currentChunkIndex + 1;
-       
     }
 
     private void ChangeCurrentChunk()
     {
         currentChunkIndex = CheckNextIndex();
-        depthFull += pass[currentChunkIndex].Map.Bounds.size.z;
+        depthFull += pass[currentChunkIndex].Map.Bounds.size.z -1;
 
         //foreach (var item in pass.GetRange(0, currentChunkIndex + 1))
         //{
