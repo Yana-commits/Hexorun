@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     private Joystick joystick;
     public float passSpeed = 0.01f;
     private bool passKlue = true;
+    public Vector3 thronePlace;
 
     public event Action<PlayerState> stateChanged;
     private PlayerState playerState = PlayerState.None;
@@ -119,6 +121,7 @@ public class Player : MonoBehaviour
         rigidbody.velocity = Vector3.zero;
 
         animator.SetTrigger("Jump");
+        transform.DOMove(thronePlace, 0.5f);
         yield return new WaitForSeconds(6);
         callback?.Invoke();
     }
