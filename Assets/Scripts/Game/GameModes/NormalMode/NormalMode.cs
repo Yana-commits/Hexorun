@@ -16,6 +16,7 @@ public class NormalMode : Mode
 
     private List<Chunk> pass = new List<Chunk>();
     private List<Hex> visiblePass = new List<Hex>();
+    public List<Multiplyer> multItems = new List<Multiplyer>();
 
 
     private float additionalTimePanel = 6;
@@ -151,9 +152,17 @@ public class NormalMode : Mode
             ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
       
             pass.Add(ch);
-            ch.gameObject.SetActive(false);
+            ch.gameObject.SetActive(true);
 
             nextChunkPos += ch.Map.Bounds.size.z - hexRadius;
+
+            if (i < multItems.Count)
+            {
+                Multiplyer collectMult = Instantiate(multItems[i], Vector3.zero * 2, Quaternion.identity);
+                collectMult.transform.localPosition = new Vector3(passX.x, 0.5f, nextChunkPos);
+                collectMult.n = i + 2;
+            }
+
         }
 
 
