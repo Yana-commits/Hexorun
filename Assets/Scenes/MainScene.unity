@@ -645,7 +645,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: -0.00000003038942, z: 0.000000011002486, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: 0.000000030742953, z: -0.000000011130483, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -794,7 +794,7 @@ PrefabInstance:
     - target: {fileID: 463645848259778549, guid: eab2aa2e813932f4c8caa6f8a1768dfe,
         type: 3}
       propertyPath: passSpeed
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7106607799302927882, guid: eab2aa2e813932f4c8caa6f8a1768dfe,
         type: 3}
@@ -1647,6 +1647,8 @@ MonoBehaviour:
   - {fileID: 4872180919899576606, guid: 668062a3240ff5a40841134fde564646, type: 3}
   - {fileID: -3296822983275208959, guid: e3ae290cc3a7a7f40a8cf1645d480b72, type: 3}
   - {fileID: -8576456071438177189, guid: 4546d16586c04cd4a92f025c0dde90a2, type: 3}
+  thronePrefab: {fileID: 5578364367256207722, guid: 04ebb63744a803e46964eaa1b1accc68,
+    type: 3}
 --- !u!4 &1697089076
 Transform:
   m_ObjectHideFlags: 0
@@ -1956,7 +1958,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: -0.000000006124287, z: 0.00000000510357, w: 1}
+  m_LocalRotation: {x: -0, y: 0.000000006396885, z: -0.0000000053307376, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
