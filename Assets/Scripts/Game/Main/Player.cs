@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
         rigidbody.velocity = Vector3.zero;
 
         animator.SetTrigger("Jump");
-        transform.DOMove(thronePlace - new Vector3(0,0.1f,0), 0.5f);
+        transform.DOMove(thronePlace, 0.5f);
         yield return new WaitForSeconds(6);
         callback?.Invoke();
     }
