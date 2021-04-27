@@ -10,6 +10,7 @@ public class NormalMode : Mode
     private GameParameters gameParameters;
     private Chunk chunk;
     private Chunk ch;
+    private Chunk platform;
 
     private float elapsedTime;
     private float duration;
@@ -17,6 +18,7 @@ public class NormalMode : Mode
     private List<Chunk> pass = new List<Chunk>();
     private List<Hex> visiblePass = new List<Hex>();
     public List<Multiplyer> multItems = new List<Multiplyer>();
+    private List<Multiplyer> visibleMult = new List<Multiplyer>();
     [SerializeField]
     GameObject thronePrefab;
 
@@ -35,6 +37,7 @@ public class NormalMode : Mode
     private Vector3 passX;
     private bool firstChunk = true;
     private bool isPass = true;
+    private int chankCounter = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -95,7 +98,15 @@ public class NormalMode : Mode
 
         if (player.transform.position.z >= depthHalf + chunk.Map.Bounds.size.z)
         {
-            LoadNextChunk();
+            if (chankCounter < 8)
+            {
+                LoadNextChunk();
+                chankCounter++;
+            }
+            else
+            {
+                LoadPlatform();
+            }
         }
         if (player.transform.position.z >= depthFull + chunk.Map.Bounds.size.z)
         {
@@ -148,13 +159,13 @@ public class NormalMode : Mode
         for (int i = 0; i < 10; i++)
         {
             ch = Instantiate(chunkPrefab, this.transform);
-            ch.Map.Initializie(new Vector2Int(3, 10), new RectShape(), gameParameters.theme);
+            ch.Map.Initializie(new Vector2Int(3, 7), new RectShape(), gameParameters.theme);
             ch.Map.gameObject.SetActive(true);
 
             ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
       
             pass.Add(ch);
-            ch.gameObject.SetActive(true);
+            ch.gameObject.SetActive(false);
 
             nextChunkPos += ch.Map.Bounds.size.z - hexRadius;
 
@@ -175,16 +186,19 @@ public class NormalMode : Mode
                 {
                     collectMult.state = PlayerState.Lose;
                 }
+                collectMult.gameObject.SetActive(false);
+                visibleMult.Add(collectMult);
             }
         }
 
         var throne = Instantiate(thronePrefab, Vector3.zero, Quaternion.identity);
-        throne.transform.position = new Vector3(passX.x + 0.75f, -0.35f, nextChunkPos - ch.Map.Bounds.size.z*0.8f);
+        throne.transform.position = new Vector3(passX.x + 0.75f, -0.35f, nextChunkPos - chunk.Map.Bounds.size.z/4);
         player.thronePlace = throne.transform.position;
         throne.gameObject.SetActive(true);
 
         currentChunkIndex = 0;
         pass[currentChunkIndex].gameObject.SetActive(true);
+        visibleMult[currentChunkIndex].gameObject.SetActive(true);
         depthFull = pass[currentChunkIndex].Map.Bounds.size.z;
         depthHalf = depthFull / 2;
         visiblePass = pass[currentChunkIndex].Map.ToList();
@@ -212,8 +226,20 @@ public class NormalMode : Mode
         chunkPass.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
         chunkPass.Map.SetTheme(gameParameters.theme);
         chunkPass.gameObject.SetActive(true);
+        if (CheckNextIndex() < visibleMult.Count)
+        {
+            visibleMult[CheckNextIndex()].gameObject.SetActive(true);
+        }
         depthHalf = depthHalf + chunkPass.Map.Bounds.size.z -1;
-        visiblePass.AddRange(chunkPass.Map.ToList());
+        //visiblePass.AddRange(chunkPass.Map.ToList());
+    }
+    private void LoadPlatform()
+    {
+        platform = Instantiate(chunkPrefab, this.transform);
+        platform.Map.Initializie(new Vector2Int(0, 4), new HexShape(), gameParameters.theme);
+        platform.Map.gameObject.SetActive(true);
+
+        platform.transform.localPosition = new Vector3(passX.x + 0.83f, 0, nextChunkPos + ch.Map.Bounds.size.z*1.4f - hexRadius);
     }
 
     private int CheckNextIndex()
