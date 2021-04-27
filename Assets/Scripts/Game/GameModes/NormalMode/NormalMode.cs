@@ -191,10 +191,7 @@ public class NormalMode : Mode
             }
         }
 
-        var throne = Instantiate(thronePrefab, Vector3.zero, Quaternion.identity);
-        throne.transform.position = new Vector3(passX.x + 0.75f, -0.35f, nextChunkPos - chunk.Map.Bounds.size.z/4);
-        player.thronePlace = throne.transform.position;
-        throne.gameObject.SetActive(true);
+      
 
         currentChunkIndex = 0;
         pass[currentChunkIndex].gameObject.SetActive(true);
@@ -240,6 +237,11 @@ public class NormalMode : Mode
         platform.Map.gameObject.SetActive(true);
 
         platform.transform.localPosition = new Vector3(passX.x + 0.83f, 0, nextChunkPos + ch.Map.Bounds.size.z*1.4f - hexRadius);
+
+        var throne = Instantiate(thronePrefab, Vector3.zero, Quaternion.identity);
+        throne.transform.position = new Vector3(passX.x + 0.83f, -0.35f, nextChunkPos + ch.Map.Bounds.size.z * 1.4f - hexRadius);
+        player.thronePlace = throne.transform.position;
+        throne.gameObject.SetActive(true);
     }
 
     private int CheckNextIndex()
