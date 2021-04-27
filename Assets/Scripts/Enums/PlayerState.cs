@@ -5,5 +5,6 @@ public enum PlayerState
     Playing,
     Win,
     Lose,
-    Fall
+    Fall,
+    BigWin
 }

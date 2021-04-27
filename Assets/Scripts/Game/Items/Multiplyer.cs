@@ -8,6 +8,8 @@ public class Multiplyer : MonoBehaviour, ICollectable
 {
     public int n;
 
+    public PlayerState state;
+
     [SerializeField]
     private GameObject explosionPrefab;
     public void Collect(GameState gameState)
@@ -16,7 +18,7 @@ public class Multiplyer : MonoBehaviour, ICollectable
   
         gameState.CoinAmount *= n;
 
-        gameState.OnPlayerStateChanged(PlayerState.Lose);
+        gameState.OnPlayerStateChanged(state);
         Destroy(gameObject);
     }
 }

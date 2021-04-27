@@ -159,10 +159,20 @@ public class NormalMode : Mode
             if (i < multItems.Count)
             {
                 Multiplyer collectMult = Instantiate(multItems[i], Vector3.zero * 2, Quaternion.identity);
-                collectMult.transform.localPosition = new Vector3(passX.x, 0.5f, nextChunkPos);
+                float[] points = new float[3] { passX.x, passX.x + 0.75f, passX.x + 1.5f};
+                
+                collectMult.transform.localPosition = new Vector3(points[Random.Range(0,points.Length)], 0.5f, nextChunkPos);
                 collectMult.n = i + 2;
+                if (i == multItems.Count - 1)
+                {
+                    Debug.Log("222");
+                    collectMult.state = PlayerState.BigWin;
+                }
+                else
+                {
+                    collectMult.state = PlayerState.Lose;
+                }
             }
-
         }
 
 

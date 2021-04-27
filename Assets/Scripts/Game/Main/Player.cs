@@ -114,6 +114,15 @@ public class Player : MonoBehaviour
         callback?.Invoke();
     }
 
+    public IEnumerator BigWinner(Action callback)
+    {
+        rigidbody.velocity = Vector3.zero;
+
+        animator.SetTrigger("Jump");
+        yield return new WaitForSeconds(6);
+        callback?.Invoke();
+    }
+
     public void StopPlayer()
     {
         playerState = PlayerState.None;
