@@ -13,9 +13,21 @@ public class RectShape : IShape
     {
         for (int r = 0; r < size.y; r++)
             for (int q = 0; q < size.x; q++)
-                yield return Hexagonal.Offset.QToCube(new Vector2Int(q,r), OffsetCoord.Even);
+                yield return Hexagonal.Offset.QToCube(new Vector2Int(q,r));
     }
 }
+
+
+public class RectShapePass : IShape
+{
+    public IEnumerable<Vector3Int> GetIndexes(Vector2Int size)
+    {
+        for (int r = 0; r < size.y; r++)
+            for (int q = 0; q < size.x; q++)
+                yield return Hexagonal.Offset.QToCube(new Vector2Int(q, r),OffsetCoord.Even);
+    }
+}
+
 
 public class HexShape : IShape
 {

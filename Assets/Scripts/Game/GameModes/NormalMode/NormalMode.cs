@@ -161,7 +161,7 @@ public class NormalMode : Mode
         for (int i = 0; i < 10; i++)
         {
             ch = Instantiate(chunkPrefab, this.transform);
-            ch.Map.Initializie(new Vector2Int(3, 7), new RectShape(), gameParameters.theme);
+            ch.Map.Initializie(new Vector2Int(3, 7), new RectShapePass(), gameParameters.theme);
             ch.Map.gameObject.SetActive(true);
 
             ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
