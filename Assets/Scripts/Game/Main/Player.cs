@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
 
         animator.SetTrigger("Jump");
         transform.DOMove(thronePlace, 0.5f);
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(2);
         callback?.Invoke();
     }
 
