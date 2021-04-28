@@ -38,6 +38,7 @@ public class NormalMode : Mode
     private bool firstChunk = true;
     private bool isPass = true;
     private int chankCounter = 0;
+    private bool isPlatform = true;
 
     // Start is called before the first frame update
     void Start()
@@ -103,9 +104,10 @@ public class NormalMode : Mode
                 LoadNextChunk();
                 chankCounter++;
             }
-            else
+            else if(isPlatform)
             {
                 LoadPlatform();
+                isPlatform = false;
             }
         }
         if (player.transform.position.z >= depthFull + chunk.Map.Bounds.size.z)
@@ -178,13 +180,12 @@ public class NormalMode : Mode
                 collectMult.n = i + 2;
                 if (i == multItems.Count - 1)
                 {
-                    Debug.Log("222");
                     collectMult.state = PlayerState.BigWin;
                     collectMult.transform.localPosition = new Vector3(passX.x + 0.75f, 0.5f, nextChunkPos);
                 }
                 else
                 {
-                    collectMult.state = PlayerState.Lose;
+                    collectMult.state = PlayerState.Win;
                 }
                 collectMult.gameObject.SetActive(false);
                 visibleMult.Add(collectMult);
@@ -236,10 +237,11 @@ public class NormalMode : Mode
         platform.Map.Initializie(new Vector2Int(0, 4), new HexShape(), gameParameters.theme);
         platform.Map.gameObject.SetActive(true);
 
-        platform.transform.localPosition = new Vector3(passX.x + 0.83f, 0, nextChunkPos + ch.Map.Bounds.size.z*1.4f - hexRadius);
+        platform.transform.localPosition = new Vector3(passX.x + 0.75f, 0, nextChunkPos + ch.Map.Bounds.size.z*1.47f - hexRadius);
 
+       
         var throne = Instantiate(thronePrefab, Vector3.zero, Quaternion.identity);
-        throne.transform.position = new Vector3(passX.x + 0.83f, -0.35f, nextChunkPos + ch.Map.Bounds.size.z * 1.4f - hexRadius);
+        throne.transform.position = new Vector3(passX.x + 0.75f, -0.35f, nextChunkPos + ch.Map.Bounds.size.z * 1.47f - hexRadius);
         player.thronePlace = throne.transform.position;
         throne.gameObject.SetActive(true);
     }
