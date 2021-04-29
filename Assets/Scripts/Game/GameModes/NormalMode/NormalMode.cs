@@ -227,7 +227,7 @@ public class NormalMode : Mode
         chunkPass.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
         chunkPass.Map.SetTheme(gameParameters.theme);
         chunkPass.gameObject.SetActive(true);
-      
+       
     }
 
     private void LoadnextMult()

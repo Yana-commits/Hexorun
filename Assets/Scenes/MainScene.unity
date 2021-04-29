@@ -645,7 +645,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: -0.000000026471186, z: 0.000000009583892, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: 0.000000022880092, z: -0.000000008283736, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -791,6 +791,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 463645848259778549, guid: eab2aa2e813932f4c8caa6f8a1768dfe,
+        type: 3}
+      propertyPath: vcam
+      value: 
+      objectReference: {fileID: 2073511404}
     - target: {fileID: 463645848259778549, guid: eab2aa2e813932f4c8caa6f8a1768dfe,
         type: 3}
       propertyPath: passSpeed
@@ -1959,7 +1964,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: 0.0000000037286974, z: -0.0000000031072442, w: 1}
+  m_LocalRotation: {x: -0, y: 1.7763568e-15, z: -2.6645353e-15, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
