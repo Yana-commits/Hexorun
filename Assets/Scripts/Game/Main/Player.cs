@@ -93,8 +93,9 @@ public class Player : MonoBehaviour
     }
     public void CreatePass()
     {
-        forPass?.Invoke();
         passKlue = false;
+        forPass?.Invoke();
+        
     }
     public void Fall()
     {
@@ -122,7 +123,8 @@ public class Player : MonoBehaviour
 
         animator.SetTrigger("Jump");
         transform.DOMove(thronePlace, 0.5f);
-        yield return new WaitForSeconds(2);
+        transform.position = thronePlace;
+        yield return new WaitForSeconds(3);
         callback?.Invoke();
     }
 
