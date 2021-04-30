@@ -13,13 +13,15 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private Animator animator;
     [SerializeField] private CinemachineVirtualCamera vcam;
+    private CinemachineTransposer cineTransposer;
 
     public float speed;
     private Joystick joystick;
     public float passSpeed = 0.01f;
     private bool passKlue = true;
     public Vector3 thronePlace;
-    private float target = 30f;
+    private float target = 40f;
+    private float targetOffset = 2.5f;
     public float zoomSpeed = 3f; 
 
     public event Action<PlayerState> stateChanged;
@@ -28,6 +30,11 @@ public class Player : MonoBehaviour
     public event Action forPass;
 
     [SerializeField] private Bounds mapBounds;
+
+    private void Start()
+    {
+        cineTransposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
+    }
 
     public void Initializie(Joystick joystick)
     {
@@ -124,13 +131,13 @@ public class Player : MonoBehaviour
     public IEnumerator BigWinner(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
-        
         animator.SetTrigger("Jump");
         
         transform.DOMove(thronePlace, 0.5f);
         transform.position = thronePlace;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         StartCoroutine(Zoom());
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(3);
         callback?.Invoke();
     }
 
@@ -138,14 +145,16 @@ public class Player : MonoBehaviour
     {
         float elapsedTime = 0;
 
-        while (elapsedTime <=5)
+        while (elapsedTime <=2)
         {
             elapsedTime += Time.deltaTime;
             Debug.Log("444");
             float fov = vcam.m_Lens.FieldOfView;
-
             vcam.m_Lens.FieldOfView = Mathf.Lerp(fov, target, zoomSpeed * Time.deltaTime);
-            yield return null;
+
+            float offsetY = cineTransposer.m_FollowOffset.y;
+            cineTransposer.m_FollowOffset.y = Mathf.Lerp(offsetY, targetOffset, zoomSpeed * Time.deltaTime);
+           yield return null;
         }
     }
 

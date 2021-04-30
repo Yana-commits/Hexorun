@@ -10,6 +10,8 @@ public class LevelComplete : MonoBehaviour
     [SerializeField] Button giveUpBtn;
     [SerializeField] Text scoreCoinText;
     [SerializeField] Text totalScoreText;
+    [SerializeField] Image characterImg;
+    [SerializeField] Text pecentText;
 
     public Action continuePlay;
     private void OnEnable()
@@ -38,5 +40,7 @@ public class LevelComplete : MonoBehaviour
     {
         totalScoreText.text = totalScore.ToString();
         scoreCoinText.text = coinScore.ToString();
+        characterImg.fillAmount = totalScore*0.01f;
+        pecentText.text = $"{totalScore}%";
     }
 }

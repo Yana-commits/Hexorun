@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,7 +108,7 @@ public class NormalMode : Mode
 
             if (loadTime > appearTime)
             {
-                if (chankCounter < 29)
+                if (chankCounter < 35)
                 {
                     LoadNextChunk();
                     chankCounter++;
@@ -224,10 +225,10 @@ public class NormalMode : Mode
 
         var chunkPass = pass[CheckNextIndex()];
       
-        chunkPass.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
+        chunkPass.transform.localPosition = new Vector3(passX.x, -3f, nextChunkPos);
         chunkPass.Map.SetTheme(gameParameters.theme);
         chunkPass.gameObject.SetActive(true);
-       
+       chunkPass.transform.DOLocalMoveY(0, 0.5f);
     }
 
     private void LoadnextMult()
