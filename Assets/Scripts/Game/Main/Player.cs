@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         callback?.Invoke();
     }
-    public IEnumerator FallDown(Action callback)
+    public IEnumerator Reload(Action callback)
     {
         yield return new WaitForSeconds(0.5f);
         callback?.Invoke();

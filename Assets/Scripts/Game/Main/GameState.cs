@@ -60,6 +60,7 @@ public class GameState : MonoBehaviour
     {
         hud.OnPause += () => { SetGameState(gamePlayState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
         hud.overEndless.continueFall += ReloadScene;
+        hud.levelComplete.continuePlay += ReloadScene;
 
         Time.timeScale = 1;
         Application.targetFrameRate = 60;
@@ -138,14 +139,16 @@ public class GameState : MonoBehaviour
         switch (obj)
         {
             case PlayerState.Win:
-                StartCoroutine(player.Winner(ReloadScene));
+                StartCoroutine(player.Winner(Coplete));
                 GamePlayerPrefs.LastLevel = gameParameters.id;
                 GamePlayerPrefs.TotalCoins += CoinAmount;
+              
                 break;
             case PlayerState.BigWin:
-                StartCoroutine(player.BigWinner(ReloadScene));
+                StartCoroutine(player.BigWinner(Coplete));
                 GamePlayerPrefs.LastLevel = gameParameters.id;
                 GamePlayerPrefs.TotalCoins += CoinAmount;
+               
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
@@ -165,6 +168,12 @@ public class GameState : MonoBehaviour
         }
     }
 
+    private void Coplete()
+    {
+        hud.gamePlay.SetActive(false);
+        hud.levelComplete.gameObject.SetActive(true);
+        hud.levelComplete.Initialize(GamePlayerPrefs.TotalCoins, _coinsCollect);
+    }
     private void EndlessPlayerFall()
     {
         player.stateChanged -= OnPlayerStateChanged;
@@ -179,7 +188,7 @@ public class GameState : MonoBehaviour
     {
         Time.timeScale = 1;
         hud.gamePlay.SetActive(true);
-        StartCoroutine(player.FallDown(ReloadScene));
+        StartCoroutine(player.Reload(ReloadScene));
     }
 
     private void ReloadScene()
