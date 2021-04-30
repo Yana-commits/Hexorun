@@ -126,7 +126,7 @@ public class GameState : MonoBehaviour
 
     private void PlayerInit()
     {
-        player.Initializie(joystick);
+        player.Initializie(joystick, gameParameters);
         player.stateChanged += OnPlayerStateChanged;
         player.enabled = false;
     }

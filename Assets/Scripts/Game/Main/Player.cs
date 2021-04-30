@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     public float speed;
     private Joystick joystick;
+    private GameParameters parameters;
     public float passSpeed = 0.01f;
     private bool passKlue = true;
     public Vector3 thronePlace;
@@ -36,9 +37,10 @@ public class Player : MonoBehaviour
         cineTransposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
     }
 
-    public void Initializie(Joystick joystick)
+    public void Initializie(Joystick joystick,GameParameters parameters)
     {
         this.joystick = joystick;
+        this.parameters = parameters;
     }
 
     public void SetGamePlaySettings(float speed, Bounds bounds)
@@ -97,6 +99,17 @@ public class Player : MonoBehaviour
         rigidbody.position = position;
     }
 
+    public void TargetSpot()
+    {
+        if (parameters.id % 2 == 1)
+        {
+            CreatePass();
+        }
+        else 
+        {
+            DestinationReached();
+        }
+    }
     public void DestinationReached()
     {
         playerState = PlayerState.Win;
