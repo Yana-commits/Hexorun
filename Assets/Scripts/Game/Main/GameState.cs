@@ -142,6 +142,9 @@ public class GameState : MonoBehaviour
                 GamePlayerPrefs.LastLevel = gameParameters.id;
                 GamePlayerPrefs.TotalCoins += CoinAmount;
                 break;
+            case PlayerState.BigWin:
+                StartCoroutine(player.BigWinner(ReloadScene));
+                break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
                 break;

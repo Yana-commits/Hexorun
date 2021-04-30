@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     private Joystick joystick;
     public float passSpeed = 0.01f;
     private bool passKlue = true;
+    public Vector3 thronePlace;
 
     public event Action<PlayerState> stateChanged;
     private PlayerState playerState = PlayerState.None;
@@ -70,7 +72,7 @@ public class Player : MonoBehaviour
 
         if (velocity.magnitude > 0)
             rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
-        animator.SetFloat(SpeedKeyHash, velocity.magnitude);
+        animator.SetFloat("Pass", velocity.magnitude);
 
         velocity.y = rigidbody.velocity.y;
         rigidbody.velocity = velocity;
@@ -88,7 +90,6 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.Win;
         stateChanged?.Invoke(playerState);
-
     }
     public void CreatePass()
     {
@@ -111,6 +112,16 @@ public class Player : MonoBehaviour
     {
         rigidbody.velocity = Vector3.zero;
         animator.SetTrigger("Win");
+        yield return new WaitForSeconds(6);
+        callback?.Invoke();
+    }
+
+    public IEnumerator BigWinner(Action callback)
+    {
+        rigidbody.velocity = Vector3.zero;
+
+        animator.SetTrigger("Jump");
+        transform.DOMove(thronePlace, 0.5f);
         yield return new WaitForSeconds(6);
         callback?.Invoke();
     }
