@@ -142,12 +142,13 @@ public class ObstacleGenerator : MonoBehaviour
 
     private IEnumerable<Vector2Int> RandomObstacles()
     {
+       
         //return new Vector2Int[0];
         var obstacles = _map
                .Shuffle()
                .Take((int)(_map.Count() * _obstaclesParam.obstacleProbability.Random()))
                .Select(h => h.index);
-
+      
         //TODO: если клетка опущена Physics.OverlapSphere не может ее отловить
         var colliders = Physics.OverlapSphere(_player.position, _overlapSphereRadius, hexLayer);
         var hexIndexes = colliders.Select(c => c.GetComponent<Hex>().index);

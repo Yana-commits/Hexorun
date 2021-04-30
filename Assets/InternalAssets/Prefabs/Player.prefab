@@ -80,6 +80,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 463645848259778443}
   animator: {fileID: 5944086027897944736}
+  vcam: {fileID: 0}
+  cineTransposer: {fileID: 0}
+  speed: 0
+  passSpeed: 0.01
+  thronePlace: {x: 0, y: 0, z: 0}
+  zoomSpeed: 3
   mapBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
