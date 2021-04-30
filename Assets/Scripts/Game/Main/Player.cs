@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
@@ -11,12 +12,18 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private Animator animator;
+    [SerializeField] private CinemachineVirtualCamera vcam;
+    private CinemachineTransposer cineTransposer;
 
     public float speed;
     private Joystick joystick;
+    private GameParameters parameters;
     public float passSpeed = 0.01f;
     private bool passKlue = true;
     public Vector3 thronePlace;
+    private float target = 40f;
+    private float targetOffset = 2.5f;
+    public float zoomSpeed = 3f; 
 
     public event Action<PlayerState> stateChanged;
     private PlayerState playerState = PlayerState.None;
@@ -25,9 +32,15 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Bounds mapBounds;
 
-    public void Initializie(Joystick joystick)
+    private void Start()
+    {
+        cineTransposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
+    }
+
+    public void Initializie(Joystick joystick,GameParameters parameters)
     {
         this.joystick = joystick;
+        this.parameters = parameters;
     }
 
     public void SetGamePlaySettings(float speed, Bounds bounds)
@@ -86,6 +99,17 @@ public class Player : MonoBehaviour
         rigidbody.position = position;
     }
 
+    public void TargetSpot()
+    {
+        if (parameters.id % 2 == 1)
+        {
+            CreatePass();
+        }
+        else 
+        {
+            DestinationReached();
+        }
+    }
     public void DestinationReached()
     {
         playerState = PlayerState.Win;
@@ -93,8 +117,9 @@ public class Player : MonoBehaviour
     }
     public void CreatePass()
     {
-        forPass?.Invoke();
         passKlue = false;
+        forPass?.Invoke();
+        
     }
     public void Fall()
     {
@@ -119,11 +144,31 @@ public class Player : MonoBehaviour
     public IEnumerator BigWinner(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
-
         animator.SetTrigger("Jump");
+        
         transform.DOMove(thronePlace, 0.5f);
-        yield return new WaitForSeconds(6);
+        transform.position = thronePlace;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        StartCoroutine(Zoom());
+        yield return new WaitForSeconds(3);
         callback?.Invoke();
+    }
+
+    private IEnumerator Zoom()
+    {
+        float elapsedTime = 0;
+
+        while (elapsedTime <=2)
+        {
+            elapsedTime += Time.deltaTime;
+            Debug.Log("444");
+            float fov = vcam.m_Lens.FieldOfView;
+            vcam.m_Lens.FieldOfView = Mathf.Lerp(fov, target, zoomSpeed * Time.deltaTime);
+
+            float offsetY = cineTransposer.m_FollowOffset.y;
+            cineTransposer.m_FollowOffset.y = Mathf.Lerp(offsetY, targetOffset, zoomSpeed * Time.deltaTime);
+           yield return null;
+        }
     }
 
     public void StopPlayer()
@@ -140,7 +185,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         callback?.Invoke();
     }
-    public IEnumerator FallDown(Action callback)
+    public IEnumerator Reload(Action callback)
     {
         yield return new WaitForSeconds(0.5f);
         callback?.Invoke();

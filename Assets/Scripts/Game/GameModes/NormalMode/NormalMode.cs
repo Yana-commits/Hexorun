@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,16 +29,19 @@ public class NormalMode : Mode
     private bool IsAdditionalTime = false;
     private float generatorTime;
     float hexRadius = 0.9755461f / 2;
+    private float loadTime;
+    private float loadMultTime;
 
-    
-    private float depthFull=0;
-    private float depthHalf= 0;
+
     private int currentChunkIndex;
     private float nextChunkPos = 0;
     private Vector3 passX;
     private bool firstChunk = true;
     private bool isPass = true;
     private int chankCounter = 0;
+    private bool isPlatform = true;
+    private int j = 0;
+    public float appearTime;
 
     // Start is called before the first frame update
     void Start()
@@ -96,28 +100,51 @@ public class NormalMode : Mode
         }
         hud.UpdateScoreValue(duration - elapsedTime);
 
-        if (player.transform.position.z >= depthHalf + chunk.Map.Bounds.size.z)
+
+        if (isPass == false)
         {
-            if (chankCounter < 8)
+            loadTime += Time.deltaTime;
+            loadMultTime += Time.deltaTime;
+
+            if (loadTime > appearTime)
             {
-                LoadNextChunk();
-                chankCounter++;
+                if (chankCounter < 35)
+                {
+                    LoadNextChunk();
+                    chankCounter++;
+                    ChangeCurrentChunk();
+                    loadTime = 0;
+                }
+                else if (isPlatform)
+                {
+                    LoadPlatform();
+                    isPlatform = false;
+                }
             }
-            else
+           
+            if (loadMultTime > appearTime*4)
             {
-                LoadPlatform();
+                LoadnextMult();
+                loadMultTime = 0;
             }
         }
-        if (player.transform.position.z >= depthFull + chunk.Map.Bounds.size.z)
-        {
-            ChangeCurrentChunk();
-        }
-      
+       
     }
 
     public override void ChangedHexState(KindOfMapBehavor mapBehavor)
     {
-        chunk.ChangeHexes(mapBehavor);
+       
+        if (isPass)
+        {
+            chunk.ChangeHexes(mapBehavor);
+        }
+        else 
+        {
+            //foreach (var item in pass)
+            //{
+            //    item.ChangeHexes(mapBehavor);
+            //}
+        }
     }
 
     private void CheckForAdditionalTime()
@@ -151,15 +178,16 @@ public class NormalMode : Mode
         isPass = false;
 
         var nextChunkPos = chunk.Map.Bounds.size.z - hexRadius ;
+        //var itemCounter = 0;
 
         passX = Hexagonal.Cube.HexToPixel(
               Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
               Vector2.one * hexRadius);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             ch = Instantiate(chunkPrefab, this.transform);
-            ch.Map.Initializie(new Vector2Int(3, 7), new RectShape(), gameParameters.theme);
+            ch.Map.Initializie(new Vector2Int(3, 2), new RectShapePass(), gameParameters.theme);
             ch.Map.gameObject.SetActive(true);
 
             ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
@@ -169,35 +197,12 @@ public class NormalMode : Mode
 
             nextChunkPos += ch.Map.Bounds.size.z - hexRadius;
 
-            if (i < multItems.Count)
-            {
-                Multiplyer collectMult = Instantiate(multItems[i], Vector3.zero, Quaternion.identity);
-                float[] points = new float[3] { passX.x, passX.x + 0.75f, passX.x + 1.5f};
-                
-                collectMult.transform.localPosition = new Vector3(points[Random.Range(0,points.Length)], 0.5f, nextChunkPos);
-                collectMult.n = i + 2;
-                if (i == multItems.Count - 1)
-                {
-                    Debug.Log("222");
-                    collectMult.state = PlayerState.BigWin;
-                    collectMult.transform.localPosition = new Vector3(passX.x + 0.75f, 0.5f, nextChunkPos);
-                }
-                else
-                {
-                    collectMult.state = PlayerState.Lose;
-                }
-                collectMult.gameObject.SetActive(false);
-                visibleMult.Add(collectMult);
-            }
         }
 
       
 
         currentChunkIndex = 0;
         pass[currentChunkIndex].gameObject.SetActive(true);
-        visibleMult[currentChunkIndex].gameObject.SetActive(true);
-        depthFull = pass[currentChunkIndex].Map.Bounds.size.z;
-        depthHalf = depthFull / 2;
         visiblePass = pass[currentChunkIndex].Map.ToList();
 
         var bound = new Bounds(new Vector3(passX.x+0.75f, 0, chunk.Map.Bounds.size.z  + 5), new Vector3(2.5f, 0, chunk.Map.Bounds.size.z *10));
@@ -207,28 +212,48 @@ public class NormalMode : Mode
 
     private void LoadNextChunk()
     {
-       
+
         if (firstChunk)
         {
             nextChunkPos += chunk.Map.Bounds.size.z + ch.Map.Bounds.size.z - hexRadius * 2;
             firstChunk = false;
         }
-        else 
+        else
         {
             nextChunkPos += ch.Map.Bounds.size.z - hexRadius ;
         }
 
         var chunkPass = pass[CheckNextIndex()];
       
-        chunkPass.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
+        chunkPass.transform.localPosition = new Vector3(passX.x, -3f, nextChunkPos);
         chunkPass.Map.SetTheme(gameParameters.theme);
         chunkPass.gameObject.SetActive(true);
-        if (CheckNextIndex() < visibleMult.Count)
+       chunkPass.transform.DOLocalMoveY(0, 0.5f);
+    }
+
+    private void LoadnextMult()
+    {
+        if (j < multItems.Count)
         {
-            visibleMult[CheckNextIndex()].gameObject.SetActive(true);
+            Multiplyer collectMult = Instantiate(multItems[j], Vector3.zero, Quaternion.identity);
+            float[] points = new float[3] { passX.x, passX.x + 0.75f, passX.x + 1.5f };
+
+            collectMult.transform.localPosition = new Vector3(points[Random.Range(0, points.Length)], 0.5f, nextChunkPos);
+            collectMult.n = j + 2;
+            if (j == multItems.Count - 1)
+            {
+                collectMult.state = PlayerState.BigWin;
+                collectMult.transform.localPosition = new Vector3(passX.x + 0.75f, 0.5f, nextChunkPos);
+            }
+            else
+            {
+                collectMult.state = PlayerState.Win;
+            }
+            collectMult.gameObject.SetActive(true);
+            visibleMult.Add(collectMult);
         }
-        depthHalf = depthHalf + chunkPass.Map.Bounds.size.z -1;
-        //visiblePass.AddRange(chunkPass.Map.ToList());
+
+        j++;
     }
     private void LoadPlatform()
     {
@@ -236,10 +261,11 @@ public class NormalMode : Mode
         platform.Map.Initializie(new Vector2Int(0, 4), new HexShape(), gameParameters.theme);
         platform.Map.gameObject.SetActive(true);
 
-        platform.transform.localPosition = new Vector3(passX.x + 0.83f, 0, nextChunkPos + ch.Map.Bounds.size.z*1.4f - hexRadius);
+        platform.transform.localPosition = new Vector3(passX.x + 0.75f, 0, nextChunkPos + ch.Map.Bounds.size.z*2.4f - hexRadius);
 
+       
         var throne = Instantiate(thronePrefab, Vector3.zero, Quaternion.identity);
-        throne.transform.position = new Vector3(passX.x + 0.83f, -0.35f, nextChunkPos + ch.Map.Bounds.size.z * 1.4f - hexRadius);
+        throne.transform.position = new Vector3(passX.x + 0.75f, -0.35f, nextChunkPos + ch.Map.Bounds.size.z * 2.4f - hexRadius);
         player.thronePlace = throne.transform.position;
         throne.gameObject.SetActive(true);
     }
@@ -252,7 +278,6 @@ public class NormalMode : Mode
     private void ChangeCurrentChunk()
     {
         currentChunkIndex = CheckNextIndex();
-        depthFull += pass[currentChunkIndex].Map.Bounds.size.z -1;
     }
 
     private void OnDisable()

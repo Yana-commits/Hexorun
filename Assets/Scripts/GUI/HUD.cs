@@ -10,11 +10,13 @@ public class HUD : MonoBehaviour
     public AdditionalTime additional;
     public GameOverEndless overEndless;
     public GameObject gamePlay;
+    public LevelComplete levelComplete;
 
     [SerializeField] GameObject normalGamePlayPnl;
     [SerializeField] GameObject endlessGamePlayPnl;
     [SerializeField] GameObject timerContainer;
     [SerializeField] GameObject arenaGamePlayPnl;
+
 
     [SerializeField] Image lineImg;
 

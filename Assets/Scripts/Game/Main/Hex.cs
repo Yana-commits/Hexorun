@@ -38,9 +38,10 @@ public class Hex : MonoBehaviour
     {
         if (IsTarget && other.TryGetComponent<Player>(out var player))
         {
-            player.CreatePass();
+            player.TargetSpot();
+            //player.CreatePass();
             //player.DestinationReached();
-            //this.enabled = false;
+            this.enabled = false;
         }
     }
    
