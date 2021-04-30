@@ -139,13 +139,13 @@ public class GameState : MonoBehaviour
         switch (obj)
         {
             case PlayerState.Win:
-                StartCoroutine(player.Winner(Coplete));
+                StartCoroutine(player.Winner(Complete));
                 GamePlayerPrefs.LastLevel = gameParameters.id;
                 GamePlayerPrefs.TotalCoins += CoinAmount;
               
                 break;
             case PlayerState.BigWin:
-                StartCoroutine(player.BigWinner(Coplete));
+                StartCoroutine(player.BigWinner(Complete));
                 GamePlayerPrefs.LastLevel = gameParameters.id;
                 GamePlayerPrefs.TotalCoins += CoinAmount;
                
@@ -155,20 +155,17 @@ public class GameState : MonoBehaviour
                 break;
             case PlayerState.Fall:
                 if (gameMode == GameModeState.Endless)
-                {
                     EndlessPlayerFall();
-                }
                 else 
-                { 
                     AfterFall();
-                }
+
                 break;
             default:
                 break;
         }
     }
 
-    private void Coplete()
+    private void Complete()
     {
         hud.gamePlay.SetActive(false);
         hud.levelComplete.gameObject.SetActive(true);
@@ -176,12 +173,13 @@ public class GameState : MonoBehaviour
     }
     private void EndlessPlayerFall()
     {
+        GamePlayerPrefs.TotalCoins += _coinsCollect;
         player.stateChanged -= OnPlayerStateChanged;
         CheckBestScore();
         Time.timeScale = 0;
         hud.gamePlay.SetActive(false);
         hud.overEndless.gameObject.SetActive(true);
-        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect);
+        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect, GamePlayerPrefs.TotalCoins);
     }
 
     private void AfterFall()
