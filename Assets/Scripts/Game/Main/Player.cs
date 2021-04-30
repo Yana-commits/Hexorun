@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private Animator animator;
+    [SerializeField] private Animator skinAnimator;
 
     public float speed;
     private Joystick joystick;
@@ -61,7 +62,7 @@ public class Player : MonoBehaviour
 
         if (velocity.magnitude > 0)
             rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
-        animator.SetFloat(SpeedKeyHash, velocity.magnitude);
+        SetFloat(SpeedKeyHash, velocity.magnitude);
 
         velocity.y = rigidbody.velocity.y;
         rigidbody.velocity = velocity;
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour
 
         if (velocity.magnitude > 0)
             rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
-        animator.SetFloat("Pass", velocity.magnitude);
+        SetFloat("Pass", velocity.magnitude);
 
         velocity.y = rigidbody.velocity.y;
         rigidbody.velocity = velocity;
@@ -111,7 +112,7 @@ public class Player : MonoBehaviour
     public IEnumerator Winner(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
-        animator.SetTrigger("Win");
+        SetTrigger("Win");
         yield return new WaitForSeconds(6);
         callback?.Invoke();
     }
@@ -120,7 +121,7 @@ public class Player : MonoBehaviour
     {
         rigidbody.velocity = Vector3.zero;
 
-        animator.SetTrigger("Jump");
+        SetTrigger("Jump");
         transform.DOMove(thronePlace, 0.5f);
         yield return new WaitForSeconds(6);
         callback?.Invoke();
@@ -130,13 +131,13 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.None;
         rigidbody.velocity = Vector3.zero;
-        animator.SetFloat(SpeedKeyHash, 0);  
+        SetFloat(SpeedKeyHash, 0);  
     }
 
     public IEnumerator Looser(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
-        animator.SetTrigger("Loose");
+        SetTrigger("Loose");
         yield return new WaitForSeconds(5);
         callback?.Invoke();
     }
@@ -144,5 +145,24 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         callback?.Invoke();
+    }
+
+
+    private void SetFloat(int id, float _val) 
+    {
+        animator.SetFloat(id, _val);
+        skinAnimator.SetFloat(id, _val);   
+    }
+
+    private void SetFloat(string id, float _val)
+    {
+        animator.SetFloat(id, _val);
+        skinAnimator.SetFloat(id, _val);
+    }
+
+    private void SetTrigger(string id)
+    {
+        animator.SetTrigger(id);
+        skinAnimator.SetTrigger(id);
     }
 }
