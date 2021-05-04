@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Main;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,7 @@ public class GameState : MonoBehaviour
 
     [Space]
     [SerializeField] private Player player;
+    [SerializeField] private PlayerSkinController playerSkin;
 
     private GameParameters gameParameters;
     private Mode mode;
@@ -129,6 +131,7 @@ public class GameState : MonoBehaviour
         player.Initializie(joystick, gameParameters);
         player.stateChanged += OnPlayerStateChanged;
         player.enabled = false;
+        playerSkin.Init(player.GetComponentInChildren<Animator>());
     }
 
     public void OnPlayerStateChanged(PlayerState obj)

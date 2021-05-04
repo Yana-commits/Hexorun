@@ -5,7 +5,7 @@ using System;
 using static MaterialRepository;
 
 [CreateAssetMenu(menuName = "Repositories/Materials")]
-public class MaterialRepository : ScriptableObject, IEnumerable<Data>, IReadOnlyList<Data>
+public class MaterialRepository : ScriptableObject, IReadOnlyList<MaterialRepository.Data>
 {
     [Serializable]
     public struct Data

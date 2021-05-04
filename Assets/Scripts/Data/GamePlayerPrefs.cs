@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using static Data.PlayerPrefsConstants;
 public static class GamePlayerPrefs
 {
     public static int LastTheme
@@ -24,5 +24,11 @@ public static class GamePlayerPrefs
     {
         get => PlayerPrefs.GetInt(nameof(BestScore), 0);
         set => PlayerPrefs.SetInt(nameof(BestScore), value);
+    }
+
+    public static int SkinIndex
+    {
+        get => PlayerPrefs.GetInt(LastSkinID, -1);
+        set => PlayerPrefs.SetInt(LastSkinID, value);
     }
 }
