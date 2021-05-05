@@ -64,7 +64,7 @@ MonoBehaviour:
         minValue: 0.22
         maxValue: 0.3
       pattern: 00000000
-  - size: {x: 10, y: 26}
+  - size: {x: 10, y: 40}
     duration: 30
     playerSpeed: 2.5
     changesTime: 2
@@ -115,7 +115,7 @@ MonoBehaviour:
         minValue: 0.2
         maxValue: 0.3
       pattern: 0000000002000000
-  - size: {x: 10, y: 32}
+  - size: {x: 10, y: 40}
     duration: 30
     playerSpeed: 2.5
     changesTime: 2

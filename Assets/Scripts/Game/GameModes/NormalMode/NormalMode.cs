@@ -229,6 +229,13 @@ public class NormalMode : Mode
         chunkPass.Map.SetTheme(gameParameters.theme);
         chunkPass.gameObject.SetActive(true);
        chunkPass.transform.DOLocalMoveY(0, 0.5f);
+
+        int[] holes = new[] { 0, 1 };
+        var goUp = chunkPass.Map.Shuffle().Take(Random.Range(0, holes.Length));
+        foreach (var item in goUp)
+        {
+            item.gameObject.transform.DOLocalMoveY(-3f, 0.5f);
+        }
     }
 
     private void LoadnextMult()
