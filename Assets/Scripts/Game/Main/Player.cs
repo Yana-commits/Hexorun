@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private Joystick joystick;
     private GameParameters parameters;
     public float passSpeed = 0.01f;
-    private bool passKlue = true;
+    public bool passKlue = true;
     public Vector3 thronePlace;
     private float target = 40f;
     private float targetOffset = 2.5f;
@@ -123,8 +123,8 @@ public class Player : MonoBehaviour
     }
     public void Fall()
     {
-        playerState = PlayerState.Fall;
-        stateChanged?.Invoke(playerState);
+            playerState = PlayerState.Fall;
+            stateChanged?.Invoke(playerState);
     }
     public void StartPlaying()
     {
@@ -132,8 +132,14 @@ public class Player : MonoBehaviour
         this.enabled = true;
     }
 
+    public IEnumerator PassFall(Action callback)
+    {
+        yield return new WaitForSeconds(1);
+        Debug.Log("111");
+        callback?.Invoke();
+    }
 
-    public IEnumerator Winner(Action callback)
+        public IEnumerator Winner(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
         animator.SetTrigger("Win");

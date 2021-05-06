@@ -140,15 +140,11 @@ public class GameState : MonoBehaviour
         {
             case PlayerState.Win:
                 StartCoroutine(player.Winner(Coplete));
-                GamePlayerPrefs.LastLevel = gameParameters.id;
-                GamePlayerPrefs.TotalCoins += CoinAmount;
-              
+                CountParams();
                 break;
             case PlayerState.BigWin:
                 StartCoroutine(player.BigWinner(Coplete));
-                GamePlayerPrefs.LastLevel = gameParameters.id;
-                GamePlayerPrefs.TotalCoins += CoinAmount;
-               
+                CountParams();
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
@@ -158,14 +154,29 @@ public class GameState : MonoBehaviour
                 {
                     EndlessPlayerFall();
                 }
-                else 
-                { 
+                else if (gameMode == GameModeState.Normal && player.passKlue == false )
+                {
+                    
+                    
+                    StartCoroutine(player.PassFall(Coplete));
+                    Debug.Log("888");
+                    CountParams();
+                    player.stateChanged -= OnPlayerStateChanged;
+                }
+                else
+                {
                     AfterFall();
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private void CountParams()
+    {
+        GamePlayerPrefs.LastLevel = gameParameters.id;
+        GamePlayerPrefs.TotalCoins += CoinAmount;
     }
 
     private void Coplete()
