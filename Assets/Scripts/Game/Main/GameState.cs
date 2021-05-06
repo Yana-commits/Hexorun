@@ -17,6 +17,8 @@ public class GameState : MonoBehaviour
     [SerializeField] private NormalMode normalMode;
     [SerializeField] private ArenaMode arenaMode;
 
+    [SerializeField] private PicGameMode picGameMode;
+
     [Space]
     [SerializeField] private Player player;
 
@@ -79,6 +81,7 @@ public class GameState : MonoBehaviour
         hud.UpdateLevel(gameParameters.id + 1);
         CoinAmount = 0;
     }
+
 
     public void StartNormalMode()
     {

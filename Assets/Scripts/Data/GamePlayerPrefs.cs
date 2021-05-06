@@ -25,4 +25,5 @@ public static class GamePlayerPrefs
         get => PlayerPrefs.GetInt(nameof(BestScore), 0);
         set => PlayerPrefs.SetInt(nameof(BestScore), value);
     }
+
 }
