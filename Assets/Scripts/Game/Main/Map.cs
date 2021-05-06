@@ -148,7 +148,6 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
             RedZOnes(item);
         }
 
-
         foreach (var item in zones(size))
         {
             var qqq = Offset.QFromCube(item);
@@ -162,7 +161,23 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
                 RedZOnes(ttt);
             }
         }
+    }
 
+    public void SetSafeZoneArena(Vector2Int vector)
+    {
+        Renderer rend = this[vector]?.Renderer;
+        if (rend)
+        {
+            rend.material = data.target;
+            this[vector].safeZone = true;
+        }
+
+        var neighbours = Offset.GetQNeighbour(vector);
+        foreach (var ttt in neighbours)
+        {
+            this[ttt].safeZone = true;
+            RedZOnes(ttt);
+        }
     }
 
     public void RedZOnes(Vector2Int vector)

@@ -35,7 +35,9 @@ public class ArenaMode : Mode
         chunk.GeneratePointItem();
         chunk.Map.SetArenaTarget();
 
-        var hex = chunk.Map[new Vector2Int(0, -gameParameters.size.y +1)];
+        var startPosZone = new Vector2Int(0, -gameParameters.size.y + 1);
+        chunk.Map.SetSafeZoneArena(startPosZone);
+        var hex = chunk.Map[startPosZone];
         Vector3 startPos = hex.transform.position;
         player.transform.SetPositionAndRotation(startPos, Quaternion.identity);
         player.SetGamePlaySettings(gameParameters.playerSpeed, chunk.Map.Bounds);

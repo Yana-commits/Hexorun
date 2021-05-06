@@ -21,10 +21,11 @@ public class Hex : MonoBehaviour
 
     public Vector3Int index;
     public bool IsTarget;
+    public bool safeZone =false; 
 
     public bool TrySetState(HexState state)
     {
-        if (IsTarget || State == HexState.Disable) return false;
+        if (IsTarget ||safeZone|| State == HexState.Disable) return false;
 
         State = state;
 
