@@ -156,8 +156,6 @@ public class GameState : MonoBehaviour
                 }
                 else if (gameMode == GameModeState.Normal && player.passKlue == false )
                 {
-                    
-                    
                     StartCoroutine(player.PassFall(Coplete));
                     Debug.Log("888");
                     CountParams();
