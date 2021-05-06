@@ -43,9 +43,6 @@ namespace Game.Main
 
             parentAnimator.Play("Base Layer.Idle", 0, 0);
             animator.Play("Base Layer.Idle", 0, 0);
-            //animator.PlayInFixedTime("Base Layer.Idle", 0,  animatorState.normalizedTime);
-            //animator.Play(parentAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, time);
-            //animator.Play("Idle", 0, 0.5f);
         }
 
         public void SetFloat(string key, float value)
