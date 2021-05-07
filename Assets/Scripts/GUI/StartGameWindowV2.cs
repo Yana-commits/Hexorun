@@ -43,7 +43,7 @@ public class StartGameWindowV2 : MonoBehaviour
 
     public void OnStartClick()
     {
-        gameState.StartNormalMode();
+        gameState.StartGameMode();
         OnStartGame?.Invoke(null);
     }
 }

@@ -26,4 +26,9 @@ public static class GamePlayerPrefs
         set => PlayerPrefs.SetInt(nameof(BestScore), value);
     }
 
+    public static int LastGameMode
+    {
+        get => PlayerPrefs.GetInt(nameof(LastGameMode),(int)GameModeState.Normal);
+        set => PlayerPrefs.SetInt(nameof(LastGameMode), value);
+    }
 }

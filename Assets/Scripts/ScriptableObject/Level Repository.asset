@@ -47,7 +47,7 @@ MonoBehaviour:
         minValue: 0.1
         maxValue: 0.2
       pattern: 02000000
-  - size: {x: 10, y: 26}
+  - size: {x: 10, y: 40}
     duration: 30
     playerSpeed: 2.5
     changesTime: 2

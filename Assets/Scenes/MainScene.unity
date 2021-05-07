@@ -177,6 +177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 374825335}
   - component: {fileID: 374825334}
+  - component: {fileID: 374825336}
   m_Layer: 0
   m_Name: GameState
   m_TagString: Untagged
@@ -201,6 +202,7 @@ MonoBehaviour:
   endlessMode: {fileID: 644589474}
   normalMode: {fileID: 1697089075}
   arenaMode: {fileID: 741759528}
+  picGameMode: {fileID: 374825336}
   player: {fileID: 1051566764}
   gameMode: 0
 --- !u!4 &374825335
@@ -217,6 +219,18 @@ Transform:
   m_Father: {fileID: 1588216769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &374825336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374825333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4619ef68a9ad664186856ac9b64eb13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &379622156
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +421,7 @@ MonoBehaviour:
   chunkPrefab: {fileID: 8328084201240121504, guid: b81827ca1dc275546b5bc627638c7322,
     type: 3}
   gameState: {fileID: 374825334}
+  size: {x: 10, y: 40}
   crushTime: 8
 --- !u!4 &741759529
 Transform:
@@ -588,7 +603,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: 0.00000003040879, z: -0.0000000110095, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: 0.000000022880089, z: -0.000000008283735, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1737,7 +1752,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: 0.0000000061495573, z: -0.0000000051246305, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

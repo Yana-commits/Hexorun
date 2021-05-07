@@ -82,7 +82,25 @@ public class GameState : MonoBehaviour
         CoinAmount = 0;
     }
 
-
+    public void StartGameMode()
+    {
+        gameMode = picGameMode.PicMode((GameModeState)GamePlayerPrefs.LastGameMode, GamePlayerPrefs.LastLevel);
+      
+        switch (gameMode)
+        {
+            case GameModeState.Normal:
+                StartNormalMode();
+                break;
+            case GameModeState.Endless:
+                StartEndlessMode();
+                break;
+            case GameModeState.Arena:
+                StartArenaLevel();
+                break;
+            default:
+                break;
+        }
+    }
     public void StartNormalMode()
     {
         SetGameState(GameplayState.Play);
@@ -138,6 +156,8 @@ public class GameState : MonoBehaviour
     {
 
         SetGameState(GameplayState.GameOver);
+        GamePlayerPrefs.LastGameMode = (int)gameMode;
+        Debug.Log($"{(GameModeState)GamePlayerPrefs.LastGameMode}");
 
         switch (obj)
         {
@@ -194,6 +214,7 @@ public class GameState : MonoBehaviour
         hud.gamePlay.SetActive(false);
         hud.overEndless.gameObject.SetActive(true);
         hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect);
+        GamePlayerPrefs.TotalCoins += CoinAmount;
     }
 
     private void AfterFall()

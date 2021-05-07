@@ -4,37 +4,36 @@ using UnityEngine;
 
 public class PicGameMode : MonoBehaviour
 {
-    private GameModeState gameMode;
-
    
-
-
     public GameModeState PicMode(GameModeState gameMode, int level)
     {
+        
         switch (gameMode)
         {
             case GameModeState.Endless:
-             return   gameMode = GameModeState.Normal;
-
+             return  GameModeState.Normal;
+                
             case GameModeState.Arena:
-             return   gameMode = GameModeState.Normal;
+             return  GameModeState.Normal;
 
             case GameModeState.Normal:
-
-              return  gameMode = ModeState(level);
+               
+                return  ModeState(level);
 
             default:
-                return gameMode = GameModeState.Normal;
+                return  GameModeState.Normal;
         }
     }
 
     public GameModeState ModeState(int level)
     {
-        if (level == 1 || level == 5 || level == 15)
+        GameModeState gameMode;
+
+        if (level == 0 || level == 4 || level == 14)
         {
             gameMode = GameModeState.Endless;
         }
-        else if (level == 2 || level == 10 || level == 20)
+        else if (level == 1 || level == 9 || level == 19)
         {
             gameMode = GameModeState.Arena;
         }
