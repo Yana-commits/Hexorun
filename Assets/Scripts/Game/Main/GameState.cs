@@ -154,35 +154,42 @@ public class GameState : MonoBehaviour
 
     public void OnPlayerStateChanged(PlayerState obj)
     {
-
         SetGameState(GameplayState.GameOver);
         GamePlayerPrefs.LastGameMode = (int)gameMode;
-        Debug.Log($"{(GameModeState)GamePlayerPrefs.LastGameMode}");
 
         switch (obj)
         {
             case PlayerState.Win:
-                StartCoroutine(player.Winner(Coplete));
+                StartCoroutine(player.Winner(Complete));
                 CountParams();
                 break;
             case PlayerState.BigWin:
-                StartCoroutine(player.BigWinner(Coplete));
+                StartCoroutine(player.BigWinner(Complete));
                 CountParams();
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
+                player.stateChanged -= OnPlayerStateChanged;
+
                 if (gameMode == GameModeState.Endless)
                 {
                     EndlessPlayerFall();
+                    CountParams();
                 }
-                else if (gameMode == GameModeState.Normal && player.passKlue == false )
+                else if (gameMode == GameModeState.Normal && player.passKlue == false)
                 {
-                    StartCoroutine(player.PassFall(Coplete));
+                    StartCoroutine(player.PassFall(Complete));
                     Debug.Log("888");
                     CountParams();
-                    player.stateChanged -= OnPlayerStateChanged;
+                   
+                }
+                else if (gameMode == GameModeState.Arena)
+                {
+                    StartCoroutine(player.PassFall(Complete));
+                    CountParams();
+                   
                 }
                 else
                 {
@@ -196,11 +203,14 @@ public class GameState : MonoBehaviour
 
     private void CountParams()
     {
-        GamePlayerPrefs.LastLevel = gameParameters.id;
+        if (gameMode == GameModeState.Normal)
+        {
+            GamePlayerPrefs.LastLevel = gameParameters.id;
+        }
         GamePlayerPrefs.TotalCoins += CoinAmount;
     }
 
-    private void Coplete()
+    private void Complete()
     {
         hud.gamePlay.SetActive(false);
         hud.levelComplete.gameObject.SetActive(true);
@@ -208,13 +218,11 @@ public class GameState : MonoBehaviour
     }
     private void EndlessPlayerFall()
     {
-        player.stateChanged -= OnPlayerStateChanged;
         CheckBestScore();
         Time.timeScale = 0;
         hud.gamePlay.SetActive(false);
         hud.overEndless.gameObject.SetActive(true);
         hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect);
-        GamePlayerPrefs.TotalCoins += CoinAmount;
     }
 
     private void AfterFall()
