@@ -172,17 +172,26 @@ public class GameState : MonoBehaviour
                 break;
             case PlayerState.Fall:
                 player.stateChanged -= OnPlayerStateChanged;
+                KindOfFall();
+                break;
+            default:
+                break;
+        }
+    }
 
-                if (gameMode == GameModeState.Endless)
-                {
-                    EndlessPlayerFall();
-                    CountParams();
-                }
-                else if (gameMode == GameModeState.Normal && player.passKlue == false)
-                {
-                    FallWithCoins();
-                }
-                else if (gameMode == GameModeState.Arena)
+    private void KindOfFall()
+    {
+        switch (gameMode)
+        {
+            case GameModeState.Endless:
+                EndlessPlayerFall();
+                CountParams();
+                break;
+            case GameModeState.Arena:
+                FallWithCoins();
+                break;
+            case GameModeState.Normal:
+                if (player.passKlue == false)
                 {
                     FallWithCoins();
                 }
@@ -190,8 +199,6 @@ public class GameState : MonoBehaviour
                 {
                     AfterFall();
                 }
-                break;
-            default:
                 break;
         }
     }
