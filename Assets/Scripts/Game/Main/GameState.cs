@@ -180,16 +180,11 @@ public class GameState : MonoBehaviour
                 }
                 else if (gameMode == GameModeState.Normal && player.passKlue == false)
                 {
-                    StartCoroutine(player.PassFall(Complete));
-                    Debug.Log("888");
-                    CountParams();
-                   
+                    FallWithCoins();
                 }
                 else if (gameMode == GameModeState.Arena)
                 {
-                    StartCoroutine(player.PassFall(Complete));
-                    CountParams();
-                   
+                    FallWithCoins();
                 }
                 else
                 {
@@ -199,6 +194,12 @@ public class GameState : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void FallWithCoins()
+    {
+        StartCoroutine(player.PassFall(Complete));
+        CountParams();
     }
 
     private void CountParams()

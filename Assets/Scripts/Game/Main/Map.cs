@@ -136,7 +136,8 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         if (rend)
         {
             rend.material = data.target;
-            this[targetIndex].IsTarget = true;
+            //this[targetIndex].IsTarget = true;
+            this[targetIndex].safeZone = true;
 
             var arrow = Instantiate(arrowPrefab, this[targetIndex].transform);
             arrow.transform.localPosition = Vector3.up;
