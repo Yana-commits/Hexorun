@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Game.Main;
 using UnityEngine.SceneManagement;
 
 using Random = UnityEngine.Random;
@@ -21,6 +22,7 @@ public class GameState : MonoBehaviour
 
     [Space]
     [SerializeField] private Player player;
+    [SerializeField] private PlayerSkinController playerSkin;
 
     private GameParameters gameParameters;
     private Mode mode;
@@ -150,6 +152,7 @@ public class GameState : MonoBehaviour
         player.Initializie(joystick, gameParameters);
         player.stateChanged += OnPlayerStateChanged;
         player.enabled = false;
+        playerSkin.Init(player.GetComponentInChildren<Animator>());
     }
 
     public void OnPlayerStateChanged(PlayerState obj)
@@ -230,7 +233,7 @@ public class GameState : MonoBehaviour
         Time.timeScale = 0;
         hud.gamePlay.SetActive(false);
         hud.overEndless.gameObject.SetActive(true);
-        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect);
+        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect, GamePlayerPrefs.TotalCoins);
     }
 
     private void AfterFall()
