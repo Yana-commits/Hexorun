@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using static Data.PlayerPrefsConstants;
 public static class GamePlayerPrefs
 {
     public static int LastTheme
@@ -28,7 +28,13 @@ public static class GamePlayerPrefs
 
     public static int LastGameMode
     {
-        get => PlayerPrefs.GetInt(nameof(LastGameMode),(int)GameModeState.Normal);
+        get => PlayerPrefs.GetInt(nameof(LastGameMode), (int)GameModeState.Normal);
         set => PlayerPrefs.SetInt(nameof(LastGameMode), value);
+    }
+
+    public static int SkinIndex
+    {
+        get => PlayerPrefs.GetInt(LastSkinID, -1);
+        set => PlayerPrefs.SetInt(LastSkinID, value);
     }
 }

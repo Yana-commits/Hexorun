@@ -11,6 +11,8 @@ public class GameOverEndless : MonoBehaviour
     [SerializeField] Text scoreText;
     [SerializeField] Text bestScoreText;
     [SerializeField] Text coinsText;
+    [SerializeField] Image characterImg;
+    [SerializeField] Text pecentText;
 
     public Action continueFall;
 
@@ -36,10 +38,12 @@ public class GameOverEndless : MonoBehaviour
         continueFall?.Invoke();
     }
 
-    public void Initialize(int score,int bestScore,int coinScore)
+    public void Initialize(int score,int bestScore,int coinScore,int totalCoins)
     {
         scoreText.text = $"SCORE : {score}";
         bestScoreText.text = $"BEST : {bestScore}";
         coinsText.text = coinScore.ToString();
+        characterImg.fillAmount = totalCoins * 0.01f;
+        pecentText.text = $"{totalCoins}%";
     }
 }
