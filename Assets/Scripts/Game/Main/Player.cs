@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
+using Game.Main;
 
 public class Player : MonoBehaviour
 {
-    private readonly int SpeedKeyHash = Animator.StringToHash("Speed");
+    private readonly string SpeedKey = "Speed";
 
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private Animator animator;
+    [SerializeField] private PlayerSkinController secondAnimator;
     [SerializeField] private CinemachineVirtualCamera vcam;
     private CinemachineTransposer cineTransposer;
 
@@ -31,6 +33,21 @@ public class Player : MonoBehaviour
     public event Action forPass;
 
     [SerializeField] private Bounds mapBounds;
+
+    private string AnimatorTrigger
+    {
+        set
+        {
+            animator.SetTrigger(value);
+            secondAnimator.SetTrigger(value);
+        }
+    }
+
+    private void SetAnimatorFloat(string key, float value)
+    {
+        animator.SetFloat(key, value);
+        secondAnimator.SetFloat(key,value);
+    }
 
     private void Start()
     {
@@ -74,8 +91,7 @@ public class Player : MonoBehaviour
 
         if (velocity.magnitude > 0)
             rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
-        animator.SetFloat(SpeedKeyHash, velocity.magnitude);
-
+        SetAnimatorFloat(SpeedKey, velocity.magnitude);
         velocity.y = rigidbody.velocity.y;
         rigidbody.velocity = velocity;
     }
@@ -85,7 +101,8 @@ public class Player : MonoBehaviour
 
         if (velocity.magnitude > 0)
             rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
-        animator.SetFloat("Pass", velocity.magnitude);
+        
+        SetAnimatorFloat("Pass", velocity.magnitude);
 
         velocity.y = rigidbody.velocity.y;
         rigidbody.velocity = velocity;
@@ -142,7 +159,7 @@ public class Player : MonoBehaviour
         public IEnumerator Winner(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
-        animator.SetTrigger("Win");
+        AnimatorTrigger = "Win";
         yield return new WaitForSeconds(6);
         callback?.Invoke();
     }
@@ -150,7 +167,7 @@ public class Player : MonoBehaviour
     public IEnumerator BigWinner(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
-        animator.SetTrigger("Jump");
+        AnimatorTrigger = "Jump";
         
         transform.DOMove(thronePlace, 0.5f);
         transform.position = thronePlace;
@@ -181,13 +198,13 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.None;
         rigidbody.velocity = Vector3.zero;
-        animator.SetFloat(SpeedKeyHash, 0);  
+        animator.SetFloat(SpeedKey, 0);  
     }
 
     public IEnumerator Looser(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
-        animator.SetTrigger("Loose");
+        AnimatorTrigger = "Loose";
         yield return new WaitForSeconds(5);
         callback?.Invoke();
     }
