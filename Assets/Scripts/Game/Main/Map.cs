@@ -67,7 +67,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
         var cent = deathTrigger.transform.InverseTransformPoint(_bounds.center);
         deathTrigger.size = _bounds.size;
-        deathTrigger.center = cent + Vector3.down * 0.35f;
+        deathTrigger.center = cent + Vector3.down * 0.34f;
     }
 
     public void SetTheme(MaterialRepository.Data data)

@@ -8,7 +8,7 @@ public class ArenaMode : Mode
     private HUD hud;
     private GameParameters gameParameters;
     private Chunk chunk;
-    public Vector2Int size = new Vector2Int(10, 40);
+    //public Vector2Int size = new Vector2Int(10, 38);
 
     [SerializeField] float crushTime = 6;
 
@@ -36,7 +36,7 @@ public class ArenaMode : Mode
         chunk.GeneratePointItem();
         chunk.Map.SetArenaTarget();
 
-        var startPosZone = new Vector2Int(0, -size.y + 1);
+        var startPosZone = new Vector2Int(0, -gameParameters.size.y + 1);
         chunk.Map.SetSafeZoneArena(startPosZone);
         var hex = chunk.Map[startPosZone];
         Vector3 startPos = hex.transform.position;
