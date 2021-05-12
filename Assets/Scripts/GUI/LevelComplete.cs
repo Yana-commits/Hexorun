@@ -45,7 +45,7 @@ public class LevelComplete : MonoBehaviour
 
         skins[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
         stroks[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
-        skins[GamePlayerPrefs.SkinIndex + 1].fillAmount = totalScore*0.01f;
-        pecentText.text = $"{totalScore}%";
+        skins[GamePlayerPrefs.SkinIndex + 1].fillAmount = (totalScore % 100)* 0.01f;
+        pecentText.text = $"{totalScore%100}%";
     }
 }

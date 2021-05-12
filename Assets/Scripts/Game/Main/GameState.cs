@@ -68,7 +68,7 @@ public class GameState : MonoBehaviour
         hud.overEndless.continueFall += ReloadScene;
         hud.levelComplete.continuePlay += ReloadScene;
         hud.skinUnlock.keepIt += ReloadScene;
-        hud.skinUnlock.loseIt += ReloadScene;
+        hud.skinUnlock.loseIt += LoseSkin;
 
         Time.timeScale = 1;
         Application.targetFrameRate = 60;
@@ -279,6 +279,12 @@ public class GameState : MonoBehaviour
     {
         if (gameMode == GameModeState.Endless && PointsAmount > GamePlayerPrefs.BestScore)
             GamePlayerPrefs.BestScore = PointsAmount;
+    }
+
+    private void LoseSkin()
+    {
+      GamePlayerPrefs.SkinIndex = lastSkin;
+        ReloadScene();
     }
 }
 public enum KindOfMapBehavor
