@@ -8,7 +8,6 @@ public class NormalMode : Mode
 {
     private Player player;
     private HUD hud;
-    private GameParameters gameParameters;
     private Chunk chunk;
     private Chunk ch;
     private Chunk platform;
@@ -46,7 +45,7 @@ public class NormalMode : Mode
     // Start is called before the first frame update
     void Start()
     {
-        player.forPass += LoadPass1;
+        player.OnPassActivated += LoadPass1;
     }
 
     public override void Initialized(Player _player,HUD hud)
@@ -55,18 +54,11 @@ public class NormalMode : Mode
         this.hud = hud;
         hud.SetActiveNormalPanel();
 
-        int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count - 1);
-        gameParameters = levels[level];
-        gameParameters.id = level;
-        gameParameters.theme = datas.Materials[GamePlayerPrefs.LastTheme];
         duration = gameParameters.duration;
-
 
         chunk = Instantiate(chunkPrefab,this.transform);
         chunk.Initialize(player.transform, new RectShape(),gameParameters);
         chunk.Map.SetTarget();
-
-       
 
         var hex = chunk.Map[new Vector2Int(gameParameters.size.x / 2, 0)];
         Vector3 startPos = hex.transform.position;
@@ -289,6 +281,6 @@ public class NormalMode : Mode
 
     private void OnDisable()
     {
-        player.forPass -= LoadPass1;
+        player.OnPassActivated -= LoadPass1;
     }
 }

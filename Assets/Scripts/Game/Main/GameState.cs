@@ -12,13 +12,16 @@ public class GameState : MonoBehaviour
 {
     [SerializeField] private HUD hud;
 
+
     [SerializeField] private Joystick joystick;
 
     [SerializeField] private EndlessMode endlessMode;
     [SerializeField] private NormalMode normalMode;
     [SerializeField] private ArenaMode arenaMode;
 
-    [SerializeField] private PicGameMode picGameMode;
+    [SerializeField] private MaterialRepository datas;
+    [SerializeField] private LevelRepository levels;
+    [SerializeField] private ModesRepository modesRepository;
 
     [Space]
     [SerializeField] private Player player;
@@ -29,7 +32,6 @@ public class GameState : MonoBehaviour
 
     private GameplayState gamePlayState = GameplayState.Stop;
     [Space]
-    [SerializeField]
     private GameModeState gameMode = GameModeState.Normal;
 
     private int _coinsCollect = 0;
@@ -57,8 +59,8 @@ public class GameState : MonoBehaviour
     }
 
     public GameplayState GamePlayState { get => gamePlayState; }
-
-
+    public MaterialRepository Datas { get => datas; set => datas = value; }
+    public LevelRepository Levels { get => levels; set => levels = value; }
 
     public Action OnChangedHexPosition;
 
@@ -72,66 +74,33 @@ public class GameState : MonoBehaviour
 
         Time.timeScale = 1;
         Application.targetFrameRate = 60;
+        StartGame();
     }
 
-    public void StartGame(GameParameters parameters)
+    public void StartGame()
     {
-        gameParameters = parameters;
+        int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, modesRepository.Count - 1);
         lastSkin = GamePlayerPrefs.SkinIndex;
 
-        mode = normalMode;
+        gameParameters = modesRepository[level].gameParams;
+        gameParameters.id = level;
+        gameParameters.theme = datas.Materials[GamePlayerPrefs.LastTheme];
+
+        gameMode = modesRepository[level].mode;
+        mode = GetMode(gameMode);
+        mode.gameParameters = gameParameters;
         mode.gameObject.SetActive(true);
         mode.Initialized(player, hud);
-
+ 
         PlayerInit();
 
-        hud.UpdateLevel(gameParameters.id + 1);
+        hud.UpdateLevel(level + 1);
         CoinAmount = 0;
+        GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
     }
 
     public void StartGameMode()
     {
-        gameMode = picGameMode.PicMode((GameModeState)GamePlayerPrefs.LastGameMode, GamePlayerPrefs.LastLevel);
-      
-        switch (gameMode)
-        {
-            case GameModeState.Normal:
-                StartNormalMode();
-                break;
-            case GameModeState.Endless:
-                StartEndlessMode();
-                break;
-            case GameModeState.Arena:
-                StartArenaLevel();
-                break;
-            default:
-                break;
-        }
-    }
-    public void StartNormalMode()
-    {
-        SetGameState(GameplayState.Play);
-        mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
-    }
-
-    public void StartEndlessMode()
-    {
-        gameMode = GameModeState.Endless;
-        mode.gameObject.SetActive(false);
-        mode = endlessMode;
-        mode.gameObject.SetActive(true);
-        mode.Initialized(player, hud);
-        SetGameState(GameplayState.Play);
-        mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
-    }
-
-    public void StartArenaLevel()
-    {
-        gameMode = GameModeState.Arena;
-        mode.gameObject.SetActive(false);
-        mode = arenaMode;
-        mode.gameObject.SetActive(true);
-        mode.Initialized(player, hud);
         SetGameState(GameplayState.Play);
         mode?.ChangedHexState(KindOfMapBehavor.DiffMoove);
     }
@@ -155,7 +124,8 @@ public class GameState : MonoBehaviour
     private void PlayerInit()
     {
         player.Initializie(joystick, gameParameters);
-        player.stateChanged += OnPlayerStateChanged;
+        player.passKlue = modesRepository[gameParameters.id].mode == GameModeState.NormalWithBonus ? true : false;
+        player.OnStateChanged += OnPlayerStateChanged;
         player.enabled = false;
         playerSkin.Init(player.GetComponentInChildren<Animator>());
     }
@@ -179,8 +149,10 @@ public class GameState : MonoBehaviour
                 StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
-                player.stateChanged -= OnPlayerStateChanged;
                 KindOfFall();
+                break;
+            case PlayerState.BonusFall:
+                FallWithCoins();
                 break;
             default:
                 break;
@@ -196,17 +168,13 @@ public class GameState : MonoBehaviour
                 EndlessPlayerFall();
                 break;
             case GameModeState.Arena:
-                FallWithCoins();
+                AfterFall();
                 break;
             case GameModeState.Normal:
-                if (player.passKlue == false)
-                {
-                    FallWithCoins();
-                }
-                else
-                {
-                    AfterFall();
-                }
+                 AfterFall();
+                break;
+            case GameModeState.NormalWithBonus:
+                AfterFall();
                 break;
         }
     }
@@ -219,10 +187,7 @@ public class GameState : MonoBehaviour
 
     private void CountParams()
     {
-        if (gameMode == GameModeState.Normal)
-        {
-            GamePlayerPrefs.LastLevel = gameParameters.id;
-        }
+        GamePlayerPrefs.LastLevel = gameParameters.id;
         GamePlayerPrefs.TotalCoins += CoinAmount;
 
         if (GamePlayerPrefs.TotalCoins >= 100*skinKoeff)
@@ -271,7 +236,7 @@ public class GameState : MonoBehaviour
     private void OnDestroy()
     {
         if (player)
-            player.stateChanged -= OnPlayerStateChanged;
+            player.OnStateChanged -= OnPlayerStateChanged;
     }
 
 
@@ -285,6 +250,23 @@ public class GameState : MonoBehaviour
     {
       GamePlayerPrefs.SkinIndex = lastSkin;
         ReloadScene();
+    }
+
+    private Mode GetMode(GameModeState gameState)
+    {
+        switch (gameState)
+        {
+            case GameModeState.Normal:
+                return normalMode;
+            case GameModeState.Endless:
+                return endlessMode;
+            case GameModeState.Arena:
+                return arenaMode;
+            case GameModeState.NormalWithBonus:
+                return normalMode;
+            default:
+                return normalMode;
+        }
     }
 }
 public enum KindOfMapBehavor

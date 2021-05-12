@@ -21,16 +21,19 @@ public class Player : MonoBehaviour
     private Joystick joystick;
     private GameParameters parameters;
     public float passSpeed = 0.01f;
-    public bool passKlue = true;
+    public bool passKlue;
     public Vector3 thronePlace;
+
     private float target = 40f;
     private float targetOffset = 2.5f;
-    public float zoomSpeed = 3f; 
+    public float zoomSpeed = 3f;
 
-    public event Action<PlayerState> stateChanged;
+    private bool isFastRun = false;
+
     private PlayerState playerState = PlayerState.None;
 
-    public event Action forPass;
+    public event Action<PlayerState> OnStateChanged;
+    public event Action OnPassActivated;
 
     [SerializeField] private Bounds mapBounds;
 
@@ -46,7 +49,7 @@ public class Player : MonoBehaviour
     private void SetAnimatorFloat(string key, float value)
     {
         animator.SetFloat(key, value);
-        secondAnimator.SetFloat(key,value);
+        secondAnimator.SetFloat(key, value);
     }
 
     private void Start()
@@ -54,7 +57,7 @@ public class Player : MonoBehaviour
         cineTransposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
     }
 
-    public void Initializie(Joystick joystick,GameParameters parameters)
+    public void Initializie(Joystick joystick, GameParameters parameters)
     {
         this.joystick = joystick;
         this.parameters = parameters;
@@ -71,15 +74,15 @@ public class Player : MonoBehaviour
     {
         if (playerState == PlayerState.Playing)
         {
-            if (passKlue)
+            if (!isFastRun)
             {
                 Move(joystick.Direction);
-               
+
             }
             else
             {
                 MovePass(joystick.Direction);
-               
+
             }
             ClampPosition();
         }
@@ -101,7 +104,7 @@ public class Player : MonoBehaviour
 
         if (velocity.magnitude > 0)
             rigidbody.rotation = Quaternion.LookRotation(velocity, Vector3.up);
-        
+
         SetAnimatorFloat("Pass", velocity.magnitude);
 
         velocity.y = rigidbody.velocity.y;
@@ -118,11 +121,11 @@ public class Player : MonoBehaviour
 
     public void TargetSpot()
     {
-        if (parameters.id % 2 == 1)
+        if (passKlue)
         {
             CreatePass();
         }
-        else 
+        else
         {
             DestinationReached();
         }
@@ -130,18 +133,17 @@ public class Player : MonoBehaviour
     public void DestinationReached()
     {
         playerState = PlayerState.Win;
-        stateChanged?.Invoke(playerState);
+        OnStateChanged?.Invoke(playerState);
     }
     public void CreatePass()
     {
-        passKlue = false;
-        forPass?.Invoke();
-        
+        isFastRun = true;
+        OnPassActivated?.Invoke();
     }
     public void Fall()
     {
-            playerState = PlayerState.Fall;
-            stateChanged?.Invoke(playerState);
+        playerState = isFastRun ? PlayerState.Fall : PlayerState.Fall;
+        OnStateChanged?.Invoke(playerState);
     }
     public void StartPlaying()
     {
@@ -156,7 +158,7 @@ public class Player : MonoBehaviour
         callback?.Invoke();
     }
 
-        public IEnumerator Winner(Action callback)
+    public IEnumerator Winner(Action callback)
     {
         rigidbody.velocity = Vector3.zero;
         AnimatorTrigger = "Win";
@@ -168,12 +170,12 @@ public class Player : MonoBehaviour
     {
         rigidbody.velocity = Vector3.zero;
         AnimatorTrigger = "Jump";
-        
+
         transform.DOMove(thronePlace, 0.5f);
         transform.position = thronePlace;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         StartCoroutine(Zoom());
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4.5f);
         callback?.Invoke();
     }
 
@@ -181,16 +183,15 @@ public class Player : MonoBehaviour
     {
         float elapsedTime = 0;
 
-        while (elapsedTime <=2)
+        while (elapsedTime <= 2)
         {
             elapsedTime += Time.deltaTime;
-            Debug.Log("444");
             float fov = vcam.m_Lens.FieldOfView;
             vcam.m_Lens.FieldOfView = Mathf.Lerp(fov, target, zoomSpeed * Time.deltaTime);
 
             float offsetY = cineTransposer.m_FollowOffset.y;
             cineTransposer.m_FollowOffset.y = Mathf.Lerp(offsetY, targetOffset, zoomSpeed * Time.deltaTime);
-           yield return null;
+            yield return null;
         }
     }
 
@@ -198,7 +199,7 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.None;
         rigidbody.velocity = Vector3.zero;
-        animator.SetFloat(SpeedKey, 0);  
+        animator.SetFloat(SpeedKey, 0);
     }
 
     public IEnumerator Looser(Action callback)

@@ -2,5 +2,6 @@ public enum GameModeState
 {
     Normal,
     Endless,
-    Arena
+    Arena,
+    NormalWithBonus
 };

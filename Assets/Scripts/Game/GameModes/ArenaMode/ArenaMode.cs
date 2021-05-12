@@ -6,9 +6,7 @@ public class ArenaMode : Mode
 {
     private Player player;
     private HUD hud;
-    private GameParameters gameParameters;
     private Chunk chunk;
-    //public Vector2Int size = new Vector2Int(10, 38);
 
     [SerializeField] float crushTime = 6;
 
@@ -21,12 +19,6 @@ public class ArenaMode : Mode
         player = _player;
         this.hud = hud;
         hud.SetArenaPanel();
-
-        int level = Mathf.Min(GamePlayerPrefs.LastLevel + 1, levels.Count - 1);
-        gameParameters = levels[level];
-        gameParameters.id = level;
-        gameParameters.theme = datas.Materials[GamePlayerPrefs.LastTheme];
-        //gameParameters.size = new Vector2Int(10, 40);
 
         generatorTime = crushTime;
         changeTime = gameParameters.changesTime;

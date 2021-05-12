@@ -116,7 +116,7 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
           Random.Range(1, size.x-1),
           Random.Range(size.y - 1, size.y)
           );
-
+        Debug.Log(targetIndex);
         Renderer rend = this[targetIndex]?.Renderer;
         if (rend)
         {

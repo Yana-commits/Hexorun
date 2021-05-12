@@ -21,7 +21,6 @@ public class EndlessMode : Mode
 
     private int themeIndex;
 
-    GameParameters gameParameters = null;
 
     // Start is called before the first frame update
     void Start()
@@ -64,10 +63,10 @@ public class EndlessMode : Mode
         float zPos = 0;
         themeIndex = GamePlayerPrefs.LastTheme;
 
-        for (int i = 0; i < levels.Count; i++)
+        for (int i = 0; i < gameState.Levels.Count; i++)
         {
-            gameParameters = levels.Parameters[i];
-            gameParameters.theme = datas[themeIndex];
+            gameParameters = gameState.Levels.Parameters[i];
+            gameParameters.theme = gameState.Datas[themeIndex];
 
             var chunk = Instantiate(chunkPrefab, this.transform);
             chunk.transform.localPosition = new Vector3(0, 0, zPos);
@@ -96,7 +95,7 @@ public class EndlessMode : Mode
 
     private void LoadNextChunk()
     {     
-        MaterialRepository.Data theme = datas.Materials[themeIndex];
+        MaterialRepository.Data theme = gameState.Datas.Materials[themeIndex];
         nextChunkPos += chunks[currentChunkIndex].Map.Bounds.size.z - hexRadius;
         var chunk = chunks[CheckNextIndex()];
         chunk.transform.localPosition = new Vector3(0, 0, nextChunkPos);
@@ -112,8 +111,8 @@ public class EndlessMode : Mode
         currentChunkIndex = CheckNextIndex();
         depthFull += chunks[currentChunkIndex].Map.Bounds.size.z;
 
-        themeIndex = GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
-        MaterialRepository.Data theme = datas.Materials[themeIndex];
+        themeIndex = GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % gameState.Datas.Count;
+        MaterialRepository.Data theme = gameState.Datas.Materials[themeIndex];
 
         foreach (var item in chunks.GetRange(0,currentChunkIndex + 1))
         {

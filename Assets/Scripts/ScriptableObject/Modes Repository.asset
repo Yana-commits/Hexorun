@@ -1,0 +1,255 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445b5fa35e898c94688837a980d0354d, type: 3}
+  m_Name: Modes Repository
+  m_EditorClassIdentifier: 
+  modeLists:
+  - mode: 0
+    gameParams:
+      size: {x: 10, y: 20}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 5
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 1
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.1
+          maxValue: 0.2
+        holeProbability:
+          minValue: 0
+          maxValue: 0.1
+        pattern: 
+  - mode: 1
+    gameParams:
+      size: {x: 10, y: 20}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 5
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 1
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.1
+          maxValue: 0.2
+        holeProbability:
+          minValue: 0
+          maxValue: 0.1
+        pattern: 
+  - mode: 3
+    gameParams:
+      size: {x: 10, y: 20}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 8
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 1
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.1
+          maxValue: 0.2
+        holeProbability:
+          minValue: 0.1
+          maxValue: 0.2
+        pattern: 02000000
+  - mode: 2
+    gameParams:
+      size: {x: 10, y: 32}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 12
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 1
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.2
+          maxValue: 0.3
+        holeProbability:
+          minValue: 0.2
+          maxValue: 0.3
+        pattern: 0000000002000000
+  - mode: 0
+    gameParams:
+      size: {x: 10, y: 40}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 10
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 1
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.2
+          maxValue: 0.3
+        holeProbability:
+          minValue: 0.2
+          maxValue: 0.3
+        pattern: 01000000
+  - mode: 1
+    gameParams:
+      size: {x: 0, y: 0}
+      duration: 0
+      playerSpeed: 0
+      changesTime: 0
+      collectableItems: []
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0
+          maxValue: 0
+        holeProbability:
+          minValue: 0
+          maxValue: 0
+        pattern: 
+  - mode: 3
+    gameParams:
+      size: {x: 10, y: 38}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 15
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 1
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.25
+          maxValue: 0.3
+        holeProbability:
+          minValue: 0.3
+          maxValue: 0.4
+        pattern: 000000000100000003000000
+  - mode: 2
+    gameParams:
+      size: {x: 10, y: 40}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 12
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 1
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.2
+          maxValue: 0.3
+        holeProbability:
+          minValue: 0.2
+          maxValue: 0.3
+        pattern: 0100000002000000
+  - mode: 0
+    gameParams:
+      size: {x: 10, y: 44}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 18
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 2
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.25
+          maxValue: 0.3
+        holeProbability:
+          minValue: 0.3
+          maxValue: 0.4
+        pattern: 030000000300000003000000
+  - mode: 1
+    gameParams:
+      size: {x: 0, y: 0}
+      duration: 0
+      playerSpeed: 0
+      changesTime: 0
+      collectableItems: []
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0
+          maxValue: 0
+        holeProbability:
+          minValue: 0
+          maxValue: 0
+        pattern: 
+  - mode: 3
+    gameParams:
+      size: {x: 10, y: 50}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 25
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 2
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.25
+          maxValue: 0.3
+        holeProbability:
+          minValue: 0.4
+          maxValue: 0.5
+        pattern: 00000000010000000300000003000000
+  - mode: 2
+    gameParams:
+      size: {x: 10, y: 40}
+      duration: 30
+      playerSpeed: 2.5
+      changesTime: 2
+      collectableItems:
+      - Key: {fileID: 3821720450235083012, guid: 8b1c7a22a3247524b90110bf020518e5,
+          type: 3}
+        Value: 12
+      - Key: {fileID: 3821720450235083012, guid: d7fcd1888c113479f92d1b425318a7db,
+          type: 3}
+        Value: 1
+      obstaclesParam:
+        obstacleProbability:
+          minValue: 0.2
+          maxValue: 0.3
+        holeProbability:
+          minValue: 0.2
+          maxValue: 0.3
+        pattern: 0100000002000000
