@@ -219,6 +219,10 @@ public class GameState : MonoBehaviour
             GamePlayerPrefs.LastLevel = gameParameters.id;
         }
         GamePlayerPrefs.TotalCoins += CoinAmount;
+        if (GamePlayerPrefs.TotalCoins >= 100)
+        {
+            GamePlayerPrefs.SkinIndex = (int)(GamePlayerPrefs.TotalCoins/100) -1;
+        }
     }
 
     private void Complete()
