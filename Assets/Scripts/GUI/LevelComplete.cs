@@ -10,8 +10,10 @@ public class LevelComplete : MonoBehaviour
     [SerializeField] Button giveUpBtn;
     [SerializeField] Text scoreCoinText;
     [SerializeField] Text totalScoreText;
-    [SerializeField] Image characterImg;
+    private Image characterImg;
     [SerializeField] Text pecentText;
+    [SerializeField] List<Image> skins;
+    [SerializeField] List<Image> stroks;
 
     public Action continuePlay;
     private void OnEnable()
@@ -40,7 +42,10 @@ public class LevelComplete : MonoBehaviour
     {
         totalScoreText.text = totalScore.ToString();
         scoreCoinText.text = coinScore.ToString();
-        characterImg.fillAmount = totalScore*0.01f;
+
+        skins[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
+        stroks[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
+        skins[GamePlayerPrefs.SkinIndex + 1].fillAmount = totalScore*0.01f;
         pecentText.text = $"{totalScore}%";
     }
 }

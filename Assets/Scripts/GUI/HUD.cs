@@ -11,6 +11,7 @@ public class HUD : MonoBehaviour
     public GameOverEndless overEndless;
     public GameObject gamePlay;
     public LevelComplete levelComplete;
+    public SkinUnlock skinUnlock;
 
     [SerializeField] GameObject normalGamePlayPnl;
     [SerializeField] GameObject endlessGamePlayPnl;

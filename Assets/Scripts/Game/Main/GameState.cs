@@ -33,6 +33,8 @@ public class GameState : MonoBehaviour
     private GameModeState gameMode = GameModeState.Normal;
 
     private int _coinsCollect = 0;
+    private int skinKoeff = 1;
+    private int lastSkin = -1;
     public int CoinAmount
     {
         get => _coinsCollect;
@@ -65,6 +67,8 @@ public class GameState : MonoBehaviour
         hud.OnPause += () => { SetGameState(gamePlayState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
         hud.overEndless.continueFall += ReloadScene;
         hud.levelComplete.continuePlay += ReloadScene;
+        hud.skinUnlock.keepIt += ReloadScene;
+        hud.skinUnlock.loseIt += ReloadScene;
 
         Time.timeScale = 1;
         Application.targetFrameRate = 60;
@@ -73,6 +77,7 @@ public class GameState : MonoBehaviour
     public void StartGame(GameParameters parameters)
     {
         gameParameters = parameters;
+        lastSkin = GamePlayerPrefs.SkinIndex;
 
         mode = normalMode;
         mode.gameObject.SetActive(true);
@@ -163,12 +168,12 @@ public class GameState : MonoBehaviour
         switch (obj)
         {
             case PlayerState.Win:
-                StartCoroutine(player.Winner(Complete));
                 CountParams();
+                StartCoroutine(player.Winner(Complete));
                 break;
             case PlayerState.BigWin:
-                StartCoroutine(player.BigWinner(Complete));
                 CountParams();
+                StartCoroutine(player.BigWinner(Complete));
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
@@ -187,8 +192,8 @@ public class GameState : MonoBehaviour
         switch (gameMode)
         {
             case GameModeState.Endless:
-                EndlessPlayerFall();
                 CountParams();
+                EndlessPlayerFall();
                 break;
             case GameModeState.Arena:
                 FallWithCoins();
@@ -208,8 +213,8 @@ public class GameState : MonoBehaviour
 
     private void FallWithCoins()
     {
-        StartCoroutine(player.PassFall(Complete));
         CountParams();
+        StartCoroutine(player.PassFall(Complete));
     }
 
     private void CountParams()
@@ -219,17 +224,28 @@ public class GameState : MonoBehaviour
             GamePlayerPrefs.LastLevel = gameParameters.id;
         }
         GamePlayerPrefs.TotalCoins += CoinAmount;
-        if (GamePlayerPrefs.TotalCoins >= 100)
+
+        if (GamePlayerPrefs.TotalCoins >= 100*skinKoeff)
         {
             GamePlayerPrefs.SkinIndex = (int)(GamePlayerPrefs.TotalCoins/100) -1;
+            skinKoeff++;
         }
     }
 
     private void Complete()
     {
-        hud.gamePlay.SetActive(false);
-        hud.levelComplete.gameObject.SetActive(true);
-        hud.levelComplete.Initialize(GamePlayerPrefs.TotalCoins, _coinsCollect);
+        if (GamePlayerPrefs.TotalCoins >= 100 * skinKoeff)
+        {
+            hud.gamePlay.SetActive(false);
+            hud.skinUnlock.gameObject.SetActive(true);
+            hud.skinUnlock.Initialize(GamePlayerPrefs.TotalCoins);
+        }
+        else 
+        {
+            hud.gamePlay.SetActive(false);
+            hud.levelComplete.gameObject.SetActive(true);
+            hud.levelComplete.Initialize(GamePlayerPrefs.TotalCoins, _coinsCollect);
+        }
     }
     private void EndlessPlayerFall()
     {
