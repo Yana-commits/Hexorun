@@ -136,9 +136,8 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
         if (rend)
         {
             rend.material = data.target;
-            //this[targetIndex].IsTarget = true;
             this[targetIndex].safeZone = true;
-
+            this[targetIndex].IsTarget = true;
             var arrow = Instantiate(arrowPrefab, this[targetIndex].transform);
             arrow.transform.localPosition = Vector3.up;
         }
@@ -172,6 +171,9 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
             rend.material = data.target;
             this[vector].safeZone = true;
         }
+
+        var safeZone = Instantiate(safeAreaPrefab, this[vector].transform);
+        safeZone.transform.localPosition = Vector3.zero;
 
         var neighbours = Offset.GetQNeighbour(vector);
         foreach (var ttt in neighbours)
