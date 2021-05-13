@@ -195,7 +195,7 @@ public class GameState : MonoBehaviour
         if (GamePlayerPrefs.TotalCoins >= 100* GamePlayerPrefs.SkinKoeff)
         {
             GamePlayerPrefs.SkinIndex = (int)(GamePlayerPrefs.TotalCoins/100) -1;
-            GamePlayerPrefs.TotalCoins++;
+            GamePlayerPrefs.SkinKoeff++;
             skinBool = true;
         }
     }
