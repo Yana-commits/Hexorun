@@ -13,6 +13,8 @@ public class GameOverEndless : MonoBehaviour
     [SerializeField] Text coinsText;
     [SerializeField] Image characterImg;
     [SerializeField] Text pecentText;
+    [SerializeField] List<Image> skins;
+    [SerializeField] List<Image> stroks;
 
     public Action continueFall;
 
@@ -43,7 +45,10 @@ public class GameOverEndless : MonoBehaviour
         scoreText.text = $"SCORE : {score}";
         bestScoreText.text = $"BEST : {bestScore}";
         coinsText.text = coinScore.ToString();
-        characterImg.fillAmount = totalCoins * 0.01f;
-        pecentText.text = $"{totalCoins}%";
+
+        skins[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
+        stroks[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
+        skins[GamePlayerPrefs.SkinIndex + 1].fillAmount = (totalCoins % 100) * 0.01f;
+        pecentText.text = $"{totalCoins % 100}%";
     }
 }

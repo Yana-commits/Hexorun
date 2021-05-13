@@ -37,4 +37,10 @@ public static class GamePlayerPrefs
         get => PlayerPrefs.GetInt(LastSkinID, -1);
         set => PlayerPrefs.SetInt(LastSkinID, value);
     }
+
+    public static int SkinKoeff
+    {
+        get => PlayerPrefs.GetInt(nameof(SkinKoeff), 1);
+        set => PlayerPrefs.SetInt(nameof(SkinKoeff), value);
+    }
 }

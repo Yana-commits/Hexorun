@@ -1430,8 +1430,6 @@ MonoBehaviour:
   levelText: {fileID: 7375357923103247502}
   totalCoins: {fileID: 3357939167655123023}
   bestScore: {fileID: 7157896735263309926}
-  endlessBtn: {fileID: 5234535570564035004}
-  arenaBtn: {fileID: 3076124563628265981}
   OnStartGame:
     m_PersistentCalls:
       m_Calls:

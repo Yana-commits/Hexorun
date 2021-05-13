@@ -35,7 +35,7 @@ public class GameState : MonoBehaviour
     private GameModeState gameMode = GameModeState.Normal;
 
     private int _coinsCollect = 0;
-    private int skinKoeff = 1;
+    private bool skinBool = false;
     private int lastSkin = -1;
     public int CoinAmount
     {
@@ -97,6 +97,8 @@ public class GameState : MonoBehaviour
         hud.UpdateLevel(level + 1);
         CoinAmount = 0;
         GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
+
+        Debug.Log($"{GamePlayerPrefs.SkinKoeff}");
     }
 
     public void StartGameMode()
@@ -190,20 +192,23 @@ public class GameState : MonoBehaviour
         GamePlayerPrefs.LastLevel = gameParameters.id;
         GamePlayerPrefs.TotalCoins += CoinAmount;
 
-        if (GamePlayerPrefs.TotalCoins >= 100*skinKoeff)
+        if (GamePlayerPrefs.TotalCoins >= 100* GamePlayerPrefs.SkinKoeff)
         {
             GamePlayerPrefs.SkinIndex = (int)(GamePlayerPrefs.TotalCoins/100) -1;
-            skinKoeff++;
+            GamePlayerPrefs.TotalCoins++;
+            skinBool = true;
+            Debug.Log($"{GamePlayerPrefs.SkinKoeff}");
         }
     }
 
     private void Complete()
     {
-        if (GamePlayerPrefs.TotalCoins >= 100 * skinKoeff)
+        if (skinBool)
         {
             hud.gamePlay.SetActive(false);
             hud.skinUnlock.gameObject.SetActive(true);
             hud.skinUnlock.Initialize(GamePlayerPrefs.TotalCoins);
+            skinBool = false;
         }
         else 
         {
