@@ -11,6 +11,8 @@ public class NormalMode : Mode
     private Chunk chunk;
     private Chunk ch;
     private Chunk platform;
+    [SerializeField]
+    private GameObject platformPrefab;
 
     private float elapsedTime;
     private float duration;
@@ -40,15 +42,17 @@ public class NormalMode : Mode
     private int chankCounter = 0;
     private bool isPlatform = true;
     private int j = 0;
-    public float appearTime;
+
+    [SerializeField]
+    private float appearTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        player.OnPassActivated += LoadPass1;
+        player.OnPassActivated += LoadPass;
     }
 
-    public override void Initialized(Player _player,HUD hud)
+    public override void Initialized(Player _player, HUD hud)
     {
         player = _player;
         this.hud = hud;
@@ -56,8 +60,8 @@ public class NormalMode : Mode
 
         duration = gameParameters.duration;
 
-        chunk = Instantiate(chunkPrefab,this.transform);
-        chunk.Initialize(player.transform, new RectShape(),gameParameters);
+        chunk = Instantiate(chunkPrefab, this.transform);
+        chunk.Initialize(player.transform, new RectShape(), gameParameters);
         chunk.Map.SetTarget();
 
         var hex = chunk.Map[new Vector2Int(gameParameters.size.x / 2, 0)];
@@ -96,47 +100,37 @@ public class NormalMode : Mode
         if (isPass == false)
         {
             loadTime += Time.deltaTime;
-            loadMultTime += Time.deltaTime;
+            //loadMultTime += Time.deltaTime;
 
             if (loadTime > appearTime)
             {
-                if (chankCounter < 35)
+                if (chankCounter < pass.Count)
                 {
                     LoadNextChunk();
                     chankCounter++;
                     ChangeCurrentChunk();
                     loadTime = 0;
                 }
-                else if (isPlatform)
-                {
-                    LoadPlatform();
-                    isPlatform = false;
-                }
+                //else if (isPlatform)
+                //{
+                //    LoadPlatform();
+                //    isPlatform = false;
+                //}
             }
-           
-            if (loadMultTime > appearTime*4)
-            {
-                LoadnextMult();
-                loadMultTime = 0;
-            }
+
+            //if (loadMultTime > appearTime * 3)
+            //{
+            //    LoadNextMult();
+            //    loadMultTime = 0;
+            //}
         }
-       
+
     }
 
     public override void ChangedHexState(KindOfMapBehavor mapBehavor)
     {
-       
         if (isPass)
-        {
             chunk.ChangeHexes(mapBehavor);
-        }
-        else 
-        {
-            //foreach (var item in pass)
-            //{
-            //    item.ChangeHexes(mapBehavor);
-            //}
-        }
     }
 
     private void CheckForAdditionalTime()
@@ -145,8 +139,8 @@ public class NormalMode : Mode
         {
             player.StopPlayer();
             IsAdditionalTime = true;
-           hud.additional.Initialize(additionalTimePanel, additionalTime, state =>
-           {
+            hud.additional.Initialize(additionalTimePanel, additionalTime, state =>
+            {
                 if (state)
                 {
                     duration += additionalTime;
@@ -157,7 +151,7 @@ public class NormalMode : Mode
                 {
                     gameState.OnPlayerStateChanged(PlayerState.Lose);
                 }
-           });
+            });
         }
         else
         {
@@ -165,113 +159,116 @@ public class NormalMode : Mode
         }
     }
 
-    private void LoadPass1()
+    private void LoadPass()
     {
         isPass = false;
 
-        var nextChunkPos = chunk.Map.Bounds.size.z - hexRadius ;
-        //var itemCounter = 0;
+
+        var nextChunkPos = chunk.Map.Bounds.size.z + (chunk.Map.targetIndex.x % 2 > 0 ? hexRadius : 0);
+
 
         passX = Hexagonal.Cube.HexToPixel(
               Hexagonal.Offset.QToCube(chunk.Map.targetIndex),
-              Vector2.one * hexRadius);
+              Vector2.one * hexRadius) - Vector3.right * (1.5f * hexRadius);
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 9; i++)
         {
             ch = Instantiate(chunkPrefab, this.transform);
-            ch.Map.Initializie(new Vector2Int(3, 2), new RectShapePass(), gameParameters.theme);
+            ch.Map.Initializie(new Vector2Int(3, 5), new RectShapePass(), gameParameters.theme);
             ch.Map.gameObject.SetActive(true);
 
             ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
-      
+
             pass.Add(ch);
             ch.gameObject.SetActive(false);
 
             nextChunkPos += ch.Map.Bounds.size.z - hexRadius;
-
         }
 
-      
+        var plat = Instantiate(platformPrefab, this.transform);
+        var pos = pass[currentChunkIndex].Map.Bounds.size.z;
+        Debug.Log(pos + " " + nextChunkPos);
+        plat.transform.localPosition = new Vector3(passX.x + 0.75f, 0, nextChunkPos + (hexRadius * 7));
+        plat.SetActive(true);
+        player.thronePlace = plat.transform.localPosition;
 
         currentChunkIndex = 0;
         pass[currentChunkIndex].gameObject.SetActive(true);
         visiblePass = pass[currentChunkIndex].Map.ToList();
 
-        var bound = new Bounds(new Vector3(passX.x+0.75f, 0, chunk.Map.Bounds.size.z  + 5), new Vector3(2.5f, 0, chunk.Map.Bounds.size.z *10));
-       
-        player.SetGamePlaySettings(gameParameters.playerSpeed+1, bound);
+        var bound = new Bounds(new Vector3(passX.x + 0.75f, 0, chunk.Map.Bounds.size.z + 5), new Vector3(2.5f, 0, chunk.Map.Bounds.size.z * 10));
+
+        player.SetGamePlaySettings(gameParameters.playerSpeed + 1, bound);
     }
 
     private void LoadNextChunk()
     {
-
-        if (firstChunk)
-        {
-            nextChunkPos += chunk.Map.Bounds.size.z + ch.Map.Bounds.size.z - hexRadius * 2;
-            firstChunk = false;
-        }
-        else
-        {
-            nextChunkPos += ch.Map.Bounds.size.z - hexRadius ;
-        }
-
         var chunkPass = pass[CheckNextIndex()];
-      
-        chunkPass.transform.localPosition = new Vector3(passX.x, -3f, nextChunkPos);
         chunkPass.Map.SetTheme(gameParameters.theme);
         chunkPass.gameObject.SetActive(true);
-       chunkPass.transform.DOLocalMoveY(0, 0.5f);
+        var list = chunkPass.Map.ToList();
 
-        int[] holes = new[] { 0, 1 };
-        var goUp = chunkPass.Map.Shuffle().Take(Random.Range(0, holes.Length));
-        foreach (var item in goUp)
+        int line = ((list.Count / 3) / 2);
+        int holeIndex = Random.Range(line * 3, (line * 3) + 3);
+
+        float delay = 0f;
+        for (int i = 0; i < list.Count; i++)
         {
-            item.gameObject.transform.DOLocalMoveY(-3f, 0.5f);
+            list[i].transform.localPosition += new Vector3(0, -3f, 0);
+            if (i != holeIndex)
+                list[i].gameObject.transform.DOLocalMoveY(0f, 0.2f).SetDelay(delay);
+            delay += 0.02f;
         }
+        LoadNextMult();
+        if (currentChunkIndex == pass.Count - 1)
+            LoadPlatform();
+
     }
 
-    private void LoadnextMult()
+    private void LoadNextMult()
     {
         if (j < multItems.Count)
         {
             Multiplyer collectMult = Instantiate(multItems[j], Vector3.zero, Quaternion.identity);
-            float[] points = new float[3] { passX.x, passX.x + 0.75f, passX.x + 1.5f };
 
-            collectMult.transform.localPosition = new Vector3(points[Random.Range(0, points.Length)], 0.5f, nextChunkPos);
+            var list = pass[currentChunkIndex].Map.ToList();
+            int line = ((list.Count / 3));
+
+            int multiIndex = (j == multItems.Count - 1) ? (line * 3) - 2 : Random.Range((line * 3) - 3, line * 3);
+            collectMult.transform.SetParent(list[multiIndex].transform);
+            collectMult.transform.localPosition = new Vector3(0, 0.5f, 0);
             collectMult.n = j + 2;
-            if (j == multItems.Count - 1)
-            {
-                collectMult.state = PlayerState.BigWin;
-                collectMult.transform.localPosition = new Vector3(passX.x + 0.75f, 0.5f, nextChunkPos);
-            }
-            else
-            {
-                collectMult.state = PlayerState.Win;
-            }
+            collectMult.state = (j == multItems.Count - 1) ? PlayerState.BigWin : PlayerState.Win;
             collectMult.gameObject.SetActive(true);
             visibleMult.Add(collectMult);
         }
-
         j++;
     }
+
     private void LoadPlatform()
     {
-        platform = Instantiate(chunkPrefab, this.transform);
-        platform.Map.Initializie(new Vector2Int(0, 4), new HexShape(), gameParameters.theme);
-        platform.Map.gameObject.SetActive(true);
+        //var plat = Instantiate(platformPrefab, this.transform);
+        //var pos = pass[currentChunkIndex].Map.Bounds.size.z;
+        //Debug.Log(pos + " " + nextChunkPos);
+        //plat.transform.localPosition =  new Vector3(passX.x + 0.75f, 0, pos + (hexRadius * 8));
+        //plat.SetActive(true);
 
-        platform.transform.localPosition = new Vector3(passX.x + 0.75f, 0, nextChunkPos + ch.Map.Bounds.size.z*2.4f - hexRadius);
+        //platform = Instantiate(chunkPrefab, this.transform);
+        //platform.Map.Initializie(new Vector2Int(0, 4), new HexShape(), gameParameters.theme);
+        //platform.Map.gameObject.SetActive(true);
 
-       
-        var throne = Instantiate(thronePrefab, Vector3.zero, Quaternion.identity);
-        throne.transform.position = new Vector3(passX.x + 0.75f, -0.35f, nextChunkPos + ch.Map.Bounds.size.z * 2.4f - hexRadius);
-        player.thronePlace = throne.transform.position;
-        throne.gameObject.SetActive(true);
+        //platform.transform.localPosition = new Vector3(passX.x + 0.75f, 0, nextChunkPos + ch.Map.Bounds.size.z * 2.4f - hexRadius);
+
+
+        //var throne = Instantiate(thronePrefab, Vector3.zero, Quaternion.identity);
+        //throne.transform.position = new Vector3(passX.x + 0.75f, -0.35f, nextChunkPos + ch.Map.Bounds.size.z * 2.4f - hexRadius);
+        //player.thronePlace = throne.transform.position;
+        //throne.gameObject.SetActive(true);
     }
 
     private int CheckNextIndex()
     {
-        return currentChunkIndex +1  >= pass.Count ? 0 : currentChunkIndex + 1;
+        return currentChunkIndex + 1 >= pass.Count ? 0 : currentChunkIndex + 1;
     }
 
     private void ChangeCurrentChunk()
@@ -281,6 +278,6 @@ public class NormalMode : Mode
 
     private void OnDisable()
     {
-        player.OnPassActivated -= LoadPass1;
+        player.OnPassActivated -= LoadPass;
     }
 }

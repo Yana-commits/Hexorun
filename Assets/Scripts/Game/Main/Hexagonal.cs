@@ -106,7 +106,6 @@ public static class Hexagonal
         public static Vector3 HexToPixel(Vector3Int index, Vector2 size)
         {
             var t = OrientationFlat * (Vector3)index;
-            //var t = OrientationPointy * (Vector3)index;
             t.Scale(size);
 
             return new Vector3(t.x, 0, t.y);
