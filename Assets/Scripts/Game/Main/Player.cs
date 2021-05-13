@@ -175,7 +175,9 @@ public class Player : MonoBehaviour
         transform.position = thronePlace;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         StartCoroutine(Zoom());
-        yield return new WaitForSeconds(4.5f);
+       
+        yield return new WaitForSeconds(5f);
+        Debug.Log("444");
         callback?.Invoke();
     }
 
@@ -183,8 +185,9 @@ public class Player : MonoBehaviour
     {
         float elapsedTime = 0;
 
-        while (elapsedTime <= 2)
+        while (elapsedTime <= 4)
         {
+            
             elapsedTime += Time.deltaTime;
             float fov = vcam.m_Lens.FieldOfView;
             vcam.m_Lens.FieldOfView = Mathf.Lerp(fov, target, zoomSpeed * Time.deltaTime);

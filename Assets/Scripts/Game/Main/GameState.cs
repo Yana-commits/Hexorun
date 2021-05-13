@@ -97,8 +97,6 @@ public class GameState : MonoBehaviour
         hud.UpdateLevel(level + 1);
         CoinAmount = 0;
         GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
-
-        Debug.Log($"{GamePlayerPrefs.SkinKoeff}");
     }
 
     public void StartGameMode()
@@ -136,6 +134,7 @@ public class GameState : MonoBehaviour
     {
         SetGameState(GameplayState.GameOver);
         GamePlayerPrefs.LastGameMode = (int)gameMode;
+        player.OnStateChanged -= OnPlayerStateChanged;
 
         switch (obj)
         {
@@ -144,8 +143,9 @@ public class GameState : MonoBehaviour
                 StartCoroutine(player.Winner(Complete));
                 break;
             case PlayerState.BigWin:
-                CountParams();
                 StartCoroutine(player.BigWinner(Complete));
+                CountParams();
+                Debug.Log("999");
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
@@ -197,7 +197,6 @@ public class GameState : MonoBehaviour
             GamePlayerPrefs.SkinIndex = (int)(GamePlayerPrefs.TotalCoins/100) -1;
             GamePlayerPrefs.TotalCoins++;
             skinBool = true;
-            Debug.Log($"{GamePlayerPrefs.SkinKoeff}");
         }
     }
 
@@ -228,6 +227,7 @@ public class GameState : MonoBehaviour
 
     private void AfterFall()
     {
+        Debug.Log("222");
         Time.timeScale = 1;
         hud.gamePlay.SetActive(true);
         StartCoroutine(player.Reload(ReloadScene));
@@ -235,6 +235,7 @@ public class GameState : MonoBehaviour
 
     private void ReloadScene()
     {
+        Debug.Log("111");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
