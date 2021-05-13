@@ -10,6 +10,8 @@ public class Chunk : MonoBehaviour
     [SerializeField] private ObstacleGenerator obstacleGenerator;
     [SerializeField] private ObstaclePresenter obstaclePresenter;
     [SerializeField] GameObject pointsPrefab;
+
+
     public Map Map => map;
 
     public void Initialize(Transform _player, IShape shape ,GameParameters parameters)
@@ -51,5 +53,6 @@ public class Chunk : MonoBehaviour
     {
         Map.SetThemeWithDelay(_data);
     }
+
 
 }

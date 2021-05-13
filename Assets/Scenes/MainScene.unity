@@ -600,7 +600,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: 0.000000022880089, z: -0.000000008283735, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: -0.00000003036094, z: 0.000000010992177, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1464,7 +1464,7 @@ MonoBehaviour:
   - {fileID: -8576456071438177189, guid: 4546d16586c04cd4a92f025c0dde90a2, type: 3}
   thronePrefab: {fileID: 5578364367256207722, guid: 04ebb63744a803e46964eaa1b1accc68,
     type: 3}
-  appearTime: 0.3
+  appearTime: 0.7
 --- !u!4 &1697089076
 Transform:
   m_ObjectHideFlags: 0
@@ -1774,7 +1774,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.0000000061147745, z: 0.0000000050956466, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

@@ -67,7 +67,8 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
         var cent = deathTrigger.transform.InverseTransformPoint(_bounds.center);
         deathTrigger.size = _bounds.size;
-        deathTrigger.center = cent + Vector3.down * 0.34f;
+        deathTrigger.center = cent + Vector3.down * 0.35f;
+       
     }
 
     public void SetTheme(MaterialRepository.Data data)
@@ -202,6 +203,18 @@ public class Map : MonoBehaviour, IEnumerable<Hex>
 
     #endregion
 
+    public void DisableDeathCollider()
+    {
+        deathTrigger.gameObject.SetActive(false);
+    }
+    public void DisablePlaneRender()
+    {
+        planeRenderer.gameObject.SetActive(false);
+    }
+    public void SetDeathColliderPosition(Vector3 pos)
+    {
+        deathTrigger.center += pos;
+    }
 
     IEnumerable<Vector3Int> zones(Vector2Int mapSize)
     {
