@@ -12,8 +12,6 @@ public class NormalMode : Mode
     private Chunk ch;
     private Chunk platform;
     private GameObject throne;
-    [SerializeField]
-    private GameObject platformPrefab;
 
     private float elapsedTime;
     private float duration;
@@ -25,7 +23,6 @@ public class NormalMode : Mode
     [SerializeField]
     GameObject thronePrefab;
 
-
     private float additionalTimePanel = 6;
     private float additionalTime = 10;
     private bool IsAdditionalTime = false;
@@ -33,7 +30,6 @@ public class NormalMode : Mode
     float hexRadius = 0.9755461f / 2;
     private float loadTime;
     private float loadMultTime;
-
 
     private int currentChunkIndex;
     private float nextChunkPos = 0;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Modes Repository
   m_EditorClassIdentifier: 
   modeLists:
-  - mode: 3
+  - mode: 0
     gameParams:
       size: {x: 10, y: 20}
       duration: 30
