@@ -207,7 +207,6 @@ MonoBehaviour:
   modesRepository: {fileID: 11400000, guid: e1ebab2dcbf74574a9de39c8b1f713b6, type: 2}
   player: {fileID: 1051566764}
   playerSkin: {fileID: 1051566765}
-  gameMode: 0
 --- !u!4 &374825335
 Transform:
   m_ObjectHideFlags: 0
@@ -334,25 +333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8983c08b92fc44385297e4480b1366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  datas: {fileID: 11400000, guid: e67491d76a9a48a42a98b2a213dd045b, type: 2}
-  levels: {fileID: 11400000, guid: 87fde29953db20045904e8dceaac7316, type: 2}
   chunkPrefab: {fileID: 8328084201240121504, guid: b81827ca1dc275546b5bc627638c7322,
     type: 3}
   gameState: {fileID: 374825334}
-  gameParameters:
-    size: {x: 10, y: 20}
-    duration: 30
-    playerSpeed: 2
-    changesTime: 2
-    collectableItems: []
-    obstaclesParam:
-      obstacleProbability:
-        minValue: 0
-        maxValue: 1
-      holeProbability:
-        minValue: 0
-        maxValue: 1
-      pattern: 
   waveDelay: 5
 --- !u!4 &644589475
 Transform:
@@ -433,25 +416,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b26431851c28ed8479be68101eda3b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  datas: {fileID: 11400000, guid: e67491d76a9a48a42a98b2a213dd045b, type: 2}
-  levels: {fileID: 11400000, guid: 87fde29953db20045904e8dceaac7316, type: 2}
   chunkPrefab: {fileID: 8328084201240121504, guid: b81827ca1dc275546b5bc627638c7322,
     type: 3}
   gameState: {fileID: 374825334}
-  gameParameters:
-    size: {x: 10, y: 20}
-    duration: 30
-    playerSpeed: 2
-    changesTime: 2
-    collectableItems: []
-    obstaclesParam:
-      obstacleProbability:
-        minValue: 0
-        maxValue: 1
-      holeProbability:
-        minValue: 0
-        maxValue: 1
-      pattern: 
   crushTime: 8
 --- !u!4 &741759529
 Transform:
@@ -633,7 +600,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: 0.000000021908322, z: -0.000000007931907, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: -0.00000003036094, z: 0.000000010992177, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1480,25 +1447,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4e73ac79b04c146bcdbdf199eaa22d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  datas: {fileID: 11400000, guid: e67491d76a9a48a42a98b2a213dd045b, type: 2}
-  levels: {fileID: 11400000, guid: 87fde29953db20045904e8dceaac7316, type: 2}
   chunkPrefab: {fileID: 8328084201240121504, guid: b81827ca1dc275546b5bc627638c7322,
     type: 3}
   gameState: {fileID: 374825334}
-  gameParameters:
-    size: {x: 10, y: 20}
-    duration: 30
-    playerSpeed: 2
-    changesTime: 2
-    collectableItems: []
-    obstaclesParam:
-      obstacleProbability:
-        minValue: 0
-        maxValue: 1
-      holeProbability:
-        minValue: 0
-        maxValue: 1
-      pattern: 
+  platformPrefab: {fileID: 1196137337245246655, guid: 03d5c336e72394b49ab61a0842256fee,
+    type: 3}
   multItems:
   - {fileID: -1799374168591655890, guid: c342c1888dbb1a348a59b1ccca2e8e61, type: 3}
   - {fileID: -5291032961797994728, guid: 4cbbbd1bbb687ab49b7ecbb3e631a305, type: 3}
@@ -1511,7 +1464,7 @@ MonoBehaviour:
   - {fileID: -8576456071438177189, guid: 4546d16586c04cd4a92f025c0dde90a2, type: 3}
   thronePrefab: {fileID: 5578364367256207722, guid: 04ebb63744a803e46964eaa1b1accc68,
     type: 3}
-  appearTime: 0.2
+  appearTime: 0.7
 --- !u!4 &1697089076
 Transform:
   m_ObjectHideFlags: 0
@@ -1821,7 +1774,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: -5.978986e-10, z: 4.9824944e-10, w: 1}
+  m_LocalRotation: {x: -0, y: -0.0000000061147745, z: 0.0000000050956466, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

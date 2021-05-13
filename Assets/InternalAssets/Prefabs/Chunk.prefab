@@ -152,6 +152,8 @@ MonoBehaviour:
   obstaclePresenter: {fileID: 480623377039618243}
   pointsPrefab: {fileID: 3821720450235083012, guid: fc0eaafd1290dcb49a4baa82d139b7f3,
     type: 3}
+  deathTrigger: {fileID: 480623376853879957}
+  deepPlane: {fileID: 1345211337449622180}
 --- !u!1001 &480623377232792417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -231,6 +233,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: fcaab2e9c477b6b43a7a93a2c9cf6e42, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f19906302d579a4784ecad80c994dc9, type: 3}
+--- !u!1 &1345211337449622180 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1441331100251505093, guid: 5f19906302d579a4784ecad80c994dc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 480623377232792417}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1345211337449622184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1441331100251505097, guid: 5f19906302d579a4784ecad80c994dc9,

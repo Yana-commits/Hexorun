@@ -20,7 +20,6 @@ public class StartGameWindowV2 : MonoBehaviour
     {
         int level = GamePlayerPrefs.LastLevel + 1;
 
-        GamePlayerPrefs.LastTheme = (GamePlayerPrefs.LastTheme + 1) % datas.Count;
         levelText.text = "Level " + (level + 1).ToString();
         totalCoins.text = GamePlayerPrefs.TotalCoins.ToString();
         bestScore.text = "BEST: "+ GamePlayerPrefs.BestScore.ToString();
