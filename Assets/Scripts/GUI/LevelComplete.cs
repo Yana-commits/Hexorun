@@ -15,7 +15,7 @@ public class LevelComplete : MonoBehaviour
     [SerializeField] Text pecentText;
     [SerializeField] List<Image> skins;
     [SerializeField] List<Image> stroks;
-    private float myFloat = 0;
+    private int myFloat = 0;
 
     public Action continuePlay;
     private void OnEnable()
@@ -52,16 +52,16 @@ public class LevelComplete : MonoBehaviour
         var currentView = (totalScore % 100) * 0.01f;
         characterImg.fillAmount = ((totalScore - coinScore) % 100) * 0.01f;
         DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
-        //characterImg.fillAmount = (totalScore % 100)* 0.01f;
         myFloat = (totalScore - coinScore);
-        pecentText.text = myFloat.ToString();
-
-        DOTween.To(() => myFloat, x => myFloat = x, totalScore, 1);
- 
         
+        DOTween.To(() => myFloat, x => myFloat = x, totalScore, 1)
+            .OnUpdate(()=> {
+                pecentText.text = myFloat.ToString() + "%";              
+            })
+            .OnComplete(()=> {
+                //TO DO complete button active
+            });       
     }
-    private void Update()
-    {
-        Debug.Log($"{myFloat}");
-    }
+
+   
 }

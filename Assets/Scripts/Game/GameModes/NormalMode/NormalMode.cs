@@ -34,10 +34,9 @@ public class NormalMode : Mode
     private int currentChunkIndex;
     private float nextChunkPos = 0;
     private Vector3 passX;
-    private bool firstChunk = true;
+
     private bool isPass = true;
     private int chankCounter = 0;
-    private bool isPlatform = true;
     private int j = 0;
 
     [SerializeField]
