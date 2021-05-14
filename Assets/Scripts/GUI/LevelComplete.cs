@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,10 +44,15 @@ public class LevelComplete : MonoBehaviour
         totalScoreText.text = totalScore.ToString();
         scoreCoinText.text = coinScore.ToString();
 
-        skins[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
+        characterImg = skins[GamePlayerPrefs.SkinIndex + 1];
+        characterImg.gameObject.SetActive(true);
         stroks[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
-        Debug.Log($"{GamePlayerPrefs.SkinIndex}");
-        skins[GamePlayerPrefs.SkinIndex + 1].fillAmount = (totalScore % 100)* 0.01f;
-        pecentText.text = $"{totalScore%100}%";
+
+        var currentView = (totalScore % 100) * 0.01f;
+        characterImg.fillAmount = ((totalScore - coinScore) % 100) * 0.01f;
+        DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
+        //characterImg.fillAmount = (totalScore % 100)* 0.01f;
+        pecentText.text = $"{totalScore % 100}%";
     }
+
 }

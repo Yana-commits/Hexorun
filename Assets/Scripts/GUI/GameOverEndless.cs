@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,15 +41,21 @@ public class GameOverEndless : MonoBehaviour
         continueFall?.Invoke();
     }
 
-    public void Initialize(int score,int bestScore,int coinScore,int totalCoins)
+    public void Initialize(int score, int bestScore, int coinScore, int totalCoins)
     {
         scoreText.text = $"SCORE : {score}";
         bestScoreText.text = $"BEST : {bestScore}";
         coinsText.text = coinScore.ToString();
 
-        skins[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
+        characterImg = skins[GamePlayerPrefs.SkinIndex + 1];
+        characterImg.gameObject.SetActive(true);
         stroks[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
-        skins[GamePlayerPrefs.SkinIndex + 1].fillAmount = (totalCoins % 100) * 0.01f;
+
+        var currentView = (totalCoins % 100) * 0.01f;
+        characterImg.fillAmount = ((totalCoins - coinScore) % 100) * 0.01f;
+        DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
+        Debug.Log("333");
+        //characterImg.fillAmount = (totalScore % 100)* 0.01f;
         pecentText.text = $"{totalCoins % 100}%";
     }
 }
