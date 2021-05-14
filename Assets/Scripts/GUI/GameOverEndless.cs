@@ -47,14 +47,14 @@ public class GameOverEndless : MonoBehaviour
         bestScoreText.text = $"BEST : {bestScore}";
         coinsText.text = coinScore.ToString();
 
-        characterImg = skins[GamePlayerPrefs.SkinIndex + 1];
+        characterImg = skins[1];
         characterImg.gameObject.SetActive(true);
-        stroks[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
+        stroks[1].gameObject.SetActive(true);
 
         var currentView = (totalCoins % 100) * 0.01f;
         characterImg.fillAmount = ((totalCoins - coinScore) % 100) * 0.01f;
         DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
-        Debug.Log("333");
+  
         //characterImg.fillAmount = (totalScore % 100)* 0.01f;
         pecentText.text = $"{totalCoins % 100}%";
     }
