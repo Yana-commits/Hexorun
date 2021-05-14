@@ -58,10 +58,10 @@ public class GameOverEndless : MonoBehaviour
           
 
 
-        myScore = (totalCoins - coinScore);
+        myScore = (totalCoins - coinScore)%100;
         DOTween.To(() => myScore, x => myScore = x, totalCoins, 1)
             .OnUpdate(() => {
-                pecentText.text = myScore.ToString() + "%";
+                pecentText.text = (myScore % 100).ToString() + "%";
             })
             .OnComplete(() => {
                 continuieBtn.gameObject.SetActive(true);

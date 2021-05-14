@@ -52,11 +52,11 @@ public class LevelComplete : MonoBehaviour
         var currentView = (totalScore % 100) * 0.01f;
         characterImg.fillAmount = ((totalScore - coinScore) % 100) * 0.01f;
         DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
-        myFloat = (totalScore - coinScore);
-        
+
+        myFloat = (totalScore - coinScore)%100;
         DOTween.To(() => myFloat, x => myFloat = x, totalScore, 1)
             .OnUpdate(()=> {
-                pecentText.text = myFloat.ToString() + "%";              
+                pecentText.text = (myFloat%100).ToString() + "%";              
             })
             .OnComplete(()=> {
                 continuieBtn.gameObject.SetActive(true);
