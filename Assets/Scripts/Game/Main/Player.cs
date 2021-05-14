@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 {
     private readonly string SpeedKey = "Speed";
 
-    [SerializeField] private Rigidbody rigidbody;
+   public Rigidbody rigidbody;
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerSkinController secondAnimator;
     [SerializeField] private CinemachineVirtualCamera vcam;

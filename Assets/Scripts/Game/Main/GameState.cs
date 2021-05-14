@@ -221,7 +221,8 @@ public class GameState : MonoBehaviour
     private void EndlessPlayerFall()
     {
         CheckBestScore();
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
+        player.rigidbody.isKinematic = false;
         hud.gamePlay.SetActive(false);
         hud.overEndless.gameObject.SetActive(true);
         hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect, GamePlayerPrefs.TotalCoins);
@@ -229,8 +230,7 @@ public class GameState : MonoBehaviour
 
     private void AfterFall()
     {
-        Debug.Log("222");
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         hud.gamePlay.SetActive(true);
         StartCoroutine(player.Reload(ReloadScene));
     }

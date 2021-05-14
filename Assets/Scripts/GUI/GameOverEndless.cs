@@ -16,6 +16,7 @@ public class GameOverEndless : MonoBehaviour
     [SerializeField] Text pecentText;
     [SerializeField] List<Image> skins;
     [SerializeField] List<Image> stroks;
+    private int myScore = 0;
 
     public Action continueFall;
 
@@ -54,8 +55,16 @@ public class GameOverEndless : MonoBehaviour
         var currentView = (totalCoins % 100) * 0.01f;
         characterImg.fillAmount = ((totalCoins - coinScore) % 100) * 0.01f;
         DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
-  
-        //characterImg.fillAmount = (totalScore % 100)* 0.01f;
-        pecentText.text = $"{totalCoins % 100}%";
+          
+
+
+        myScore = (totalCoins - coinScore);
+        DOTween.To(() => myScore, x => myScore = x, totalCoins, 1)
+            .OnUpdate(() => {
+                pecentText.text = myScore.ToString() + "%";
+            })
+            .OnComplete(() => {
+                continuieBtn.gameObject.SetActive(true);
+            });
     }
 }

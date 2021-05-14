@@ -45,9 +45,9 @@ public class LevelComplete : MonoBehaviour
         totalScoreText.text = totalScore.ToString();
         scoreCoinText.text = coinScore.ToString();
 
-        characterImg = skins[GamePlayerPrefs.SkinIndex + 1];
+        characterImg = skins[1];
         characterImg.gameObject.SetActive(true);
-        stroks[GamePlayerPrefs.SkinIndex + 1].gameObject.SetActive(true);
+        stroks[1].gameObject.SetActive(true);
 
         var currentView = (totalScore % 100) * 0.01f;
         characterImg.fillAmount = ((totalScore - coinScore) % 100) * 0.01f;
@@ -59,7 +59,7 @@ public class LevelComplete : MonoBehaviour
                 pecentText.text = myFloat.ToString() + "%";              
             })
             .OnComplete(()=> {
-                //TO DO complete button active
+                continuieBtn.gameObject.SetActive(true);
             });       
     }
 
