@@ -7,6 +7,7 @@ using Game.Main;
 using UnityEngine.SceneManagement;
 
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 public class GameState : MonoBehaviour
 {
@@ -115,7 +116,7 @@ public class GameState : MonoBehaviour
                 break;
             case GameplayState.Stop:
             case GameplayState.Pause:
-            case GameplayState.GameOver:
+            case GameplayState.GameOver:           
                 player.StopPlayer();
                 break;
         }
@@ -151,6 +152,7 @@ public class GameState : MonoBehaviour
                 StartCoroutine(player.Looser(ReloadScene));
                 break;
             case PlayerState.Fall:
+                DOTween.KillAll();
                 KindOfFall();
                 break;
             case PlayerState.BonusFall:

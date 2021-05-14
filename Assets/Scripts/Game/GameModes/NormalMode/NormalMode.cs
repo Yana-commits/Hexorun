@@ -47,6 +47,7 @@ public class NormalMode : Mode
     void Start()
     {
         player.OnPassActivated += LoadPass;
+
     }
 
     public override void Initialized(Player _player, HUD hud)
@@ -115,6 +116,7 @@ public class NormalMode : Mode
     {
         if (isPass)
             chunk.ChangeHexes(mapBehavor);
+       
     }
 
     private void CheckForAdditionalTime()
@@ -159,7 +161,7 @@ public class NormalMode : Mode
             ch.Map.Initializie(new Vector2Int(3, 5), new RectShapePass(), gameParameters.theme);
             ch.Map.gameObject.SetActive(true);
             ch.Map.DisablePlaneRender();
-            ch.Map.SetDeathColliderPosition(new Vector3(0, 0.1f,0));
+            ch.Map.SetDeathColliderPosition(new Vector3(0, 0.15f,0));
             ch.transform.localPosition = new Vector3(passX.x, 0, nextChunkPos);
 
             pass.Add(ch);

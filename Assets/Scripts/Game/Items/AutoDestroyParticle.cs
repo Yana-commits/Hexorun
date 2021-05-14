@@ -11,7 +11,6 @@ public class AutoDestroyParticle : MonoBehaviour
     {
         if (_particleSystem)
         {
-            _particleSystem = GetComponent<ParticleSystem>();
             duration = _particleSystem.main.duration +
                 _particleSystem.main.startLifetime.constantMax +
                 _particleSystem.main.startDelay.constant;
@@ -20,14 +19,7 @@ public class AutoDestroyParticle : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, duration);
-             
+        Destroy(gameObject, duration);            
     }
 
-    public void Update()
-    {
-        //if (!_particleSystem) return;
-        //if (!_particleSystem.IsAlive())
-        //    Destroy(gameObject);
-    }
 }

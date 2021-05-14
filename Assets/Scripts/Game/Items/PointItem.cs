@@ -12,7 +12,9 @@ public class PointItem : MonoBehaviour, ICollectable
     public void Collect(GameState gameState)
     {
         gameState.PointsAmount += 2;
-        Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
+        //Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
+        explosionPrefab.transform.SetParent(null);
+        explosionPrefab.SetActive(true);
         Destroy(gameObject);
     }
 }

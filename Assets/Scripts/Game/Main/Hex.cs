@@ -31,7 +31,7 @@ public class Hex : MonoBehaviour
 
         float y = hexPositionByState[State].Random();
         transform.DOLocalMoveY(y, 0.5f);
-
+       
         return true;
     }
 

@@ -12,7 +12,9 @@ public class Star : MonoBehaviour, ICollectable
     public void Collect(GameState gameState)
     {
         gameState.CoinAmount++;
-        Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
+        //Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
+        explosionPrefab.transform.SetParent(null);
+        explosionPrefab.SetActive(true);
         MMVibrationManager.Haptic(HapticTypes.Success);
         Destroy(gameObject);
     }
