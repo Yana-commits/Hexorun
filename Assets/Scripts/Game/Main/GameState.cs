@@ -68,11 +68,6 @@ public class GameState : MonoBehaviour
     private void Start()
     {
         hud.OnPause += () => { SetGameState(gamePlayState == GameplayState.Play ? GameplayState.Pause : GameplayState.Play); };
-        hud.overEndless.continueFall += ReloadScene;
-        hud.levelComplete.continuePlay += ReloadScene;
-        hud.skinUnlock.keepIt += ReloadScene;
-        hud.skinUnlock.loseIt += LoseSkin;
-
         Time.timeScale = 1;
         Application.targetFrameRate = 60;
         StartGame();
@@ -194,9 +189,9 @@ public class GameState : MonoBehaviour
         GamePlayerPrefs.LastLevel = gameParameters.id;
         GamePlayerPrefs.TotalCoins += CoinAmount;
 
-        if (GamePlayerPrefs.TotalCoins >= 100* GamePlayerPrefs.SkinKoeff)
+        if (GamePlayerPrefs.TotalCoins >= 50  * GamePlayerPrefs.SkinKoeff)
         {
-            GamePlayerPrefs.SkinIndex = (int)(GamePlayerPrefs.TotalCoins/100) -1;
+            GamePlayerPrefs.SkinIndex = (int)(GamePlayerPrefs.TotalCoins / 50) -1;
             GamePlayerPrefs.SkinKoeff++;
             skinBool = true;
         }
@@ -204,40 +199,25 @@ public class GameState : MonoBehaviour
 
     private void Complete()
     {
-        if (skinBool)
-        {
-            hud.gamePlay.SetActive(false);
-            hud.skinUnlock.gameObject.SetActive(true);
-            hud.skinUnlock.Initialize(GamePlayerPrefs.TotalCoins);
-            skinBool = false;
-        }
-        else 
-        {
-            hud.gamePlay.SetActive(false);
-            hud.levelComplete.gameObject.SetActive(true);
-            hud.levelComplete.Initialize(GamePlayerPrefs.TotalCoins, _coinsCollect);
-        }
+        hud.gamePlay.SetActive(false);
+        hud.InitResultPopUp(gameMode);
+        hud.ShowResultPopUp(GamePlayerPrefs.TotalCoins, _coinsCollect, GamePlayerPrefs.BestScore, PointsAmount,ReloadScene);
     }
     private void EndlessPlayerFall()
     {
         CheckBestScore();
-        //Time.timeScale = 0;
         player.rigidbody.isKinematic = false;
-        hud.gamePlay.SetActive(false);
-        hud.overEndless.gameObject.SetActive(true);
-        hud.overEndless.Initialize(PointsAmount, GamePlayerPrefs.BestScore, _coinsCollect, GamePlayerPrefs.TotalCoins);
+        Complete();
     }
 
     private void AfterFall()
     {
-        //Time.timeScale = 1;
         hud.gamePlay.SetActive(true);
         StartCoroutine(player.Reload(ReloadScene));
     }
 
     private void ReloadScene()
     {
-        Debug.Log("111");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

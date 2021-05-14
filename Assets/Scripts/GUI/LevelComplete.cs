@@ -5,29 +5,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelComplete : MonoBehaviour
+
+public class ResultPoPup : MonoBehaviour
 {
-    [SerializeField] Button continuieBtn;
-    [SerializeField] Button giveUpBtn;
-    [SerializeField] Text scoreCoinText;
-    [SerializeField] Text totalScoreText;
-    private Image characterImg;
-    [SerializeField] Text pecentText;
-    [SerializeField] List<Image> skins;
-    [SerializeField] List<Image> stroks;
-    private int myFloat = 0;
+    [SerializeField] private Button continuieBtn;
+    [SerializeField] Text coinScoreText;
+    [SerializeField] Text totalCoinsText;
+    [SerializeField] private Image characterImg;
+    [SerializeField] private Image strokeImg;
+    [SerializeField] private Text percentText;
+    [SerializeField] List<Sprite> skins;
+    [SerializeField] List<Sprite> stroks;
 
     public Action continuePlay;
+
+    public virtual void Initialize(int totalCoins, int currentCoins, int bestScore, int currentScore)
+    {
+        totalCoinsText.text = totalCoins.ToString();
+        coinScoreText.text = currentCoins.ToString();
+        SetSkin(GamePlayerPrefs.SkinIndex + 1);
+        characterImg.gameObject.SetActive(true);
+        strokeImg.gameObject.SetActive(true);
+
+        float currentView =  ((float)totalCoins / 50);
+        characterImg.fillAmount = ((float)(totalCoins - currentCoins) / 50);
+        DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
+
+        int currentPercent = ((totalCoins - currentCoins) / 50) * 100;
+
+        DOTween.To(() => currentPercent, x => currentPercent = x,(int)(currentView * 100), 1)
+            .OnUpdate(() => {
+                percentText.text = currentPercent <= 100 ? currentPercent.ToString() + "%" : "100%";
+            })
+            .OnComplete(() => {
+                continuieBtn.gameObject.SetActive(true);
+            });
+    }
+
     private void OnEnable()
     {
         continuieBtn.onClick.AddListener(OnContinue);
-        giveUpBtn.onClick.AddListener(OnCancel);
+
     }
 
     private void OnDisable()
     {
         continuieBtn.onClick.RemoveListener(OnContinue);
-        giveUpBtn.onClick.RemoveListener(OnCancel);
     }
 
     private void OnContinue()
@@ -35,33 +58,23 @@ public class LevelComplete : MonoBehaviour
         continuePlay?.Invoke();
     }
 
-    private void OnCancel()
+    private void SetSkin(int id)
     {
-        continuePlay?.Invoke();
+        if (id < 0 || id >= skins.Count)
+        {
+            return;
+        }
+        characterImg.sprite = skins[id];
+        strokeImg.sprite = stroks[id];
     }
+}
 
-    public void Initialize(int totalScore, int coinScore)
+public class LevelComplete : ResultPoPup
+{
+
+    public override void Initialize(int totalCoins, int currentCoins, int bestScore, int currentScore)
     {
-        totalScoreText.text = totalScore.ToString();
-        scoreCoinText.text = coinScore.ToString();
-
-        characterImg = skins[1];
-        characterImg.gameObject.SetActive(true);
-        stroks[1].gameObject.SetActive(true);
-
-        var currentView = (totalScore % 100) * 0.01f;
-        characterImg.fillAmount = ((totalScore - coinScore) % 100) * 0.01f;
-        DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
-        myFloat = (totalScore - coinScore);
-        
-        DOTween.To(() => myFloat, x => myFloat = x, totalScore, 1)
-            .OnUpdate(()=> {
-                pecentText.text = myFloat.ToString() + "%";              
-            })
-            .OnComplete(()=> {
-                continuieBtn.gameObject.SetActive(true);
-            });       
+        base.Initialize(totalCoins, currentCoins, bestScore, currentScore);
+       
     }
-
-   
 }

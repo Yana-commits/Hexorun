@@ -22,13 +22,19 @@ public class HUD : MonoBehaviour
     [SerializeField] Image lineImg;
 
     [SerializeField] Button pauseBtn;
-    
+
 
     [SerializeField] Text timeText;
     [SerializeField] Text levelText;
     [SerializeField] Text scoreText;
     [SerializeField] Text pointsText;
     [SerializeField] Text arenaTimerText;
+
+    private ResultPoPup resultPopUp;
+
+    [SerializeField] LevelComplete levelCompletePopUp;
+    [SerializeField] GameOverEndless gameOverEndlessPopUp;
+
 
     public event UnityAction OnPause
     {
@@ -78,7 +84,26 @@ public class HUD : MonoBehaviour
     public void UpDateCrashTimer(float _value, float time)
     {
         lineImg.fillAmount = _value;
-        arenaTimerText.text = $"{(int) time}";
+        arenaTimerText.text = $"{(int)time}";
     }
+
+
+    public void InitResultPopUp(GameModeState gameState)
+    {
+        if (gameState == GameModeState.Endless)
+            resultPopUp = gameOverEndlessPopUp;
+        else
+            resultPopUp = levelCompletePopUp;
+    }
+
+    public void ShowResultPopUp(int totalCoins, int currentCoins, int bestScore, int currentScore, Action callback)
+    {  
+        resultPopUp.Initialize(totalCoins, currentCoins, bestScore, currentScore);
+        resultPopUp.continuePlay += callback;
+        resultPopUp.gameObject.SetActive(true);
+    }
+
+
+
 
 }

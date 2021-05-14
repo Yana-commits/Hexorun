@@ -32,7 +32,7 @@ namespace Game.Main
 
         private void SetSkin(int id)
         {
-            if (id < 0 || id > skinAnimators.Count)
+            if (id < 0 || id >= skinAnimators.Count)
             {
                 return;
             }
