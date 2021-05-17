@@ -36,7 +36,6 @@ public class GameState : MonoBehaviour
     private GameModeState gameMode = GameModeState.Normal;
 
     private int _coinsCollect = 0;
-    private bool skinBool = false;
     private int lastSkin = -1;
     public int CoinAmount
     {
@@ -163,7 +162,7 @@ public class GameState : MonoBehaviour
         switch (gameMode)
         {
             case GameModeState.Endless:
-                CountParams();
+                
                 EndlessPlayerFall();
                 break;
             case GameModeState.Arena:
@@ -173,7 +172,7 @@ public class GameState : MonoBehaviour
                  AfterFall();
                 break;
             case GameModeState.NormalWithBonus:
-                AfterFall();
+                FallWithCoins();
                 break;
         }
     }
@@ -188,13 +187,6 @@ public class GameState : MonoBehaviour
     {
         GamePlayerPrefs.LastLevel = gameParameters.id;
         GamePlayerPrefs.TotalCoins += CoinAmount;
-
-        if (GamePlayerPrefs.TotalCoins >= 50  * GamePlayerPrefs.SkinKoeff)
-        {
-            GamePlayerPrefs.SkinIndex = (int)(GamePlayerPrefs.TotalCoins / 50) -1;
-            GamePlayerPrefs.SkinKoeff++;
-            skinBool = true;
-        }
     }
 
     private void Complete()
@@ -205,8 +197,9 @@ public class GameState : MonoBehaviour
     }
     private void EndlessPlayerFall()
     {
+        CountParams();
         CheckBestScore();
-        player.rigidbody.isKinematic = false;
+        player.rigidbody.useGravity = false;
         Complete();
     }
 

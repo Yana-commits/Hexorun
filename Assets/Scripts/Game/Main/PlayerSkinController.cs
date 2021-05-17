@@ -24,7 +24,7 @@ namespace Game.Main
         public void Init(Animator animator)
         {
             var lastSkin = GamePlayerPrefs.SkinIndex;
-
+            Debug.Log("Skin # " + lastSkin);
             parentAnimator = animator;
             
             SetSkin(lastSkin);

@@ -17,28 +17,34 @@ public class ResultPoPup : MonoBehaviour
     [SerializeField] List<Sprite> skins;
     [SerializeField] List<Sprite> stroks;
 
-    public Action continuePlay;
+    public Action OnContinuePlay;
+    public Action OnUnlockNewSkin;
 
     public virtual void Initialize(int totalCoins, int currentCoins, int bestScore, int currentScore)
     {
         totalCoinsText.text = totalCoins.ToString();
         coinScoreText.text = currentCoins.ToString();
         SetSkin(GamePlayerPrefs.SkinIndex + 1);
-        characterImg.gameObject.SetActive(true);
-        strokeImg.gameObject.SetActive(true);
+        int purposeCoins = 50 * GamePlayerPrefs.SkinKoeff;
 
-        float currentView =  ((float)totalCoins / 50);
-        characterImg.fillAmount = ((float)(totalCoins - currentCoins) / 50);
+        float currentView =  ((float)totalCoins % 100) / purposeCoins;
+        float delta = (((float)(totalCoins - currentCoins) % 100) / purposeCoins);
+
+        characterImg.fillAmount = delta;
         DOTween.To(() => characterImg.fillAmount, x => characterImg.fillAmount = x, currentView, 1);
 
-        int currentPercent = ((totalCoins - currentCoins) / 50) * 100;
+        int currentPercent =  (int)(delta * 100);
+        int totalPercent = (int)(currentView * 100) > 100 ? 100 : (int)(currentView * 100);
 
-        DOTween.To(() => currentPercent, x => currentPercent = x,(int)(currentView * 100), 1)
+        DOTween.To(() => currentPercent, x => currentPercent = x, totalPercent, 1)
             .OnUpdate(() => {
-                percentText.text = currentPercent <= 100 ? currentPercent.ToString() + "%" : "100%";
+                percentText.text = currentPercent > 100 ? "100%" : currentPercent.ToString() + "%";
             })
             .OnComplete(() => {
                 continuieBtn.gameObject.SetActive(true);
+                if (totalPercent >= 100)
+                    OnUnlockNewSkin?.Invoke();
+
             });
     }
 
@@ -55,15 +61,12 @@ public class ResultPoPup : MonoBehaviour
 
     private void OnContinue()
     {
-        continuePlay?.Invoke();
+        OnContinuePlay?.Invoke();
     }
 
     private void SetSkin(int id)
     {
-        if (id < 0 || id >= skins.Count)
-        {
-            return;
-        }
+        id = id >= skins.Count ? 0 : id;
         characterImg.sprite = skins[id];
         strokeImg.sprite = stroks[id];
     }

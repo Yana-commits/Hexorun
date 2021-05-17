@@ -97,13 +97,33 @@ public class HUD : MonoBehaviour
     }
 
     public void ShowResultPopUp(int totalCoins, int currentCoins, int bestScore, int currentScore, Action callback)
-    {  
+    {
+        resultPopUp.OnUnlockNewSkin += () =>
+        {
+            resultPopUp.gameObject.SetActive(false);
+            skinUnlock.Initialize(totalCoins);
+            skinUnlock.gameObject.SetActive(true);
+            GamePlayerPrefs.SkinKoeff++;
+            skinUnlock.OnKeepIt += () => {
+                GamePlayerPrefs.SkinIndex++;
+                callback?.Invoke();
+            };
+        };
+        resultPopUp.OnContinuePlay += callback;
         resultPopUp.Initialize(totalCoins, currentCoins, bestScore, currentScore);
-        resultPopUp.continuePlay += callback;
         resultPopUp.gameObject.SetActive(true);
     }
 
 
 
-
+    private void OnDestroy()
+    {
+        if (resultPopUp != null)
+        { 
+            resultPopUp.OnContinuePlay = null;
+            resultPopUp.OnUnlockNewSkin = null;
+        }
+        if (skinUnlock != null)
+            skinUnlock.OnKeepIt = null;
+    }
 }

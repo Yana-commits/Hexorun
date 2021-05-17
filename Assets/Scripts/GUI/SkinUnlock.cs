@@ -11,8 +11,8 @@ public class SkinUnlock : MonoBehaviour
     [SerializeField] Text scoreCoinText;
     [SerializeField] List<GameObject> skins;
   
-    public Action keepIt;
-    public Action loseIt;
+    public Action OnKeepIt;
+    public Action OnLoseIt;
 
     private void OnEnable()
     {
@@ -28,12 +28,12 @@ public class SkinUnlock : MonoBehaviour
 
     private void OnContinue()
     {
-        keepIt?.Invoke();
+        OnKeepIt?.Invoke();
     }
 
     private void OnCancel()
     {
-       loseIt?.Invoke();
+       OnLoseIt?.Invoke();
     }
 
     public void Initialize(int totalScore)
@@ -41,5 +41,6 @@ public class SkinUnlock : MonoBehaviour
         scoreCoinText.text = totalScore.ToString();
         if (GamePlayerPrefs.SkinIndex < skins.Count && GamePlayerPrefs.SkinIndex >= 0)
         skins[GamePlayerPrefs.SkinIndex].SetActive(true);
+
     }
 }
