@@ -21,9 +21,8 @@ public class Player : MonoBehaviour
     private Joystick joystick;
     private GameParameters parameters;
     public float passSpeed = 0.01f;
-    public bool passKlue;
     public Vector3 thronePlace;
-    private GameModeState gameState = GameModeState.NormalWithBonus;
+   
 
     private float target = 40f;
     private float targetOffset = 2.5f;
