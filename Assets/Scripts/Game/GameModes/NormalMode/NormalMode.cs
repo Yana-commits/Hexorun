@@ -45,7 +45,7 @@ public class NormalMode : Mode
     // Start is called before the first frame update
     void Start()
     {
-        player.OnPassActivated += LoadPass;
+        //player.OnPassActivated += LoadPass;
 
     }
 
@@ -144,7 +144,7 @@ public class NormalMode : Mode
         }
     }
 
-    private void LoadPass()
+    public void LoadPass()
     {
         isPass = false;
 
@@ -257,6 +257,6 @@ public class NormalMode : Mode
 
     private void OnDisable()
     {
-        player.OnPassActivated -= LoadPass;
+        //player.OnPassActivated -= LoadPass;
     }
 }

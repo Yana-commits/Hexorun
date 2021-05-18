@@ -71,6 +71,7 @@ public class GameState : MonoBehaviour
         Time.timeScale = 1;
         Application.targetFrameRate = 60;
         StartGame();
+        
     }
 
     public void StartGame()
@@ -120,8 +121,8 @@ public class GameState : MonoBehaviour
     private void PlayerInit()
     {
         player.Initializie(joystick, gameParameters);
-        player.passKlue = modesRepository[gameParameters.id].mode == GameModeState.NormalWithBonus ? true : false;
         player.OnStateChanged += OnPlayerStateChanged;
+        player.OnPassActivated += BonusPass;
         player.enabled = false;
         playerSkin.Init(player.GetComponentInChildren<Animator>());
     }
@@ -141,7 +142,7 @@ public class GameState : MonoBehaviour
             case PlayerState.BigWin:
                 StartCoroutine(player.BigWinner(Complete));
                 CountParams();
-                Debug.Log("999");
+               
                 break;
             case PlayerState.Lose:
                 StartCoroutine(player.Looser(ReloadScene));
@@ -174,6 +175,23 @@ public class GameState : MonoBehaviour
                 break;
             case GameModeState.NormalWithBonus:
                 FallWithCoins();
+                break;
+        }
+    }
+    private void BonusPass()
+    {
+        switch (gameMode)
+        {
+            case GameModeState.Normal:
+                Debug.Log("999");
+                player.DestinationReached();
+                break;
+            case GameModeState.NormalWithBonus:
+                normalMode.LoadPass();
+                player.isFastRun = true;
+                break;
+            default:
+                player.DestinationReached();
                 break;
         }
     }
@@ -219,6 +237,7 @@ public class GameState : MonoBehaviour
     {
         if (player)
             player.OnStateChanged -= OnPlayerStateChanged;
+        player.OnPassActivated -= BonusPass;
     }
 
 
@@ -250,6 +269,7 @@ public class GameState : MonoBehaviour
                 return normalMode;
         }
     }
+
 }
 public enum KindOfMapBehavor
 {

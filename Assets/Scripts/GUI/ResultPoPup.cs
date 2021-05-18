@@ -12,9 +12,7 @@ public class ResultPoPup : MonoBehaviour
     [SerializeField] private Image characterImg;
     [SerializeField] private Image strokeImg;
     [SerializeField] private Text percentText;
-    [SerializeField] List<Sprite> skins;
-    [SerializeField] List<Sprite> stroks;
-    private int  id;
+
 
     public Action OnContinuePlay;
     public Action OnUnlockNewSkin;
@@ -23,7 +21,6 @@ public class ResultPoPup : MonoBehaviour
     {
         totalCoinsText.text = totalCoins.ToString();
         coinScoreText.text = currentCoins.ToString();
-        id = GamePlayerPrefs.SkinIndex + 1;
  
         SetSkin(GamePlayerPrefs.SkinIndex + 1,skin);
         int purposeCoins = 50 * GamePlayerPrefs.SkinKoeff;

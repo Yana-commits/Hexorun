@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc294f83b0b20b48b98e2cb633ba13c, type: 3}
   m_Name: Skin Repository
   m_EditorClassIdentifier: 
-  skinLists: []
+  skinLists:
+  - id: 0
+    image: {fileID: 21300000, guid: 891f5e19e629fc344afd958a9d376035, type: 3}
+    stroke: {fileID: 21300000, guid: eb09c317d5296b44cac72efd8e486c44, type: 3}
+    openCoins: 100
+  - id: 0
+    image: {fileID: 21300000, guid: 891f5e19e629fc344afd958a9d376035, type: 3}
+    stroke: {fileID: 21300000, guid: eb09c317d5296b44cac72efd8e486c44, type: 3}
+    openCoins: 100
+  - id: 0
+    image: {fileID: 0}
+    stroke: {fileID: 0}
+    openCoins: 0

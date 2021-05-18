@@ -205,6 +205,7 @@ MonoBehaviour:
   datas: {fileID: 11400000, guid: e67491d76a9a48a42a98b2a213dd045b, type: 2}
   levels: {fileID: 11400000, guid: 87fde29953db20045904e8dceaac7316, type: 2}
   modesRepository: {fileID: 11400000, guid: e1ebab2dcbf74574a9de39c8b1f713b6, type: 2}
+  skinRepository: {fileID: 11400000, guid: b4e9a122d7e80cc419aed412b646117f, type: 2}
   player: {fileID: 1051566764}
   playerSkin: {fileID: 1051566765}
 --- !u!4 &374825335
@@ -600,7 +601,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.34042525, y: 0.000000022451655, z: -0.00000000812862, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042525, y: 0.000000022910893, z: -0.0000000082948866, w: 0.9402716}
   m_LocalPosition: {x: -2.79, y: 3.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -699,7 +700,7 @@ PrefabInstance:
     - target: {fileID: 463645848259778548, guid: eab2aa2e813932f4c8caa6f8a1768dfe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 463645848259778548, guid: eab2aa2e813932f4c8caa6f8a1768dfe,
         type: 3}
@@ -1817,7 +1818,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073511403}
-  m_LocalRotation: {x: -0, y: 3.6512482e-10, z: -3.0427127e-10, w: 1}
+  m_LocalRotation: {x: -0, y: 0.000000040124434, z: -0.000000033437026, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

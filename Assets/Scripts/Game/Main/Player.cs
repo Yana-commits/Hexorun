@@ -23,12 +23,13 @@ public class Player : MonoBehaviour
     public float passSpeed = 0.01f;
     public bool passKlue;
     public Vector3 thronePlace;
+    private GameModeState gameState = GameModeState.NormalWithBonus;
 
     private float target = 40f;
     private float targetOffset = 2.5f;
     public float zoomSpeed = 3f;
 
-    private bool isFastRun = false;
+    public bool isFastRun = false;
 
     private PlayerState playerState = PlayerState.None;
 
@@ -121,25 +122,15 @@ public class Player : MonoBehaviour
 
     public void TargetSpot()
     {
-        if (passKlue)
-        {
-            CreatePass();
-        }
-        else
-        {
-            DestinationReached();
-        }
+  
+        OnPassActivated?.Invoke();
     }
     public void DestinationReached()
     {
         playerState = PlayerState.Win;
         OnStateChanged?.Invoke(playerState);
     }
-    public void CreatePass()
-    {
-        isFastRun = true;
-        OnPassActivated?.Invoke();
-    }
+  
     public void Fall()
     {
         playerState = isFastRun ? PlayerState.Fall : PlayerState.Fall;
