@@ -9,9 +9,9 @@ public class GameOverEndless : ResultPoPup
 {
     [SerializeField] Text scoreText;
     [SerializeField] Text bestScoreText;
-    public override void Initialize(int totalCoins, int currentCoins, int bestScore, int currentScore)
+    public override void Initialize(int totalCoins, int currentCoins, int bestScore, int currentScore, SkinRepository skin)
     {
-        base.Initialize(totalCoins, currentCoins, bestScore, currentScore);
+        base.Initialize(totalCoins, currentCoins, bestScore, currentScore,skin);
         bestScoreText.text = $"BEST : {bestScore}";
         scoreText.text = $"SCORE : {currentScore}";
     }

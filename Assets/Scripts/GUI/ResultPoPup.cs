@@ -14,15 +14,18 @@ public class ResultPoPup : MonoBehaviour
     [SerializeField] private Text percentText;
     [SerializeField] List<Sprite> skins;
     [SerializeField] List<Sprite> stroks;
+    private int  id;
 
     public Action OnContinuePlay;
     public Action OnUnlockNewSkin;
 
-    public virtual void Initialize(int totalCoins, int currentCoins, int bestScore, int currentScore)
+    public virtual void Initialize(int totalCoins, int currentCoins, int bestScore, int currentScore, SkinRepository skin)
     {
         totalCoinsText.text = totalCoins.ToString();
         coinScoreText.text = currentCoins.ToString();
-        SetSkin(GamePlayerPrefs.SkinIndex + 1);
+        id = GamePlayerPrefs.SkinIndex + 1;
+ 
+        SetSkin(GamePlayerPrefs.SkinIndex + 1,skin);
         int purposeCoins = 50 * GamePlayerPrefs.SkinKoeff;
 
         float currentView =  ((float)totalCoins % 100) / purposeCoins;
@@ -62,10 +65,10 @@ public class ResultPoPup : MonoBehaviour
         OnContinuePlay?.Invoke();
     }
 
-    private void SetSkin(int id)
+    private void SetSkin(int id, SkinRepository skin)
     {
-        id = id >= skins.Count ? 0 : id;
-        characterImg.sprite = skins[id];
-        strokeImg.sprite = stroks[id];
+        id = id >= skin.Count ? 0 : id;
+        characterImg.sprite = skin[id].image;
+        strokeImg.sprite = skin[id].stroke;
     }
 }

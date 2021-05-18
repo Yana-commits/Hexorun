@@ -96,7 +96,7 @@ public class HUD : MonoBehaviour
             resultPopUp = levelCompletePopUp;
     }
 
-    public void ShowResultPopUp(int totalCoins, int currentCoins, int bestScore, int currentScore, Action callback)
+    public void ShowResultPopUp(int totalCoins, int currentCoins, int bestScore, int currentScore, Action callback, SkinRepository skin)
     {
         resultPopUp.OnUnlockNewSkin += () =>
         {
@@ -110,7 +110,7 @@ public class HUD : MonoBehaviour
             };
         };
         resultPopUp.OnContinuePlay += callback;
-        resultPopUp.Initialize(totalCoins, currentCoins, bestScore, currentScore);
+        resultPopUp.Initialize(totalCoins, currentCoins, bestScore, currentScore,  skin);
         resultPopUp.gameObject.SetActive(true);
     }
 

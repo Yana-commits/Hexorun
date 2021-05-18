@@ -194,7 +194,7 @@ public class GameState : MonoBehaviour
     {
         hud.gamePlay.SetActive(false);
         hud.InitResultPopUp(gameMode);
-        hud.ShowResultPopUp(GamePlayerPrefs.TotalCoins, _coinsCollect, GamePlayerPrefs.BestScore, PointsAmount,ReloadScene);
+        hud.ShowResultPopUp(GamePlayerPrefs.TotalCoins, _coinsCollect, GamePlayerPrefs.BestScore, PointsAmount,ReloadScene, skinRepository);
     }
     private void EndlessPlayerFall()
     {
