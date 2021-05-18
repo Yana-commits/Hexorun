@@ -23,6 +23,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private MaterialRepository datas;
     [SerializeField] private LevelRepository levels;
     [SerializeField] private ModesRepository modesRepository;
+    [SerializeField] private SkinRepository skinRepository;
 
     [Space]
     [SerializeField] private Player player;
