@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,11 @@ public class ArenaMode : Mode
     private float generatorTime;
     private float changeTime;
     private bool isCrush = false;
+
+    [SerializeField]
+    private CinemachineVirtualCamera vcam1;
+    [SerializeField]
+    private CinemachineVirtualCamera dollyCam;
 
     public override void Initialized(Player _player,HUD hud)
     {
@@ -35,6 +41,15 @@ public class ArenaMode : Mode
         player.transform.SetPositionAndRotation(startPos, Quaternion.identity);
         player.SetGamePlaySettings(gameParameters.playerSpeed, chunk.Map.Bounds);
         player.gameObject.SetActive(true);
+        StartCoroutine(DollyCam());
+    }
+
+    public IEnumerator DollyCam()
+    {
+        yield return new WaitForSeconds(1);
+        dollyCam.gameObject.SetActive(true);
+        yield return new WaitForSeconds(10);
+        dollyCam.gameObject.SetActive(false);
     }
 
     private void Update()
